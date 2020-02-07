@@ -12,4 +12,5 @@ LazyData: true
 RoxygenNote: 7.0.2
 Imports: bnlearn, gRain, gRbase, graphics
 Suggests: 
-    testthat
+    testthat,
+    covr
