@@ -1,15 +1,16 @@
-#' Uniform co-variation scheme
+#' Uniform covariation scheme
 #'
-#' \code{uniform_covar} returns an updated Bayesian network using uniform co-variation scheme.
+#' \code{uniform_covar} returns an updated Bayesian network using uniform covariation scheme.
 #'
-#' \cr
+#'
+#'
 #' The Bayesian network on which parameter variation is being conducted should be expressed as a bn.fit object.
 #' The name of the node to be varied, its level and its parent's level should be specified.
-#' The parameter variation specified by the function is:\cr
-#' \cr
-#' P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value} \cr
+#' The parameter variation specified by the function is:
 #'
-#' @family co-variation schemes
+#' P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+#'
+#' @family covariation schemes
 #'
 #'@param bnfit object of class bn.fit
 #'@param node character string. Node of which the conditional probability distribution is being changed.
@@ -20,6 +21,7 @@
 #'@importClassesFrom bnlearn bn.fit
 #'@importFrom stats coef
 #'@export
+#'
 uniform_covar <-
   function(bnfit,
            node,
