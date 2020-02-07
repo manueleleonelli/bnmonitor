@@ -29,6 +29,7 @@ P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{n
 }
 \seealso{
 Other covariation schemes: 
+\code{\link{orderp_covar}()},
 \code{\link{proportional_covar}()}
 }
 \concept{covariation schemes}
