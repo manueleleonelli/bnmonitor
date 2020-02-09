@@ -28,7 +28,7 @@ CD_distance(
 
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
 
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes will be plotted.  Set by default to \code{TRUE}.}
+\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
 
 \item{...}{additional parameters to be added to the plot.}
 }
@@ -37,14 +37,15 @@ CD_distance(
 }
 \details{
 The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
-The name of the node to be varied, its level and its parent's level should be specified.
+The name of the node to be varied, its level and its parent's levels should be specified.
 The parameter variation specified by the function is:
 
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 }
 \examples{
-CD_distance(synthetic_bn,"y2","1","2","all","all")
-CD_distance(synthetic_bn,"y1", "2",NULL, 0.3, "all")
+CD_distance(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
+CD_distance(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+
 }
 \references{
 Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
