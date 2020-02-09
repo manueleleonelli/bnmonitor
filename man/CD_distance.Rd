@@ -16,17 +16,17 @@ CD_distance(
 )
 }
 \arguments{
-\item{bnfit}{object of class bn.fit}
+\item{bnfit}{object of class \code{bn.fit}.}
 
 \item{node}{character string. Node of which the conditional probability distribution is being changed.}
 
 \item{value_node}{character string. Level of \code{node}.}
 
-\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.}
+\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.}
 
-\item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case in which the user wants to consider more than one value,these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 will be considered.}
+\item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
-\item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}.If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes will be considered. Set by default to \code{proportional}.}
+\item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
 
 \item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes will be plotted.  Set by default to \code{TRUE}.}
 
@@ -36,11 +36,20 @@ CD_distance(
 \code{CD_distance} returns the Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
 }
 \details{
-The Bayesian network on which parameter variation is being conducted should be expressed as a bn.fit object.
+The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 The name of the node to be varied, its level and its parent's level should be specified.
 The parameter variation specified by the function is:
 
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+}
+\examples{
+CD_distance(synthetic_bn,"y2","1","2","all","all")
+CD_distance(synthetic_bn,"y1", "2",NULL, 0.3, "all")
+}
+\references{
+Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
+
+Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
 }
 \seealso{
 Other dissimilarity measures: 
