@@ -7,27 +7,40 @@
 orderp_covar(bnfit, node, value_node, value_parents, new_value)
 }
 \arguments{
-\item{bnfit}{object of class bn.fit}
+\item{bnfit}{object of class \code{bn.fit}.}
 
 \item{node}{character string. Node of which the conditional probability distribution is being changed.}
 
 \item{value_node}{character string. Level of \code{node}.}
 
-\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.}
+\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.}
 
 \item{new_value}{numeric value between 0 and 1. Value to which the parameter should be updated.}
 }
 \description{
-\code{orderp_covar} returns an updated Bayesian network using order-preserving covariation scheme
+\code{orderp_covar} returns an updated Bayesian network using the order-preserving covariation scheme.
 }
 \details{
-The Bayesian network on which parameter variation is being conducted should be expressed as a bn.fit object.
-The name of the node to be varied, its level and its parent's level should be specified.
+The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
+The name of the node to be varied, its level and its parent's levels should be specified.
 The parameter variation specified by the function is:
 
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 
-It should be noted that if two or more parameters in a distribution have the same value, the order is given by the one in the respective conditional probability table.
+If two or more parameters in a distribution have the same value, the order is given by the one in the respective conditional probability table.
+
+The parameter associated to the largest probability of the conditional probability law cannot be varied.
+}
+\examples{
+orderp_covar(synthetic_bn, "y3", "2", c("2","1"), 0.3)
+orderp_covar(synthetic_bn, "y2", "1", "2", 0.3)
+orderp_covar(synthetic_bn, "y1", "1", NULL, 0.3)
+
+}
+\references{
+Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
+
+Leonelli, M., & Riccomagno, E. (2018). A geometric characterisation of sensitivity analysis in monomial models. arXiv preprint arXiv:1901.02058.
 }
 \seealso{
 Other covariation schemes: 

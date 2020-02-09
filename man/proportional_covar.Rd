@@ -7,25 +7,38 @@
 proportional_covar(bnfit, node, value_node, value_parents, new_value)
 }
 \arguments{
-\item{bnfit}{object of class bn.fit}
+\item{bnfit}{object of class \code{bn.fit}.}
 
 \item{node}{character string. Node of which the conditional probability distribution is being changed.}
 
 \item{value_node}{character string. Level of \code{node}.}
 
-\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.}
+\item{value_parents}{character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.}
 
 \item{new_value}{numeric value between 0 and 1. Value to which the parameter should be updated.}
 }
 \description{
-\code{proportional_covar} returns an updated Bayesian network using proportional covariation scheme.
+\code{proportional_covar} returns an updated Bayesian network using the proportional covariation scheme.
 }
 \details{
-The Bayesian network on which parameter variation is being conducted should be expressed as a bn.fit object.
-The name of the node to be varied, its level and its parent's level should be specified.
+The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
+The name of the node to be varied, its level and its parent's levels should be specified.
 The parameter variation specified by the function is:
 
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+}
+\examples{
+proportional_covar(synthetic_bn, "y3", "2", c("2","1"), 0.3)
+proportional_covar(synthetic_bn, "y2", "1", "2", 0.3)
+proportional_covar(synthetic_bn, "y1", "1", NULL, 0.3)
+
+}
+\references{
+Laskey, K. B. (1995). Sensitivity analysis for probability assessments in Bayesian networks. IEEE Transactions on Systems, Man, and Cybernetics, 25(6), 901-909.
+
+Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
+
+Leonelli, M., & Riccomagno, E. (2018). A geometric characterisation of sensitivity analysis in monomial models. arXiv preprint arXiv:1901.02058.
 }
 \seealso{
 Other covariation schemes: 
