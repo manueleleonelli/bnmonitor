@@ -24,6 +24,7 @@ fire_alarm
 }
 \seealso{
 Other datasets: 
+\code{\link{synt_gbn}},
 \code{\link{synthetic_bn}},
 \code{\link{travel}}
 }

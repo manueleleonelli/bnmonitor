@@ -12,22 +12,28 @@
 #'
 #'  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states} )
 #'
-#' @family sensitivity
+#' @family sensitivity methods
 #'
-#'@param bnfit object of class bn.fit
+#'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.
-#'@param interest_node_value character string. Level of \code{interest_node}
-#'@param evidence_nodes character string. Evidence nodes. If \code{NULL} no evidence is considerated. Set by default to \code{NULL}.
+#'@param interest_node_value character string. Level of \code{interest_node}.
+#'@param evidence_nodes character string. Evidence nodes. If \code{NULL} no evidence is considered. Set by default to \code{NULL}.
 #'@param evidence_states character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.
 #'@param value_node character string. Level of \code{node}.
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.
-#'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case in which the user wants to consider more than one value,these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 will be considered.
-#'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}.If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes will be considered. Set by default to \code{proportional}.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes will be plotted.  Set by default to \code{TRUE}.
+#'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
+#'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.
+#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes are plotted.  Set by default to \code{TRUE}.
 #'@param ... additional parameters to be added to the plot.
-
-
+#'
+#'@references Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
+#'@references Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
+#'
+#'@examples sensitivity(synthetic_bn, "y2", "3", node = "y1",value_node = "1", value_parents = NULL,
+#'    new_value = "all", covariation = "all", plot = FALSE)
+#'@examples sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all", FALSE)
+#'
 #'@import bnlearn
 #'@importClassesFrom bnlearn bn.fit
 #'@importFrom stats coef
@@ -46,7 +52,7 @@ sensitivity <- function(bnfit,
                         value_node,
                         value_parents,
                         new_value,
-                        covariation = "orderp",
+                        covariation = "proportional",
                         plot = TRUE,
                         ...)
 {

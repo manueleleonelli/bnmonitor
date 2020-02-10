@@ -14,32 +14,39 @@ sensquery(
 )
 }
 \arguments{
-\item{bnfit}{object of class bn.fit}
+\item{bnfit}{object of class \code{bn.fit}.}
 
 \item{interest_node}{character string. Node of the probability query of interest.}
 
-\item{interest_node_value}{character string. Level of \code{interest_node}}
+\item{interest_node_value}{character string. Level of \code{interest_node}.}
 
-\item{new_value}{numeric value between 0 and 1. Value of the probability of interest.}
+\item{new_value}{numeric value between 0 and 1. New value of the probability of interest.}
 
 \item{evidence_nodes}{character string. Evidence nodes. Set by default to \code{NULL}.}
 
 \item{evidence_states}{character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.}
 }
 \description{
-\code{sensquery} returns for a given probability of interest the parameters changes that make it possible and the resulting CD distances.
+\code{sensquery} returns, for a given change in a probability of interest, the parameters' changes to achieve it together with the corresponding CD distances.
 }
 \details{
-The Bayesian network should be expressed as a bn.fit object.
+The Bayesian network should be expressed as a \code{bn.fit} object.
 The name of the node of the probability of interest, its level and the new value should be specified. Evidence could be also indicated.
 The probability of interest is specified as follows:
 
  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states}  ) = \code{new_value}
 
-By default, the  proportional covariation scheme is used for computing the CD distance.
+Only the  proportional covariation scheme is used.
+}
+\examples{
+sensquery(synthetic_bn,"y3", "3", 0.3)
+
+}
+\references{
+Chan, H., & Darwiche, A. (2002). When do numbers really matter?. Journal of artificial intelligence research, 17, 265-287.
 }
 \seealso{
-Other sensitivity: 
+Other sensitivity methods: 
 \code{\link{sensitivity}()}
 }
-\concept{sensitivity}
+\concept{sensitivity methods}
