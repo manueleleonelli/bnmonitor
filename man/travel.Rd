@@ -24,6 +24,7 @@ travel
 }
 \seealso{
 Other datasets: 
+\code{\link{cachexia}},
 \code{\link{fire_alarm}},
 \code{\link{synt_gbn}},
 \code{\link{synthetic_bn}}
