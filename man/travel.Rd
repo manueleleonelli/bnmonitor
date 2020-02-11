@@ -28,6 +28,14 @@ Other datasets:
 \code{\link{fire_alarm}},
 \code{\link{synthetic_bn}},
 \code{\link{synthetic_cbn}}
+
+Other discrete bn sensitivity: 
+\code{\link{CD}()},
+\code{\link{covariation}},
+\code{\link{sensitivity}()},
+\code{\link{sensquery}()},
+\code{\link{synthetic_bn}}
 }
 \concept{datasets}
+\concept{discrete bn sensitivity}
 \keyword{datasets}

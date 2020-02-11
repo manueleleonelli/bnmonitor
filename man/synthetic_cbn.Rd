@@ -25,6 +25,15 @@ Other datasets:
 \code{\link{fire_alarm}},
 \code{\link{synthetic_bn}},
 \code{\link{travel}}
+
+Other gbn sensitivity: 
+\code{\link{bn2}},
+\code{\link{cachexia}},
+\code{\link{covariance_var}()},
+\code{\link{covariation_matrix}},
+\code{\link{mean_var}()},
+\code{\link{model_pres_cov}()}
 }
 \concept{datasets}
+\concept{gbn sensitivity}
 \keyword{datasets}

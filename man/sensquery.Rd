@@ -48,5 +48,13 @@ Chan, H., & Darwiche, A. (2002). When do numbers really matter?. Journal of arti
 \seealso{
 Other sensitivity methods: 
 \code{\link{sensitivity}()}
+
+Other discrete bn sensitivity: 
+\code{\link{CD}()},
+\code{\link{covariation}},
+\code{\link{sensitivity}()},
+\code{\link{synthetic_bn}},
+\code{\link{travel}}
 }
+\concept{discrete bn sensitivity}
 \concept{sensitivity methods}

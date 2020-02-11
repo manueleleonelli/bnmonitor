@@ -3,6 +3,7 @@
 #' @docType data
 #'
 #' @family datasets
+#' @family gbn sensitivity
 #'
 #' @format A continuous Bayesian networks over four variables ("y1", "y2", "y3", "y4"), embedding the statement "y1" independent of "y3" given "y2".
 #'     The Bayesian network is available both as an object of class \code{GBN} and as an object of class \code{CI}.

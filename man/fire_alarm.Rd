@@ -30,4 +30,5 @@ Other datasets:
 \code{\link{travel}}
 }
 \concept{datasets}
+\concept{discret bn sensitivity}
 \keyword{datasets}

@@ -14,6 +14,7 @@
 #'
 #'The function \code{bn2ci} returns an object of class \code{CI} consisting of the same list as \code{GBN}, but with the additional entry \code{cond_ind}. \code{cond_ind} is a list where each entry consists of \code{A}, \code{B} and \code{C} corresponding to the conditional independence statements \code{A} independent of \code{B} given \code{C} embedded by the network.
 #'@name bn2
+#'@family gbn sensitivity
 NULL
 
 #' @rdname bn2

@@ -5,6 +5,7 @@
 #' @docType data
 #'
 #' @family datasets
+#' @family discret bn sensitivity
 #'
 #' @usage fire_alarm
 #'

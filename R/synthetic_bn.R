@@ -5,8 +5,10 @@
 #' @docType data
 #'
 #' @family datasets
+#' @family discrete bn sensitivity
 #'
 #' @usage synthetic_bn
+#'
 #'
 #' @format The Bayesian network \code{bnsens_example} comprehends the following nodes:
 #' \itemize{

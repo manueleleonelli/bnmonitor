@@ -72,5 +72,13 @@ Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in mul
 \seealso{
 Other sensitivity methods: 
 \code{\link{sensquery}()}
+
+Other discrete bn sensitivity: 
+\code{\link{CD}()},
+\code{\link{covariation}},
+\code{\link{sensquery}()},
+\code{\link{synthetic_bn}},
+\code{\link{travel}}
 }
+\concept{discrete bn sensitivity}
 \concept{sensitivity methods}

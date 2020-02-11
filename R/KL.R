@@ -354,3 +354,141 @@ KL.bn.fit <-
     }
     return(list(KL = KL, plot = plot))
   }
+
+
+#' KL Divergence for \code{CI}
+#'
+#' \code{KL.CI} returns the Kullback-Leibler (KL) divergence between a Gaussian Bayesian network and its update after a model-preserving parameter variation.
+#'
+#'@param x object of class \code{CI}.
+#'@param type character string: either \code{mean} or \code{covariance} for variations of the mean vector and covariance matrix respectively.
+#'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
+#'@param delta variation parameter that acts multiplicatively.
+#'@param ... additional parameters to be added to the plot.
+#'
+#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'
+#'@importFrom matrixcalc is.positive.semi.definite
+#'@export
+#'
+
+KL.CI <- function(x, type, entry,delta, ...){
+  ci <- x
+  KL <- numeric(length(delta))
+  if(type == "total"){
+    for(i in 1:length(delta)){
+      Delta <- variation_mat(ci,entry,delta[i])
+      Cov <- total_covar_matrix(ci,entry,delta[i])
+      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+        KL[i] <- 0.5*(log(det(ci$covariance)/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov*Delta*ci$covariance))))
+      }
+      else{KL[i]<- NA}
+    }
+    return(data.frame(Variation = delta, KL= KL))
+  }
+  if(type == "partial"){
+    for(i in 1:length(delta)){
+      Delta <- variation_mat(ci,entry,delta[i])
+      Cov <- partial_covar_matrix(ci,entry,delta[i])
+      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+        KL[i] <- 0.5*(log(det(ci$covariance)/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov*Delta*ci$covariance))))
+      }
+      else{KL[i]<- NA}
+    }
+    return(data.frame(Variation = delta, KL= KL))
+  }
+  if(type == "row"){
+    for(i in 1:length(delta)){
+      Delta <- variation_mat(ci,entry,delta[i])
+      Cov <- row_covar_matrix(ci, entry, delta[i])
+      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+        KL[i] <- 0.5*(log(det(ci$covariance)/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov*Delta*ci$covariance))))
+      }
+      else{KL[i]<- NA}
+    }
+    return(data.frame(Variation = delta, KL= KL))
+  }
+  if(type == "column"){
+    for(i in 1:length(delta)){
+      Delta <- variation_mat(ci,entry,delta[i])
+      Cov <- col_covar_matrix(ci,entry,delta[i])
+      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+        KL[i] <- 0.5*(log(det(ci$covariance)/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov*Delta*ci$covariance))))
+      }
+      else{KL[i]<- NA}
+    }
+    return(data.frame(Variation = delta, KL= KL))
+  }
+  if(type == "all"){
+    KL <- matrix(0,length(delta),4)
+    for(i in 1:length(delta)){
+      Delta <- variation_mat(ci,entry,delta[i])
+      Cov_col <- col_covar_matrix(ci,entry,delta[i])
+      Cov_row <- row_covar_matrix(ci,entry,delta[i])
+      Cov_par <- partial_covar_matrix(ci,entry,delta[i])
+      Cov_tot <- total_covar_matrix(ci,entry,delta[i])
+      if(is.positive.semi.definite(round(Cov_tot*Delta*ci$covariance,2))){
+        KL[i,1] <- 0.5*(log(det(ci$covariance)/det(Cov_tot*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov_tot*Delta*ci$covariance))))
+      }
+      else{KL[i,1]<- NA}
+      if(is.positive.semi.definite(round(Cov_par*Delta*ci$covariance,2))){
+        KL[i,2] <- 0.5*(log(det(ci$covariance)/det(Cov_par*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov_par*Delta*ci$covariance))))
+      }
+      else{KL[i,2]<- NA}
+      if(is.positive.semi.definite(round(Cov_row*Delta*ci$covariance,2))){
+        KL[i,3] <- 0.5*(log(det(ci$covariance)/det(Cov_row*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov_row*Delta*ci$covariance))))
+      }
+      else{KL[i,3]<- NA}
+      if(is.positive.semi.definite(round(Cov_col*Delta*ci$covariance,2))){
+        KL[i,4] <- 0.5*(log(det(ci$covariance)/det(Cov_col*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(solve(ci$covariance)%*%(Cov_col*Delta*ci$covariance))))
+      }
+      else{KL[i,4]<- NA}
+    }
+    return(data.frame(Variation = delta, KL_total = KL[,1], KL_partial = KL[,2], KL_row = KL[,3], KL_column = KL[,4]))
+  }
+}
+
+
+#' KL Divergence for \code{GBN}
+#'
+#' \code{KL.GBN} returns the Kullback-Leibler (KL) divergence between a Gaussian Bayesian network and its update after an additive parameter variation.
+#'
+#'
+#'@param x object of class \code{GBN}.
+#'@param where character string: either \code{mean} or \code{covariance} for variations of the mean vector and covariance matrix respectively.
+#'@param entry if \code{where == "mean"}, \code{entry} is the index of the entry of the mean vector to vary. If \code{where == "covariance"}, entry is a vector of length 2 indicating the entry of the covariance matrix to vary.
+#'@param delta variation parameter that acts additively.
+#'@param ... additional parameters to be added to the plot.
+#'
+#'@references Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
+#'@references Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
+#'
+#'
+#'@importFrom matrixcalc is.positive.semi.definite
+#'@export
+#'
+
+KL.GBN <- function(x,where,entry,delta, ...){
+  gbn <- x
+  if(where != "mean" & where!= "covariance") stop("where is either mean or covariance")
+  KL <- numeric(length(delta))
+  if(where == "mean"){
+    d<-rep(0,length(gbn$mean))
+    for(i in 1:length(KL)){
+      d[entry] <- delta[i]
+      KL[i]<- 0.5*t(d)%*%solve(gbn$covariance)%*%d
+    }
+  }
+  if(where == "covariance"){
+    D <- matrix(0,length(gbn$mean),length(gbn$mean))
+    for(i in 1:length(KL)){
+      D[entry[1],entry[2]]<- delta[i]
+      D[entry[2],entry[1]]<- delta[i]
+      if(is.positive.semi.definite(gbn$covariance+D)){
+        KL[i] <- 0.5*(sum(diag(solve(gbn$covariance)%*%D))+log(det(gbn$covariance)/det(gbn$covariance+D)))
+      }
+      else{KL[i]<-NA}
+    }
+  }
+  return(data.frame(Variation = delta,KL=KL))
+}

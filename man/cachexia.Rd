@@ -32,6 +32,15 @@ Other datasets:
 \code{\link{synthetic_bn}},
 \code{\link{synthetic_cbn}},
 \code{\link{travel}}
+
+Other gbn sensitivity: 
+\code{\link{bn2}},
+\code{\link{covariance_var}()},
+\code{\link{covariation_matrix}},
+\code{\link{mean_var}()},
+\code{\link{model_pres_cov}()},
+\code{\link{synthetic_cbn}}
 }
 \concept{datasets}
+\concept{gbn sensitivity}
 \keyword{datasets}

@@ -26,3 +26,13 @@ The function \code{bn2ci} returns an object of class \code{CI} consisting of the
 \description{
 Functions that transform an object of class \code{bn.fit} and \code{bn.fit.gnet} (a Gaussian Bayesian network) to objects of class \code{GBN} or \code{CI}
 }
+\seealso{
+Other gbn sensitivity: 
+\code{\link{cachexia}},
+\code{\link{covariance_var}()},
+\code{\link{covariation_matrix}},
+\code{\link{mean_var}()},
+\code{\link{model_pres_cov}()},
+\code{\link{synthetic_cbn}}
+}
+\concept{gbn sensitivity}

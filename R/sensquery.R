@@ -11,6 +11,7 @@
 #'
 #' Only the  proportional covariation scheme is used.
 #' @family sensitivity methods
+#' @family discrete bn sensitivity
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.

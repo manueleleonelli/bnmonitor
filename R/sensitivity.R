@@ -13,6 +13,8 @@
 #'  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states} )
 #'
 #' @family sensitivity methods
+#' @family discrete bn sensitivity
+#'
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.
