@@ -467,7 +467,7 @@ KL.CI <- function(x, type, entry,delta, ...){
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 #'
-
+#'
 KL.GBN <- function(x,where,entry,delta, ...){
   gbn <- x
   if(where != "mean" & where!= "covariance") stop("where is either mean or covariance")
@@ -492,3 +492,4 @@ KL.GBN <- function(x,where,entry,delta, ...){
   }
   return(data.frame(Variation = delta,KL=KL))
 }
+
