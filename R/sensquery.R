@@ -10,8 +10,8 @@
 #'  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states}  ) = \code{new_value}
 #'
 #' Only the  proportional covariation scheme is used.
-#' @family sensitivity methods
-#' @family discrete bn sensitivity
+#'
+#' @seealso \code{\link{sensitivity}}
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.

@@ -49,13 +49,3 @@ Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: 
 
 Leonelli, M., & Riccomagno, E. (2018). A geometric characterisation of sensitivity analysis in monomial models. arXiv preprint arXiv:1901.02058.
 }
-\seealso{
-Other discrete bn sensitivity: 
-\code{\link{CD}()},
-\code{\link{sensitivity}()},
-\code{\link{sensquery}()},
-\code{\link{synthetic_bn}},
-\code{\link{travel}}
-}
-\concept{covariation schemes}
-\concept{discrete bn sensitivity}

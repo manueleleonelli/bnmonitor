@@ -2,8 +2,7 @@
 #'
 #' Construction of model-preserving matrices for objects of class \code{CI}.
 #'
-#' @family gbn sensitivity
-#'
+#' @seealso \code{\link{model_pres_cov}}
 #'@param ci object of class \code{CI}.
 #'@param entry a vector of length two specifying the entry of the covariance matrix to vary.
 #'@param delta multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.

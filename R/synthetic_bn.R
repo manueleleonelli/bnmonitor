@@ -4,9 +4,6 @@
 #'
 #' @docType data
 #'
-#' @family datasets
-#' @family discrete bn sensitivity
-#'
 #' @usage synthetic_bn
 #'
 #'

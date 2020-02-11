@@ -4,6 +4,7 @@
 #'
 #' The details depend on the class the method \code{Fro} is applied to.
 #'
+#' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
 #' @param x object of class \code{GBN} or \code{CI}.
 #' @param ... parameters specific to the class used.
 #' @export
@@ -22,6 +23,8 @@ Fro <- function (x, ...) {
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta variation parameter that acts additively.
 #'@param ... additional parameters to be added to the plot.
+#'
+#' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}
 #'
 #' @export
 #' @importFrom matrixcalc is.positive.semi.definite
@@ -50,6 +53,7 @@ Fro.GBN <- function(x,entry,delta, ...){
 #'@param delta variation parameter that acts multiplicatively.
 #'@param ... additional parameters to be added to the plot.
 #'
+#'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.GBN}}
 #'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 #'
 #'@importFrom matrixcalc is.positive.semi.definite

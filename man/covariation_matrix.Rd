@@ -30,12 +30,5 @@ Construction of model-preserving matrices for objects of class \code{CI}.
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
 \seealso{
-Other gbn sensitivity: 
-\code{\link{bn2}},
-\code{\link{cachexia}},
-\code{\link{covariance_var}()},
-\code{\link{mean_var}()},
-\code{\link{model_pres_cov}()},
-\code{\link{synthetic_cbn}}
+\code{\link{model_pres_cov}}
 }
-\concept{gbn sensitivity}

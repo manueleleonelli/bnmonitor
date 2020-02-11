@@ -23,3 +23,6 @@
 \references{
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
+\seealso{
+\code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+}

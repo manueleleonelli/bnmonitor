@@ -46,15 +46,5 @@ sensquery(synthetic_bn,"y3", "3", 0.3)
 Chan, H., & Darwiche, A. (2002). When do numbers really matter?. Journal of artificial intelligence research, 17, 265-287.
 }
 \seealso{
-Other sensitivity methods: 
-\code{\link{sensitivity}()}
-
-Other discrete bn sensitivity: 
-\code{\link{CD}()},
-\code{\link{covariation}},
-\code{\link{sensitivity}()},
-\code{\link{synthetic_bn}},
-\code{\link{travel}}
+\code{\link{sensitivity}}
 }
-\concept{discrete bn sensitivity}
-\concept{sensitivity methods}

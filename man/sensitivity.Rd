@@ -70,15 +70,5 @@ Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis 
 Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 }
 \seealso{
-Other sensitivity methods: 
-\code{\link{sensquery}()}
-
-Other discrete bn sensitivity: 
-\code{\link{CD}()},
-\code{\link{covariation}},
-\code{\link{sensquery}()},
-\code{\link{synthetic_bn}},
-\code{\link{travel}}
+\code{\link{covariation}}, \code{\link{sensquery}}
 }
-\concept{discrete bn sensitivity}
-\concept{sensitivity methods}

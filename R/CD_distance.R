@@ -8,8 +8,7 @@
 #'
 #'  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 #'
-#' @family dissimilarity measures
-#' @family discrete bn sensitivity
+#' @seealso \code{\link{KL.bn.fit}}
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.

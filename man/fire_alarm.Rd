@@ -22,13 +22,4 @@ fire_alarm
 \description{
 \code{fire_alarm} is a \code{bn.fit} object including a Bayesian network for a fire alarm system.
 }
-\seealso{
-Other datasets: 
-\code{\link{cachexia}},
-\code{\link{synthetic_bn}},
-\code{\link{synthetic_cbn}},
-\code{\link{travel}}
-}
-\concept{datasets}
-\concept{discret bn sensitivity}
 \keyword{datasets}

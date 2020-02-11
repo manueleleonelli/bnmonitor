@@ -4,7 +4,7 @@
 #'
 #' Need to write this description, write examples and explain the return
 #'
-#' @family gbn sensitivity
+#'@seealso \code{\link{covariance_var}}, \code{\link{covariation_matrix}}
 #'
 #'@param ci object of class \code{CI}.
 #'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row} or \code{column}.

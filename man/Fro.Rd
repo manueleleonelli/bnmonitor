@@ -17,3 +17,6 @@ Fro(x, ...)
 \details{
 The details depend on the class the method \code{Fro} is applied to.
 }
+\seealso{
+\code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+}

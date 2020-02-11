@@ -7,6 +7,8 @@
 #' @param x object of class \code{bn.fit}, \code{GBN} or \code{CI}.
 #' @param ... parameters specific to the class used.
 #'
+#' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+#'
 #'@export
 #'
 
@@ -23,8 +25,7 @@ KL <- function (x, ...) {
 #'
 #'  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 #'
-#'
-#' @family dissimilarity measures
+#'@seealso \code{\link{CD}}
 #'
 #'@param x object of class \code{bn.fit}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.
@@ -368,6 +369,8 @@ KL.bn.fit <-
 #'
 #'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 #'
+#'@seealso \code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+#'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 #'
@@ -463,6 +466,7 @@ KL.CI <- function(x, type, entry,delta, ...){
 #'@references Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
 #'@references Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
 #'
+#'@seealso \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@export

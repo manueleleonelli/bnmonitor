@@ -23,14 +23,9 @@ Need to write this description, write examples and explain the return
 Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
 
 Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
+
+ @importFrom matrixcalc is.positive.semi.definite
 }
 \seealso{
-Other gbn sensitivity: 
-\code{\link{bn2}},
-\code{\link{cachexia}},
-\code{\link{covariation_matrix}},
-\code{\link{mean_var}()},
-\code{\link{model_pres_cov}()},
-\code{\link{synthetic_cbn}}
+\code{\link{mean_var}}, \code{\link{model_pres_cov}}
 }
-\concept{gbn sensitivity}

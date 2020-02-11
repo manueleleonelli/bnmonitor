@@ -4,8 +4,6 @@
 #'
 #' @docType data
 #'
-#' @family datasets
-#' @family gbn sensitivity
 #'
 #' @format Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fumarate (F), Glucose (GC), Glutamine (GM) and Valine (V).
 #'     The networks \code{cachexia_gbn} and \code{cachexia_ci} are for people suffering of cachexia and of class \code{GBN} and \code{CI} respectively.

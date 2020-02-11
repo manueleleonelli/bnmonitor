@@ -25,12 +25,5 @@ Need to write this description, write examples and explain the return
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
 \seealso{
-Other gbn sensitivity: 
-\code{\link{bn2}},
-\code{\link{cachexia}},
-\code{\link{covariance_var}()},
-\code{\link{covariation_matrix}},
-\code{\link{mean_var}()},
-\code{\link{synthetic_cbn}}
+\code{\link{covariance_var}}, \code{\link{covariation_matrix}}
 }
-\concept{gbn sensitivity}

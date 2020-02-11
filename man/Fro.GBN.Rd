@@ -18,3 +18,6 @@
 \description{
 \code{Fro.GBN} returns the Frobenius norm between a Gaussian Bayesian network and its update after an additive parameter variation.
 }
+\seealso{
+\code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}
+}

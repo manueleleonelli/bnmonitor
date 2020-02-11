@@ -4,11 +4,12 @@
 #'
 #' Need to write this description, write examples and explain the return
 #'
-#' @family gbn sensitivity
 #'
 #'@param gbn object of class \code{GBN}.
 #'@param entry an index specifying the entry of the mean vector to vary.
 #'@param delta additive variation coefficient for the entry of the mean vector given in \code{entry}.
+#'
+#'@seealso \code{\link{covariance_var}}
 #'
 #'@references Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
 #'@references Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
@@ -28,15 +29,16 @@ mean_var <- function(gbn,entry,delta){
 #'
 #' Need to write this description, write examples and explain the return
 #'
-#' @family gbn sensitivity
-#'
 #'@param gbn object of class \code{GBN}.
 #'@param entry a vector of length 2 specifying the entry of the covariance matrix to vary.
 #'@param delta additive variation coefficient for the entry of the mean vector given in \code{entry}.
 #'
+#'@seealso \code{\link{mean_var}}, \code{\link{model_pres_cov}}
+#'
 #'@references Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
 #'@references Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
-#' @importFrom matrixcalc is.positive.semi.definite
+#'
+#'  @importFrom matrixcalc is.positive.semi.definite
 #'@export
 
 

@@ -19,20 +19,4 @@ synthetic_bn
 \description{
 \code{synthetic_bn} is a bn.fit object for a simple Bayesian network involving three variables.
 }
-\seealso{
-Other datasets: 
-\code{\link{cachexia}},
-\code{\link{fire_alarm}},
-\code{\link{synthetic_cbn}},
-\code{\link{travel}}
-
-Other discrete bn sensitivity: 
-\code{\link{CD}()},
-\code{\link{covariation}},
-\code{\link{sensitivity}()},
-\code{\link{sensquery}()},
-\code{\link{travel}}
-}
-\concept{datasets}
-\concept{discrete bn sensitivity}
 \keyword{datasets}

@@ -25,3 +25,6 @@ Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Ga
 
 Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
 }
+\seealso{
+\code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+}

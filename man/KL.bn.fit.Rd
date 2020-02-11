@@ -52,7 +52,5 @@ Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annal
 Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 }
 \seealso{
-Other dissimilarity measures: 
-\code{\link{CD}()}
+\code{\link{CD}}
 }
-\concept{dissimilarity measures}

@@ -53,15 +53,5 @@ Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic b
 Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
 }
 \seealso{
-Other dissimilarity measures: 
-\code{\link{KL.bn.fit}()}
-
-Other discrete bn sensitivity: 
-\code{\link{covariation}},
-\code{\link{sensitivity}()},
-\code{\link{sensquery}()},
-\code{\link{synthetic_bn}},
-\code{\link{travel}}
+\code{\link{KL.bn.fit}}
 }
-\concept{discrete bn sensitivity}
-\concept{dissimilarity measures}

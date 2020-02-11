@@ -22,20 +22,4 @@ travel
 \description{
 \code{travel} is a \code{bn.fit} object for the Bayesian network on a travelling preferences survey.
 }
-\seealso{
-Other datasets: 
-\code{\link{cachexia}},
-\code{\link{fire_alarm}},
-\code{\link{synthetic_bn}},
-\code{\link{synthetic_cbn}}
-
-Other discrete bn sensitivity: 
-\code{\link{CD}()},
-\code{\link{covariation}},
-\code{\link{sensitivity}()},
-\code{\link{sensquery}()},
-\code{\link{synthetic_bn}}
-}
-\concept{datasets}
-\concept{discrete bn sensitivity}
 \keyword{datasets}

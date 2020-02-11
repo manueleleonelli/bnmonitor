@@ -26,21 +26,4 @@ control_ci
 \description{
 Continuous Bayesian networks comparing the dependence of metabolomics for people who suffer and do not suffer of Cachexia
 }
-\seealso{
-Other datasets: 
-\code{\link{fire_alarm}},
-\code{\link{synthetic_bn}},
-\code{\link{synthetic_cbn}},
-\code{\link{travel}}
-
-Other gbn sensitivity: 
-\code{\link{bn2}},
-\code{\link{covariance_var}()},
-\code{\link{covariation_matrix}},
-\code{\link{mean_var}()},
-\code{\link{model_pres_cov}()},
-\code{\link{synthetic_cbn}}
-}
-\concept{datasets}
-\concept{gbn sensitivity}
 \keyword{datasets}
