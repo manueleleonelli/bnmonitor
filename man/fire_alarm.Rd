@@ -25,8 +25,8 @@ fire_alarm
 \seealso{
 Other datasets: 
 \code{\link{cachexia}},
-\code{\link{synt_gbn}},
 \code{\link{synthetic_bn}},
+\code{\link{synthetic_cbn}},
 \code{\link{travel}}
 }
 \concept{datasets}

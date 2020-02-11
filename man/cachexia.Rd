@@ -8,14 +8,11 @@
 \alias{control_gbn}
 \alias{control_ci}
 \title{Bayesian networks for a cachexia study}
-\format{The Bayesian network \code{bnsens_example} comprehends the following nodes:
-\itemize{
-  \item \bold{y1}: three-level factor with levels \emph{1}, \emph{2}, \emph{3}.
-  \item \bold{y2}: three-level factor with levels \emph{1}, \emph{2}, \emph{3}.
-  \item \bold{y3}:  three-level factor with levels \emph{1}, \emph{2}, \emph{3}.
-}}
+\format{Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fumarate (F), Glucose (GC), Glutamine (GM) and Valine (V).
+    The networks \code{cachexia_gbn} and \code{cachexia_ci} are for people suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
+    The networks \code{control_gbn} and \code{control_ci} are for people not suffering of cachexia and of class \code{GBN} and \code{CI} respectively.}
 \source{
-Manuele Leonelli, Eva Riccomagno (2018). "A geometric characterisation of sensitivity analysis in monomial models". \url{https://arxiv.org/abs/1901.02058}
+Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
 \usage{
 cachexia_gbn
@@ -27,13 +24,13 @@ control_gbn
 control_ci
 }
 \description{
-Some comments here
+Continuous Bayesian networks comparing the dependence of metabolomics for people who suffer and do not suffer of Cachexia
 }
 \seealso{
 Other datasets: 
 \code{\link{fire_alarm}},
-\code{\link{synt_gbn}},
 \code{\link{synthetic_bn}},
+\code{\link{synthetic_cbn}},
 \code{\link{travel}}
 }
 \concept{datasets}

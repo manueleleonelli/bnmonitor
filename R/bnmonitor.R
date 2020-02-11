@@ -21,8 +21,8 @@
 #' The dissimilarity measures quantify the difference between a Bayesian network and its update after parameter variation.\cr
 #' The available dissimilarity measures are:
 #' \itemize{
-#'   \item \emph{Chan-Darwiche distance} (\code{\link{CD_distance}})
-#'   \item \emph{Kullback-Leibler divergence} (\code{\link{KL_diver}})
+#'   \item \emph{Chan-Darwiche distance} (\code{\link{CD}})
+#'   \item \emph{Kullback-Leibler divergence} (\code{\link{KL}})
 #' }
 #'@section Sensitivity functions:
 #'The available function for sensitivity analysis are:

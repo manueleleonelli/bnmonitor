@@ -97,10 +97,10 @@ sensquery <- function(bnfit,
     warning("The BN satisfies the given constraint. No parameter changes are needed.")
   } else{
     final_query <- subset(final_query, !duplicated(final_query[, 1]))
-    CD <- numeric(nrow(final_query))
+    dist <- numeric(nrow(final_query))
     for (t in 1:nrow(final_query)) {
-      CD[t] <-
-        CD_distance(
+      dist[t] <-
+        CD(
           bnfit = bnfit,
           node = as.character(final_query[t, 1]) ,
           value_node = as.character(final_query[t, 2]),
@@ -110,7 +110,7 @@ sensquery <- function(bnfit,
           plot = F
         )$CD[, 2]
     }
-    final_query[, 6] <- CD
+    final_query[, 6] <- dist
     final_query <- final_query[order(final_query[, 6]), ]
     rownames(final_query) <- seq(1, nrow(final_query))
     colnames(final_query) <-

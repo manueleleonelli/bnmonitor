@@ -1,6 +1,6 @@
 #' CD-distance
 #'
-#' \code{CD_distance} returns the Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
+#' \code{CD} returns the Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
 #'
 #' The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 #' The name of the node to be varied, its level and its parent's levels should be specified.
@@ -22,14 +22,14 @@
 #'@references Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
 #'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
 #'
-#'@examples CD_distance(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
-#'@examples CD_distance(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+#'@examples CD(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
+#'@examples CD(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
 #'
 #'@importFrom stats coef
 #'@importFrom graphics lines points
 #'@importClassesFrom bnlearn bn.fit
 #'@export
-CD_distance <-
+CD <-
   function(bnfit,
            node,
            value_node,

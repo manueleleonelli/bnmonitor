@@ -1,7 +1,22 @@
 #' KL Divergence
 #'
-#' \code{KL_diver} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
+#' \code{KL} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
 #'
+#' The details depend on the class the method KL is applied to.
+#'
+#' @param x object of class \code{bn.fit}, \code{GBN} or \code{CI}.
+#' @param ... parameters specific to the class used.
+#'
+#'@export
+#'
+
+KL <- function (x, ...) {
+  UseMethod("KL", x)
+}
+
+#' KL Divergence for \code{bn.fit}
+#'
+#' \code{KL.bn.fit} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
 #' The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 #' The name of the node to be varied, its level and its parent's levels should be specified.
 #' The parameter variation specified by the function is:
@@ -11,7 +26,7 @@
 #'
 #' @family dissimilarity measures
 #'
-#'@param bnfit object of class \code{bn.fit}.
+#'@param x object of class \code{bn.fit}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.
 #'@param value_node character string. Level of \code{node}.
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.
@@ -23,8 +38,8 @@
 #'@references Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annals of mathematical statistics, 22(1), 79-86.
 #'@references Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 #'
-#'@examples KL_diver(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
-#'@examples KL_diver(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+#'@examples KL(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
+#'@examples KL(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
 #'
 #'@importClassesFrom bnlearn bn.fit
 #'@importFrom stats coef
@@ -33,8 +48,10 @@
 #'@importFrom graphics lines points
 #'@importFrom gRbase compile
 #'@export
-KL_diver <-
-  function(bnfit,
+#'
+
+KL.bn.fit <-
+  function(x,
            node,
            value_node,
            value_parents,
@@ -42,6 +59,7 @@ KL_diver <-
            covariation = "proportional",
            plot = TRUE,
            ...) {
+    bnfit <- x
     suppressWarnings(if (new_value == "all") {
       new_value2 <-
         sort(c(seq(0.05, 0.95, by = 0.05), coef(bnfit[[node]])[t(append(value_node, value_parents))]))
