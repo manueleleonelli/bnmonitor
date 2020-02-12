@@ -28,18 +28,19 @@
 
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
 
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divegence for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
+\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
 
 \item{...}{additional parameters to be added to the plot.}
 }
 \description{
 \code{KL.bn.fit} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
+}
+\details{
 The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 The name of the node to be varied, its level and its parent's levels should be specified.
 The parameter variation specified by the function is:
-}
-\details{
-P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+
+ P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 }
 \examples{
 KL(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
@@ -49,7 +50,7 @@ KL(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
 \references{
 Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annals of mathematical statistics, 22(1), 79-86.
 
-Leonelli, M., G\"{o}rgen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
+Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 }
 \seealso{
 \code{\link{CD}}

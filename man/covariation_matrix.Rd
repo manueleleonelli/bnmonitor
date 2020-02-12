@@ -23,8 +23,22 @@ row_covar_matrix(ci, entry, delta)
 
 \item{delta}{multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.}
 }
+\value{
+A covariation matrix of the same size of the covariance matrix of \code{CI}.
+}
 \description{
-Construction of model-preserving matrices for objects of class \code{CI}.
+Construction of model-preserving covariation matrices for objects of class \code{CI}.
+}
+\details{
+Functions to compute total, partial, row-based and column-based covariation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no covariation is required for model-preservation the functions return a matrix filled with ones (no covariation).
+}
+\examples{
+total_covar_matrix(synthetic_ci,c(1,1),0.3)
+total_covar_matrix(synthetic_ci,c(1,2),0.3)
+partial_covar_matrix(synthetic_ci,c(1,2),0.3)
+row_covar_matrix(synthetic_ci,c(1,2),0.3)
+col_covar_matrix(synthetic_ci,c(1,2),0.3)
+
 }
 \references{
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.

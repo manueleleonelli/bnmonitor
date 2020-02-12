@@ -4,25 +4,41 @@
 \alias{KL.CI}
 \title{KL Divergence for \code{CI}}
 \usage{
-\method{KL}{CI}(x, type, entry, delta, ...)
+\method{KL}{CI}(x, type, entry, delta, plot = TRUE, ...)
 }
 \arguments{
 \item{x}{object of class \code{CI}.}
 
-\item{type}{character string: either \code{mean} or \code{covariance} for variations of the mean vector and covariance matrix respectively.}
+\item{type}{character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the KL divergence is computed for every type of covariation matrix.}
 
 \item{entry}{a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
-\item{delta}{variation parameter that acts multiplicatively.}
+\item{delta}{numeric vector with positive elements, including the variation parameters that act multiplicatively.}
 
-\item{...}{additional parameters to be added to the plot.}
+\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.}
+
+\item{...}{additional arguments for compatibility.}
+}
+\value{
+A dataframe including in the first column the variations performed, and in the following columns the corresponding KL divergences for the chosen model-preserving covariations.
 }
 \description{
-\code{KL.CI} returns the Kullback-Leibler (KL) divergence between a Gaussian Bayesian network and its update after a model-preserving parameter variation.
+\code{KL.CI} returns the Kullback-Leibler (KL) divergence between an object of class \code{CI}  and its update after a model-preserving parameter variation.
+}
+\details{
+Computation of the KL divergence between a Bayesian network and its updated version after a model-preserving variation.
+}
+\examples{
+KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01), FALSE)
+KL(synthetic_ci, "partial", c(1,4), seq(0.9,1.1,0.01), FALSE)
+KL(synthetic_ci, "column", c(1,2), seq(0.9,1.1,0.01), FALSE)
+KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01), FALSE)
+KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01), FALSE)
+
 }
 \references{
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
 \seealso{
-\code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+\code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 }

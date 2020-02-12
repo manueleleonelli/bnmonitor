@@ -13,11 +13,18 @@ mean_var(gbn, entry, delta)
 
 \item{delta}{additive variation coefficient for the entry of the mean vector given in \code{entry}.}
 }
+\value{
+An object of class \code{GBN} with an updated mean vector.
+}
 \description{
 Computation of an updated \code{GBN} object after a variation of the mean vector.
 }
 \details{
-Need to write this description, write examples and explain the return
+Let the original Bayesian network have a Normal distribution \eqn{\mathcal{N}(\mu,\Sigma)} and let \code{entry} be equal to \eqn{i}. Let \eqn{\mu_i} be the i-th entry of \eqn{\mu}. For a variation of the mean  by an amount \eqn{\delta} the resulting distribution is \eqn{\mathcal{N}(\mu',\Sigma)}, where \eqn{\mu'} is equal to \eqn{\mu} except for the i-th entry which is equal to \eqn{\mu+\delta}.
+}
+\examples{
+mean_var(synthetic_gbn,2,3)
+
 }
 \references{
 Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.

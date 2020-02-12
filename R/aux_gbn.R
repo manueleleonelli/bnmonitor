@@ -2,7 +2,7 @@
 simple_ci <- function(ci){
   b.temp <- c()
   for(i in 1:(length(ci[[4]]))){
-    if(identical(ci[[4]][[i]]$C,character(0))){b.temp <- c(b.temp,F)} else{b.temp <- c(b.temp,T)}
+    if(identical(ci[[4]][[i]]$C,character(0)) || identical(ci[[4]][[i]]$B,character(0))){b.temp <- c(b.temp,F)} else{b.temp <- c(b.temp,T)}
   }
   temp <- vector(mode = "list", length = sum(b.temp))
   count <- 1

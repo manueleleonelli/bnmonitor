@@ -1,12 +1,15 @@
 #' CD-distance
 #'
-#' \code{CD} returns the Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
+#' Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
 #'
 #' The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 #' The name of the node to be varied, its level and its parent's levels should be specified.
 #' The parameter variation specified by the function is:
 #'
 #'  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+#'
+#' The CD distance between two probability distributions \eqn{P} and \eqn{P'} defined over the same sample space \eqn{\mathcal{Y}} is defined as
+#' \deqn{CD(P,P')= \log\max_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right) - \log\min_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right)}
 #'
 #' @seealso \code{\link{KL.bn.fit}}
 #'
@@ -20,7 +23,9 @@
 #'@param ... additional parameters to be added to the plot.
 #'
 #'@references Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
-#'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
+#'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International Journal of Approximate Reasoning, 55(4), 1022-1042.
+#'
+#'@return The function \code{CD} returns a dataframe including in the first column the variations performed, and in the following columns the corresponding CD distances for the chosen covariation schemes.
 #'
 #'@examples CD(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
 #'@examples CD(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
@@ -29,15 +34,7 @@
 #'@importFrom graphics lines points
 #'@importClassesFrom bnlearn bn.fit
 #'@export
-CD <-
-  function(bnfit,
-           node,
-           value_node,
-           value_parents,
-           new_value,
-           covariation = "proportional",
-           plot = TRUE,
-           ...) {
+CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = "proportional", plot = TRUE, ...) {
     suppressWarnings(if (new_value == "all") {
       new_value2 <-
         sort(c(seq(0.05, 0.95, by = 0.05), coef(bnfit[[node]])[t(append(value_node, value_parents))]))
@@ -221,90 +218,27 @@ CD <-
     if (plot == TRUE) {
       if (covariation == "all") {
         if (nrow(CD) == 1) {
-          plot <-
-            plot(
-              x = CD[, 1],
-              y = CD[, 2],
-              main = "CD-distance",
-              xlab = "New_value",
-              ylab = "CD-distance",
-              col = "red",
-              pch = 16,
-              xlim = c(0, 1),
-              ylim = c(min(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))]), max(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))])),
-              ...
-            )
-          points(
-            x = CD[, 1],
-            y = CD[, 3],
-            col = "green",
-            pch = 16,
-            ...
-          )
-          if (ncol(CD) == 4) {
-            points(
-              x = CD[, 1],
-              y = CD[, 4],
-              col = "blue",
-              pch = 16,
-              ...
-            )
-          }
-        } else{
-          plot <-
-            plot(
-              x = CD[, 1],
-              y = CD[, 2],
-              main = "CD-distance",
-              xlab = "New_value",
-              ylab = "CD-distance",
-              col = "red",
-              xlim = c(0, 1),
-              ylim = c(min(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))]), max(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))])),
-              type = "l",
-              ...
-            )
-          lines(x = CD[, 1],
-                y = CD[, 3],
-                col = "green",
-                ...)
-          if (ncol(CD) == 4) {
-            lines(x = CD[, 1],
-                  y = CD[, 4],
-                  col = "blue",
-                  ...)
+          if(ncol(CD) == 3){
+            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = CD[,3]), col = "green", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance")
+          } else{
+            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = CD[,3]), col = "green", na.rm = T) + geom_point(aes(y = CD[,4]), col = "blue", na.rm = T) + labs( x = "new value",y = "CD", title = "CD distance")
           }
         }
-      } else{
-        if (nrow(CD) == 1) {
-          plot <-
-            plot(
-              x = CD[, 1],
-              y = CD[, 2],
-              main = "CD-distance",
-              xlab = "New_value",
-              ylab = "CD-distance",
-              xlim = c(0, 1),
-              ylim = c(min(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))]), max(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))])),
-              pch = 16,
-              ...
-            )
+        else{
+          if(ncol(CD) == 3){
+            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = CD[,3]), col = "green", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance")
+          } else{
+            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = CD[,3]), col = "green", na.rm = T) + geom_line(aes(y = CD[,4]), col = "blue", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance")
+          }
+        }
+      }
+      else{
+        if (nrow(KL) == 1) {
+          plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_point( na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance")
         } else{
-          plot <-
-            plot(
-              x = CD[, 1],
-              y = CD[, 2],
-              main = "CD-distance",
-              xlab = "New_value",
-              ylab = "CD-distance",
-              type = "l",
-              xlim = c(0, 1),
-              ylim = c(min(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))]), max(unlist(CD[, -1])[is.finite(unlist(CD[, -1]))])),
-              ...
-            )
+          plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_line( na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance")
         }
       }
     }
-
     return(list(CD = CD, plot = plot))
   }

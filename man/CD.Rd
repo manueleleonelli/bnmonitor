@@ -32,8 +32,11 @@ CD(
 
 \item{...}{additional parameters to be added to the plot.}
 }
+\value{
+The function \code{CD} returns a dataframe including in the first column the variations performed, and in the following columns the corresponding CD distances for the chosen covariation schemes.
+}
 \description{
-\code{CD} returns the Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
+Chan-Darwiche (CD) distance between a Bayesian network and its update after parameter variation.
 }
 \details{
 The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
@@ -41,6 +44,9 @@ The name of the node to be varied, its level and its parent's levels should be s
 The parameter variation specified by the function is:
 
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
+
+The CD distance between two probability distributions \eqn{P} and \eqn{P'} defined over the same sample space \eqn{\mathcal{Y}} is defined as
+\deqn{CD(P,P')= \log\max_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right) - \log\min_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right)}
 }
 \examples{
 CD(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
@@ -50,7 +56,7 @@ CD(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
 \references{
 Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
 
-Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
+Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International Journal of Approximate Reasoning, 55(4), 1022-1042.
 }
 \seealso{
 \code{\link{KL.bn.fit}}

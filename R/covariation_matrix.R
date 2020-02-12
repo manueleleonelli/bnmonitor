@@ -1,6 +1,16 @@
 #' Covariation matrices
 #'
-#' Construction of model-preserving matrices for objects of class \code{CI}.
+#' Construction of model-preserving covariation matrices for objects of class \code{CI}.
+#'
+#' Functions to compute total, partial, row-based and column-based covariation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no covariation is required for model-preservation the functions return a matrix filled with ones (no covariation).
+#'
+#'@return A covariation matrix of the same size of the covariance matrix of \code{CI}.
+#'
+#'@examples total_covar_matrix(synthetic_ci,c(1,1),0.3)
+#'@examples total_covar_matrix(synthetic_ci,c(1,2),0.3)
+#'@examples partial_covar_matrix(synthetic_ci,c(1,2),0.3)
+#'@examples row_covar_matrix(synthetic_ci,c(1,2),0.3)
+#'@examples col_covar_matrix(synthetic_ci,c(1,2),0.3)
 #'
 #' @seealso \code{\link{model_pres_cov}}
 #'@param ci object of class \code{CI}.
@@ -15,10 +25,19 @@ NULL
 #'
 #' @export
 total_covar_matrix <- function(ci,entry,delta){
+  simpleci<- simple_ci(ci)
+  submatrix <- ci_submatrix(simpleci)
+  rows <- unique(c(submatrix$A,submatrix$C))
+  cols <- unique(c(submatrix$B,submatrix$C))
+  ind <- integer(0)
+  if(ci$order[entry[1]] %in% rows){ind <- which(cols == ci$order[entry[2]])}
+  if(ci$order[entry[2]] %in% rows){ind <- c(ind,which(cols == ci$order[entry[1]]))}
+  ind <- unique(ind)
+  if(identical(ind,integer(0))){return(matrix(1,nrow = nrow(ci$covariance), ncol = ncol(ci$covariance)))}else{
 covar <- matrix(delta,nrow = nrow(ci$covariance), ncol = ncol(ci$covariance))
 covar[entry[1],entry[2]] <- 1
 covar[entry[2],entry[1]] <- 1
-return(covar)
+return(covar)}
 }
 
 #' @rdname covariation_matrix
@@ -31,9 +50,12 @@ col_covar_matrix <- function(ci,entry,delta){
   rows <- unique(c(submatrix$A,submatrix$C))
   cols <- unique(c(submatrix$B,submatrix$C))
   temp <- matrix(1,nrow = length(rows), ncol = length(cols))
-  ind <- unique(c(which(cols == ci$order[entry[1]]),which(cols == ci$order[entry[2]])))
-  ind <- ind[!is.na(ind)]
-  while(length(ind)>0){
+  ind <- integer(0)
+  if(ci$order[entry[1]] %in% rows){ind <- which(cols == ci$order[entry[2]])}
+  if(ci$order[entry[2]] %in% rows){ind <- c(ind,which(cols == ci$order[entry[1]]))}
+  ind <- unique(ind)
+  if(identical(ind,integer(0))){return(covar)}else{
+    while(length(ind)>0){
     for(k in 1:length(ind)){
       for (i in 1:length(rows)){
         temp[i,ind[k]] <- delta
@@ -57,7 +79,7 @@ col_covar_matrix <- function(ci,entry,delta){
       }
     }
   }
-  return(covar)
+  return(covar)}
 }
 
 #' @rdname covariation_matrix
@@ -69,6 +91,11 @@ partial_covar_matrix <- function(ci, entry, delta){
   submatrix <- ci_submatrix(simpleci)
   rows <- unique(c(submatrix$A,submatrix$C))
   cols <- unique(c(submatrix$B,submatrix$C))
+  ind <- integer(0)
+  if(ci$order[entry[1]] %in% rows){ind <- which(cols == ci$order[entry[2]])}
+  if(ci$order[entry[2]] %in% rows){ind <- c(ind,which(cols == ci$order[entry[1]]))}
+  ind <- unique(ind)
+  if(identical(ind,integer(0))){return(covar)}else{
   for(i in 1:length(ci$order)){
     for(j in 1:length(ci$order)){
       if(ci$order[i] %in% rows & ci$order[j] %in% cols){
@@ -79,7 +106,7 @@ partial_covar_matrix <- function(ci, entry, delta){
   }
   covar[entry[1],entry[2]] <- 1
   covar[entry[2],entry[1]] <- 1
-  return(covar)
+  return(covar)}
 }
 
 
@@ -93,8 +120,11 @@ row_covar_matrix <- function(ci, entry, delta){
   rows <- unique(c(submatrix$A,submatrix$C))
   cols <- unique(c(submatrix$B,submatrix$C))
   temp <- matrix(1,nrow = length(rows), ncol = length(cols))
-  ind <- unique(c(which(rows == ci$order[entry[1]]),which(rows == ci$order[entry[2]])))
-  ind <- ind[!is.na(ind)]
+  ind <- integer(0)
+  if(ci$order[entry[1]] %in% cols){ind <- which(rows == ci$order[entry[2]])}
+  if(ci$order[entry[2]] %in% cols){ind <- c(ind,which(rows == ci$order[entry[1]]))}
+  ind <- unique(ind)
+  if(identical(ind,integer(0))){return(covar)}else{
   while(length(ind)>0){
     for(k in 1:length(ind)){
       for (i in 1:length(cols)){
@@ -119,5 +149,5 @@ row_covar_matrix <- function(ci, entry, delta){
       }
     }
   }
-  return(covar)
+  return(covar)}
 }

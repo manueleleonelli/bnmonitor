@@ -4,7 +4,7 @@
 \alias{KL.GBN}
 \title{KL Divergence for \code{GBN}}
 \usage{
-\method{KL}{GBN}(x, where, entry, delta, ...)
+\method{KL}{GBN}(x, where, entry, delta, plot = TRUE, ...)
 }
 \arguments{
 \item{x}{object of class \code{GBN}.}
@@ -13,12 +13,25 @@
 
 \item{entry}{if \code{where == "mean"}, \code{entry} is the index of the entry of the mean vector to vary. If \code{where == "covariance"}, entry is a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
-\item{delta}{variation parameter that acts additively.}
+\item{delta}{numeric vector, including the variation parameters that act additively.}
 
-\item{...}{additional parameters to be added to the plot.}
+\item{plot}{boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.}
+
+\item{...}{additional arguments for compatibility.}
+}
+\value{
+A dataframe including in the first column the variations performed and in the second column the corresponding KL divergences.
 }
 \description{
-\code{KL.GBN} returns the Kullback-Leibler (KL) divergence between a Gaussian Bayesian network and its update after an additive parameter variation.
+\code{KL.GBN} returns the Kullback-Leibler (KL) divergence between an object of class \code{GBN}  and its update after a standard parameter variation.
+}
+\details{
+Computation of the KL divergence between a Bayesian network and the additively perturbed Bayesian network, where the perturbation is either to the mean vector or to the covariance matrix.
+}
+\examples{
+KL(synthetic_gbn,"mean",2,seq(-1,1,0.1), FALSE)
+KL(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1), FALSE)
+
 }
 \references{
 Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
@@ -26,5 +39,5 @@ Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Ga
 Gómez-Villegas, M. A., Main, P., & Susi, R. (2013). The effect of block parameter perturbations in Gaussian Bayesian networks: Sensitivity and robustness. Information Sciences, 222, 439-458.
 }
 \seealso{
-\code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}
+\code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 }

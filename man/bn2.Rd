@@ -16,7 +16,7 @@ bn2ci(bnfit)
 \value{
 The function \code{bn2gbn} returns an object of class \code{GBN} consisting of a list with entries:
 \itemize{
-\item \code{order}: An ordering of the node according to the graph.
+\item \code{order}: An ordering of the nodes according to the graph.
 \item \code{mean}: The mean vector of the Gaussian distribution.
 \item \code{covariance}: The covariance matrix of the Gaussian distribution.
 }
@@ -24,5 +24,5 @@ The function \code{bn2gbn} returns an object of class \code{GBN} consisting of a
 The function \code{bn2ci} returns an object of class \code{CI} consisting of the same list as \code{GBN}, but with the additional entry \code{cond_ind}. \code{cond_ind} is a list where each entry consists of \code{A}, \code{B} and \code{C} corresponding to the conditional independence statements \code{A} independent of \code{B} given \code{C} embedded by the network.
 }
 \description{
-Functions that transform an object of class \code{bn.fit} and \code{bn.fit.gnet} (a Gaussian Bayesian network) to objects of class \code{GBN} or \code{CI}
+Functions that transform an object of class \code{bn.fit} and \code{bn.fit.gnet} (a Gaussian Bayesian network) to objects of class \code{GBN} or \code{CI}.
 }
