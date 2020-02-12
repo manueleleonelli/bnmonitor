@@ -15,7 +15,7 @@
 
 \item{plot}{boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.}
 
-\item{log}{boolean valie. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.}
+\item{log}{boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.}
 
 \item{...}{additional arguments for compatibility.}
 }

@@ -79,6 +79,8 @@ col_covar_matrix <- function(ci,entry,delta){
       }
     }
   }
+    covar[entry[1],entry[2]] <- 1
+    covar[entry[2],entry[1]] <- 1
   return(covar)}
 }
 
@@ -149,5 +151,7 @@ row_covar_matrix <- function(ci, entry, delta){
       }
     }
   }
+    covar[entry[1],entry[2]] <- 1
+    covar[entry[2],entry[1]] <- 1
   return(covar)}
 }
