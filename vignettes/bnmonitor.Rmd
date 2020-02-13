@@ -7,15 +7,32 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, include = FALSE, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+## Overview
+
+`bnmonitor` is a package for sensitivity analysis and robustness in Bayesian networks.
+
+## Installation 
+
+The package `bnmonitor` can be installed from GitHub using the command 
+```{r eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("manueleleonelli/bnmonitor")
+```
+and loaded in R with
+```{r}
 library(bnmonitor)
 ```
+Note that `bnmonitor` requires the package `gRain` which, while on CRAN, depends on packages that are on Bioconductor both directly and through the `gRbase` package, which depends on `RBGL`:
+```{r eval =F}
+BiocManager::install()
+BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
+install.packages("gRain")
+```
 
-# Ciao 
