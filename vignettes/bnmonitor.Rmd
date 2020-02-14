@@ -1,5 +1,4 @@
 ---
-title: "bnmonitor"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{bnmonitor}
@@ -14,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Overview
+# bnmonitor
 
 `bnmonitor` is a package for sensitivity analysis and robustness in Bayesian networks.
 
