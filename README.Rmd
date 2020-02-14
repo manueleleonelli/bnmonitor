@@ -35,3 +35,67 @@ BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
 install.packages("gRain")
 ```
 
+## Overview
+
+## Gaussian Bayesian Networks
+The functionalities of `bnmonitor` for sensitivity analysis in Gaussian Bayesian networks are illustrated next using the `mathmarks` dataset bundled within the package. 
+```{r}
+data(mathmarks)
+head(mathmarks)
+```
+The data includes the grades (out of 100) of students in five maths exams: mechanics, vectors, algebra, analysis and statistics.
+
+The structure of a Bayesian network for this data is first learnt using the package `bnlearn` and the maximum likelihood estimate of its parameters is computed and stored in `bnfit`.
+```{r out.width="50%"}
+library(bnlearn)
+bn <- hc(mathmarks)
+plot(bn)
+bnfit <-bn.fit(bn,mathmarks)
+```
+
+To start the sensitivity analysis for the parameters of the learnt Bayesian network, one first need to transform `bnfit` to objects of class `GBN` (for standard sensitivity analysis) and `CI` (for model-preserving sensitivity). This can be done using the functions `bn2gbn` and `bn2ci` respectively.
+```{r}
+gbn <- bn2gbn(bnfit)
+ci <-  bn2ci(bnfit)
+c(class(gbn),class(ci))
+```
+
+#### Perturbation of the mean vector
+
+A varied GBN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics), $\mu_5$ by an additive factor $\delta = 10$.
+
+```{r}
+rbind( t(gbn$mean),t(mean_var(gbn,entry = 5, delta = 10)$mean))
+```
+
+The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). For instance, let's see what's the effect of variations in the mean of the statistics exam.
+```{r out.width="35%"}
+mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))
+mean_var5$plot
+```
+
+More interestingly, one can check the different effect of variations of different paramenters.
+```{r echo = FALSE, out.width="45%"}
+library(ggplot2)
+par(mfrow = c(1,2))
+mean_var1 <- KL(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$KL
+mean_var2 <- KL(gbn, "mean", entry=2, delta = seq(-10,10,0.1))$KL
+mean_var3 <- KL(gbn, "mean", entry=3, delta = seq(-10,10,0.1))$KL
+mean_var4 <- KL(gbn, "mean", entry=4, delta = seq(-10,10,0.1))$KL
+mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$KL
+out <- data.frame(delta = rep(seq(-10,10,0.1),5), KL = c(mean_var1[,2],mean_var2[,2],mean_var3[,2],mean_var4[,2],mean_var5[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
+mean_var1J <- Jeffreys(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$Jeffreys
+mean_var2J <- Jeffreys(gbn, "mean", entry=2, delta = seq(-10,10,0.1))$Jeffreys
+mean_var3J <- Jeffreys(gbn, "mean", entry=3, delta = seq(-10,10,0.1))$Jeffreys
+mean_var4J <- Jeffreys(gbn, "mean", entry=4, delta = seq(-10,10,0.1))$Jeffreys
+mean_var5J <- Jeffreys(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$Jeffreys
+out1 <- data.frame(delta = rep(seq(-10,10,0.1),5), Jeffreys = c(mean_var1J[,2],mean_var2J[,2],mean_var3J[,2],mean_var4J[,2],mean_var5J[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
+ggplot(out) + geom_line(aes(x=delta,y=KL,color = Entry)) 
+ggplot(out1) + geom_line(aes(x=delta,y=Jeffreys,color = Entry)) 
+```
+
+Therefore, misspecifications of the mean of the algebra exam would have the biggest effect on the distribution of the Gaussian Bayesian network.
+
+#### Perturbation of the covariance matrix
+
+Care must be taken when performing perturbations of the covariance matrix, for two reasons: (1) the perturbed matrix may not be positive semidefinite; (2) the perturbed matrix may not respect the conditional indepedences of the underlying Bayesian network. 
