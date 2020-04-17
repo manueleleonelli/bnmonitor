@@ -8,6 +8,7 @@
 #' @format Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fumarate (F), Glucose (GC), Glutamine (GM) and Valine (V).
 #'     The networks \code{cachexia_gbn} and \code{cachexia_ci} are for people suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
 #'     The networks \code{control_gbn} and \code{control_ci} are for people not suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
+#'     The original dataset is stored in \code{cachexia_data}.
 #' @aliases cachexia_gbn
 #' @name cachexia
 #'
@@ -27,4 +28,7 @@ NULL
 
 #' @rdname cachexia
 "control_ci"
+
+#' @rdname cachexia
+"cachexia_data"
 

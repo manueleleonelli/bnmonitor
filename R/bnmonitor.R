@@ -1,34 +1,58 @@
 #' bnmonitor: A package for sensitivity analysis and robustness in Bayesian networks
 #'
-#' The package performs sensitivity analysis for discrete Bayesian networks.
+#' The package performs sensitivity analysis for Bayesian networks.
 #'
 #' @details
-#' It provides three categories of functions:covariation schemes, dissimilarity measures and sensitivity related functions.
 #'
-#' The covariation schemes available are uniform-covariation scheme, proportional co-variation scheme and order-preserving co-variation scheme.
+#' bnmonitor provides functions to perform sensitivity analysis for both discrete Bayesian networks (DBNs) and Gaussian Bayesian networks (GBNs).
 #'
-#' The dissimilarity measures available are the Chan-Darwiche distance and the Kullback-Leibler divergence. The available sensitivity related functions are the standard sensitivity function and sensquery, a new function
-#' which allows to determine the parameter changes that are needed to get a certain probabilistic query of interest.
+#' In the discrete case, it provides three categories of functions: covariation schemes, dissimilarity measures and sensitivity related functions.
 #'
-#' @section Covariation schemes:
+#' In the continuous case, both standard and model-preserving methods are available for perturbation of the mean vector and the covariance matrix.
+#'
+#'
+#' @section DBNs - Covariation schemes:
 #' The available co-variation schemes are:
 #'  \itemize{
 #'   \item \emph{Uniform co-variation scheme} (\code{\link{uniform_covar}}): distributes the probability mass to be co-varied uniformly among the co-varying parameters.
 #'   \item \emph{Proportional co-variation scheme} (\code{\link{proportional_covar}}): distributes the probability mass to be co-varied in the same proportion as in the original Bayesian network.
 #'   \item \emph{Order-preserving co-variation scheme} (\code{\link{orderp_covar}}):distributes the to be co-varied probability mass among the co-varying parameters so that the original order of parameters is preserved.
 #' }
-#' @section Dissimilarity measures:
+#' @section DBNs - Dissimilarity measures:
 #' The dissimilarity measures quantify the difference between a Bayesian network and its update after parameter variation.\cr
 #' The available dissimilarity measures are:
 #' \itemize{
 #'   \item \emph{Chan-Darwiche distance} (\code{\link{CD}})
 #'   \item \emph{Kullback-Leibler divergence} (\code{\link{KL}})
 #' }
-#'@section Sensitivity functions:
-#'The available function for sensitivity analysis are:
+#'@section DBNs - Sensitivity functions:
+#'The available functions for sensitivity analysis are:
 #'  \itemize{
 #'   \item \emph{Sensitivity function} (\code{\link{sensitivity}}): returns a certain probability of interest given a parameter change. Evidence can be considered.
 #'   \item \emph{Sensitivity query} (\code{\link{sensquery}}): returns the parameter changes needed to get a certain probability of interest. Evidence can be considered.
+#' }
+#'@section GBNs - Model-Preserving matrices:
+#' The available functions to construct model-preserving covariation matrices are:
+#' \itemize{
+#'  \item \emph{Total covariation matrix} (\code{\link{total_covar_matrix}}).
+#'  \item \emph{Partial covariation matrix} (\code{\link{partial_covar_matrix}}).
+#'  \item \emph{Row-based covariation matrix} (\code{\link{row_covar_matrix}}).
+#'  \item \emph{Column-based covariation matrix} (\code{\link{col_covar_matrix}}).
+#' }
+#'@section GBNs - Mean and Covariance variations:
+#' The available functions to perturb the distribution of a GBN are:
+#' \itemize{
+#'  \item \emph{Mean variations} (\code{\link{mean_var}}).
+#'  \item \emph{Standard covariance variations} (\code{\link{covariance_var}}).
+#'  \item \emph{Model-preserving covariance variations} (\code{\link{model_pres_cov}}).
+#' }
+#'@section GBNs - Dissimilarity measures:
+#' The available dissimilarity measures are:
+#' \itemize{
+#' \item Frobenius norm (\code{\link{Fro}}).
+#' \item Jeffrey's distance (\code{\link{Jeffreys}}).
+#' \item Kullback-Leibler divergence (\code{\link{KL}}).
+#' \item Upper bound to the KL divergence (\code{\link{KL_bounds}}).
 #' }
 #'
 #' @docType package
