@@ -115,6 +115,6 @@ delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
 gbn$covariance[3,5] + d
 gbn$covariance[3,5]*delta
 #covariance_var(gbn, c(2,5), d)
-total_covar_matrix(ci,c(3,5),delta)
-model_pres_cov(ci,"total",c(3,5),delta)
+#total_covar_matrix(ci,c(3,5),delta)
+#model_pres_cov(ci,"total",c(3,5),delta)
 ```

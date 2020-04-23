@@ -148,16 +148,11 @@ multiplicatively).
 ``` r
 d <- - 2
 delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
-gbn$covariance[2,5] + d
-#> [1] 90.47337
-gbn$covariance[2,5]*delta
-#> [1] 90.47337
+gbn$covariance[3,5] + d
+#> [1] 121.6837
+gbn$covariance[3,5]*delta
+#> [1] 121.0087
 #covariance_var(gbn, c(2,5), d)
-total_covar_matrix(ci,c(2,5),delta)
-#>           [,1]      [,2]      [,3]      [,4]      [,5]
-#> [1,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
-#> [2,] 0.9783722 0.9783722 0.9783722 0.9783722 1.0000000
-#> [3,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
-#> [4,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
-#> [5,] 0.9783722 1.0000000 0.9783722 0.9783722 0.9783722
+#total_covar_matrix(ci,c(3,5),delta)
+#model_pres_cov(ci,"total",c(3,5),delta)
 ```
