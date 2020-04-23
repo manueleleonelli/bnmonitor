@@ -62,20 +62,20 @@ c(class(gbn),class(ci))
 
 #### Perturbation of the mean vector
 
-A varied GBN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics), $\mu_5$ by an additive factor $\delta = 10$.
+A varied GBN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics) by an additive factor 10.
 
 ```{r}
 rbind( t(gbn$mean),t(mean_var(gbn,entry = 5, delta = 10)$mean))
 ```
 
 The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). For instance, let's see what's the effect of variations in the mean of the statistics exam.
-```{r out.width="35%"}
+```{r out.width="35%", warning = FALSE}
 mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))
 mean_var5$plot
 ```
 
 More interestingly, one can check the different effect of variations of different paramenters.
-```{r echo = FALSE, out.width="45%"}
+```{r echo = FALSE, out.width="45%", warning = FALSE}
 library(ggplot2)
 par(mfrow = c(1,2))
 mean_var1 <- KL(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$KL
@@ -99,3 +99,22 @@ Therefore, misspecifications of the mean of the algebra exam would have the bigg
 #### Perturbation of the covariance matrix
 
 Care must be taken when performing perturbations of the covariance matrix, for two reasons: (1) the perturbed matrix may not be positive semidefinite; (2) the perturbed matrix may not respect the conditional indepedences of the underlying Bayesian network. 
+
+Suppose we are interested in assessing the effect of varying the covariance between `Statistics` and `Vectors` corresponding to the entry (2,5) of the covariance matrix below.
+
+```{r}
+gbn$order
+gbn$covariance
+```
+
+We can construct a standard perturbation matrix as well as model-preserving covariation matrices using the following commands. The standard perturbation acts additively by a factor of ten, whilst for model-preserving matrices we apply the same factor (which now acts multiplicatively).
+
+```{r}
+d <- - 2
+delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
+gbn$covariance[3,5] + d
+gbn$covariance[3,5]*delta
+#covariance_var(gbn, c(2,5), d)
+total_covar_matrix(ci,c(3,5),delta)
+model_pres_cov(ci,"total",c(3,5),delta)
+```

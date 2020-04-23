@@ -51,7 +51,7 @@ model_pres_cov <- function(ci, type, entry, delta){
     if(type == "row"){cov_matrix <- row_covar_matrix(ci,entry, delta)}
     if(type == "column"){cov_matrix <- col_covar_matrix(ci,entry,delta)}
     ci$covariance <- cov_matrix*var_matrix*ci$covariance
-    if(is.positive.semi.definite(ci$covariance)){return(ci)}
+    if(is.positive.semi.definite(round(ci$covariance,5))){return(ci)}
     else{
       ci$warning <- "The covariance is not positive semidefinite"
       attr(ci,'class') <- 'npsd.ci'
@@ -60,7 +60,7 @@ model_pres_cov <- function(ci, type, entry, delta){
   }
   else{
     ci$covariance <- var_matrix*ci$covariance
-    if(is.positive.semi.definite(ci$covariance)){return(ci)}
+    if(is.positive.semi.definite(round(ci$covariance,5))){return(ci)}
     else{
       ci$warning <- "The covariance is not positive semidefinite"
       attr(ci,'class') <- 'npsd.ci'

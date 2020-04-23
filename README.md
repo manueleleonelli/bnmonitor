@@ -88,7 +88,7 @@ c(class(gbn),class(ci))
 A varied GBN after a perturbation of an entry of the mean vector can be
 obtained with the function `mean_var`, which can only be applied to an
 object of class `GBN`. Below, we vary the fifth entry of the mean vector
-(statistics), \(\mu_5\) by an additive factor \(\delta = 10\).
+(statistics) by an additive factor 10.
 
 ``` r
 rbind( t(gbn$mean),t(mean_var(gbn,entry = 5, delta = 10)$mean))
@@ -122,3 +122,42 @@ Care must be taken when performing perturbations of the covariance
 matrix, for two reasons: (1) the perturbed matrix may not be positive
 semidefinite; (2) the perturbed matrix may not respect the conditional
 indepedences of the underlying Bayesian network.
+
+Suppose we are interested in assessing the effect of varying the
+covariance between `Statistics` and `Vectors` corresponding to the entry
+(2,5) of the covariance matrix below.
+
+``` r
+gbn$order
+#> [1] "mechanics"  "vectors"    "algebra"    "analysis"   "statistics"
+gbn$covariance
+#>          [,1]      [,2]      [,3]      [,4]      [,5]
+#> [1,] 305.7680 127.22257 101.57941 100.88420 109.66411
+#> [2,] 127.2226 174.23649  85.65601  85.06978  92.47337
+#> [3,] 101.5794  85.65601 114.56549 113.78140 123.68375
+#> [4,] 100.8842  85.06978 113.78140 223.30480 157.73746
+#> [5,] 109.6641  92.47337 123.68375 157.73746 303.49318
+```
+
+We can construct a standard perturbation matrix as well as
+model-preserving covariation matrices using the following commands. The
+standard perturbation acts additively by a factor of ten, whilst for
+model-preserving matrices we apply the same factor (which now acts
+multiplicatively).
+
+``` r
+d <- - 2
+delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
+gbn$covariance[2,5] + d
+#> [1] 90.47337
+gbn$covariance[2,5]*delta
+#> [1] 90.47337
+#covariance_var(gbn, c(2,5), d)
+total_covar_matrix(ci,c(2,5),delta)
+#>           [,1]      [,2]      [,3]      [,4]      [,5]
+#> [1,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
+#> [2,] 0.9783722 0.9783722 0.9783722 0.9783722 1.0000000
+#> [3,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
+#> [4,] 0.9783722 0.9783722 0.9783722 0.9783722 0.9783722
+#> [5,] 0.9783722 1.0000000 0.9783722 0.9783722 0.9783722
+```

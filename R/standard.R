@@ -67,7 +67,7 @@ covariance_var <- function(gbn, entry, delta){
     D[entry[1],entry[2]]<- delta
     D[entry[2],entry[1]]<- delta
   gbn$covariance <- D + gbn$covariance
-  if(is.positive.semi.definite(gbn$covariance)){return(gbn)}
+  if(is.positive.semi.definite(round(gbn$covariance,5))){return(gbn)}
   else{
     gbn$warning <- "The covariance is not positive semidefinite"
     attr(gbn,'class') <- 'npsd.gbn'
