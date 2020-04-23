@@ -139,20 +139,85 @@ gbn$covariance
 #> [5,] 109.6641  92.47337 123.68375 157.73746 303.49318
 ```
 
-We can construct a standard perturbation matrix as well as
-model-preserving covariation matrices using the following commands. The
-standard perturbation acts additively by a factor of ten, whilst for
-model-preserving matrices we apply the same factor (which now acts
-multiplicatively).
+A standard perturbated covariance matrix can be constructed with the
+`covariance_var` function. Suppose we want to increase the covariance
+between `Statistics` and `Vectors` by a factor of 10.
 
 ``` r
-d <- - 2
-delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
-gbn$covariance[3,5] + d
-#> [1] 121.6837
-gbn$covariance[3,5]*delta
-#> [1] 121.0087
-#covariance_var(gbn, c(2,5), d)
-#total_covar_matrix(ci,c(3,5),delta)
-#model_pres_cov(ci,"total",c(3,5),delta)
+d <- 10
+covariance_var(gbn, c(2,5), d)$covariance
+#>          [,1]      [,2]      [,3]      [,4]     [,5]
+#> [1,] 305.7680 127.22257 101.57941 100.88420 109.6641
+#> [2,] 127.2226 174.23649  85.65601  85.06978 102.4734
+#> [3,] 101.5794  85.65601 114.56549 113.78140 123.6837
+#> [4,] 100.8842  85.06978 113.78140 223.30480 157.7375
+#> [5,] 109.6641 102.47337 123.68375 157.73746 303.4932
+```
+
+The above perturbation made the original network structure not valid for
+the new covariation matrix. In order to ensure that the perturbed
+covariance is still valid for the underlying network structure, we can
+use model-preserving methods. These apply multiplicatively and not
+additively as standard methods, but we apply the same change in the
+covariance via the perturbation `delta` defined below. We can construct
+various covarioation matrices using the following commands:
+
+``` r
+delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]
+total_covar_matrix(ci,c(2,5), delta)
+#>          [,1]     [,2]     [,3]     [,4]     [,5]
+#> [1,] 1.108139 1.108139 1.108139 1.108139 1.108139
+#> [2,] 1.108139 1.108139 1.108139 1.108139 1.000000
+#> [3,] 1.108139 1.108139 1.108139 1.108139 1.108139
+#> [4,] 1.108139 1.108139 1.108139 1.108139 1.108139
+#> [5,] 1.108139 1.000000 1.108139 1.108139 1.108139
+partial_covar_matrix(ci,c(2,5),delta)
+#>          [,1]     [,2]     [,3]     [,4]     [,5]
+#> [1,] 1.000000 1.000000 1.108139 1.108139 1.108139
+#> [2,] 1.000000 1.000000 1.108139 1.108139 1.000000
+#> [3,] 1.108139 1.108139 1.108139 1.108139 1.108139
+#> [4,] 1.108139 1.108139 1.108139 1.108139 1.108139
+#> [5,] 1.108139 1.000000 1.108139 1.108139 1.000000
+row_covar_matrix(ci,c(2,5),delta)
+#>          [,1] [,2]     [,3]     [,4]     [,5]
+#> [1,] 1.000000    1 1.000000 1.000000 1.108139
+#> [2,] 1.000000    1 1.000000 1.000000 1.000000
+#> [3,] 1.000000    1 1.000000 1.000000 1.108139
+#> [4,] 1.000000    1 1.000000 1.000000 1.108139
+#> [5,] 1.108139    1 1.108139 1.108139 1.000000
+col_covar_matrix(ci,c(2,5),delta)
+#>      [,1]     [,2]     [,3]     [,4] [,5]
+#> [1,]    1 1.000000 1.000000 1.000000    1
+#> [2,]    1 1.000000 1.108139 1.108139    1
+#> [3,]    1 1.108139 1.000000 1.000000    1
+#> [4,]    1 1.108139 1.000000 1.000000    1
+#> [5,]    1 1.000000 1.000000 1.000000    1
+```
+
+For any of the four available methods (`total`, `partial`, `row` and
+`column`) the perturbed covariance matrix can be calculated with the
+function `model_pres_cov`. For instance in the case of a partial
+covariation:
+
+``` r
+model_pres_cov(ci,"partial",c(2,5),delta)$covariance
+#>          [,1]      [,2]      [,3]      [,4]     [,5]
+#> [1,] 305.7680 127.22257 112.56414 111.79374 121.5231
+#> [2,] 127.2226 174.23649  94.91879  94.26916 102.4734
+#> [3,] 112.5641  94.91879 126.95451 126.08563 137.0588
+#> [4,] 111.7937  94.26916 126.08563 247.45281 174.7951
+#> [5,] 121.5231 102.47337 137.05881 174.79507 303.4932
+```
+
+Having constructed various covariation matrices, we can assess how far
+apart the original and the perturbed distributions are for various
+covariations methods. Available dissimilarity measures are Frobenius
+norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey’s
+divergence (`Jeffreys`).
+
+``` r
+d <- seq(-10,10,0.1)
+delta <- (d+gbn$covariance[2,5])/gbn$covariance[2,5]
+#standard <- Jeffreys(gbn,"covariance", c(2,5), d)
+#standard
 ```

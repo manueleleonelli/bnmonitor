@@ -107,14 +107,32 @@ gbn$order
 gbn$covariance
 ```
 
-We can construct a standard perturbation matrix as well as model-preserving covariation matrices using the following commands. The standard perturbation acts additively by a factor of ten, whilst for model-preserving matrices we apply the same factor (which now acts multiplicatively).
+A standard perturbated covariance matrix can be constructed with the `covariance_var` function. Suppose we want to increase the covariance between `Statistics` and `Vectors` by a factor of 10. 
+```{r}
+d <- 10
+covariance_var(gbn, c(2,5), d)$covariance
+```
+
+The above perturbation made the original network structure not valid for the new covariation matrix. In order to ensure that the perturbed covariance is still valid for the underlying network structure, we can use model-preserving methods. These apply multiplicatively and not additively as standard methods, but we apply the same change in the covariance via the perturbation `delta` defined below. We can construct various covarioation matrices using the following commands:
 
 ```{r}
-d <- - 2
-delta <- (d + gbn$covariance[2,5])/ gbn$covariance[2,5]
-gbn$covariance[3,5] + d
-gbn$covariance[3,5]*delta
-#covariance_var(gbn, c(2,5), d)
-#total_covar_matrix(ci,c(3,5),delta)
-#model_pres_cov(ci,"total",c(3,5),delta)
+delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]
+total_covar_matrix(ci,c(2,5), delta)
+partial_covar_matrix(ci,c(2,5),delta)
+row_covar_matrix(ci,c(2,5),delta)
+col_covar_matrix(ci,c(2,5),delta)
 ```
+For any of the four available methods (`total`, `partial`, `row` and `column`) the perturbed covariance matrix can be calculated with the function `model_pres_cov`. For instance in the case of a partial covariation:
+```{r}
+model_pres_cov(ci,"partial",c(2,5),delta)$covariance
+```
+
+Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariations methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`).
+
+```{r}
+d <- seq(-10,10,0.1)
+delta <- (d+gbn$covariance[2,5])/gbn$covariance[2,5]
+#standard <- Jeffreys(gbn,"covariance", c(2,5), d)
+#standard
+```
+

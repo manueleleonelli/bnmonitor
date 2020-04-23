@@ -67,7 +67,7 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
       D[entry[1],entry[2]]<- delta[i]
       D[entry[2],entry[1]]<- delta[i]
       det_new <- det(gbn$covariance + D)
-      if(is.positive.semi.definite(gbn$covariance+D) & det_new > 1e-10){
+      if(is.positive.semi.definite(round(gbn$covariance+D,5)) & det_new > 1e-10){
         KL[i] <- 0.5*(sum(diag(inv_or%*%D))+log(det_or/det_new)) + 0.5*(sum(diag(solve(gbn$covariance + D)%*%gbn$covariance)) - nrow(gbn$covariance) + log(det(gbn$covariance + D)/det_or))
       }
       else{KL[i]<-NA}
