@@ -65,7 +65,7 @@ c(class(gbn),class(ci))
 A varied GBN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics) by an additive factor 10.
 
 ```{r}
-rbind( t(gbn$mean),t(mean_var(gbn,entry = 5, delta = 10)$mean))
+rbind(gbn$order,round(t(gbn$mean),2),round(t(mean_var(gbn,entry = 5, delta = 10)$mean),2))
 ```
 
 The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). For instance, let's see what's the effect of variations in the mean of the statistics exam.
@@ -127,12 +127,58 @@ For any of the four available methods (`total`, `partial`, `row` and `column`) t
 model_pres_cov(ci,"partial",c(2,5),delta)$covariance
 ```
 
-Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariations methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`).
+Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariations methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). The code below computes the Jefrrey's divergence for multiple variation values `d` for both the standard approach and the model-preserving one with a partial covariation matrix.
 
 ```{r}
 d <- seq(-10,10,0.1)
 delta <- (d+gbn$covariance[2,5])/gbn$covariance[2,5]
-#standard <- Jeffreys(gbn,"covariance", c(2,5), d)
-#standard
+standard <- Jeffreys(gbn,"covariance", c(2,5), d)$Jeffreys
+partial <- Jeffreys(ci,"partial",c(2,5),delta)$Jeffreys
 ```
+
+Let's compare the methods.
+
+```{r, echo = FALSE, out.width="45%"}
+total <- Jeffreys(ci,"total",c(2,5),delta)$Jeffreys
+row <- Jeffreys(ci,"row",c(2,5),delta)$Jeffreys
+column <- Jeffreys(ci,"column",c(2,5),delta)$Jeffreys
+out <- data.frame(d = c(d,d,d,d,d), method = c(rep("standard",length(d)),rep("partial",length(d)),rep("total",length(d)),rep("row",length(d)),rep("column",length(d))), Jeffreys = c(standard$Jeffreys,partial$Jeffreys,total$Jeffreys,row$Jeffreys,column$Jeffreys))
+ggplot(out) + geom_line(aes(x=d,y=Jeffreys,color = method)) 
+```
+
+The standard approach has the smallest Jeffreys divergence (this expected, although not guaranteed, since it changes the smallest number of parameters). Column-based and partial covariation have a similar Jeffreys divergence and not too far from the one of the standard method.
+
+As for the mean, we can check which entry of the covariance matrix has the biggest impact if varied. For simplicity here we pick the standard method only.
+
+```{r,echo=FALSE, out.width="45%"}
+d <- seq(-5,5,0.1)
+standard11 <- Jeffreys(gbn,"covariance", c(1,1), d)$Jeffreys
+standard12 <- Jeffreys(gbn,"covariance", c(1,2), d)$Jeffreys
+standard13 <- Jeffreys(gbn,"covariance", c(1,3), d)$Jeffreys
+standard14 <- Jeffreys(gbn,"covariance", c(1,4), d)$Jeffreys
+standard15 <- Jeffreys(gbn,"covariance", c(1,5), d)$Jeffreys
+standard22 <- Jeffreys(gbn,"covariance", c(2,2), d)$Jeffreys
+standard23 <- Jeffreys(gbn,"covariance", c(2,3), d)$Jeffreys
+standard24 <- Jeffreys(gbn,"covariance", c(2,4), d)$Jeffreys
+standard25 <- Jeffreys(gbn,"covariance", c(2,5), d)$Jeffreys
+standard33 <- Jeffreys(gbn,"covariance", c(3,3), d)$Jeffreys
+standard34 <- Jeffreys(gbn,"covariance", c(3,4), d)$Jeffreys
+standard35 <- Jeffreys(gbn,"covariance", c(3,5), d)$Jeffreys
+standard44 <- Jeffreys(gbn,"covariance", c(4,4), d)$Jeffreys
+standard45 <- Jeffreys(gbn,"covariance", c(4,5), d)$Jeffreys
+standard55 <- Jeffreys(gbn,"covariance", c(5,5), d)$Jeffreys
+dtot <- rep(d,15)
+l <- length(d)
+entry <- c(rep("mechanics",l),rep("mechanics/vectors",l),rep("mechanics/algebra",l),rep("mechanics/analysis",l),rep("mechanics/statistics",l),rep("vectors",l),rep("vectors/algebra",l),rep("vectors/analysis",l),rep("vectors/statistics",l), rep("algebra",l), rep("algebra/analysis",l),rep("algebra/statistics",l),rep("analysis",l),rep("analysis/statistics",l),rep("statistics",l))
+Jef <- c(standard11$Jeffreys,standard12$Jeffreys,standard13$Jeffreys,standard14$Jeffreys,standard15$Jeffreys,standard22$Jeffreys,standard23$Jeffreys,standard24$Jeffreys,standard25$Jeffreys,standard33$Jeffreys,standard34$Jeffreys,standard35$Jeffreys,standard44$Jeffreys,standard45$Jeffreys,standard55$Jeffreys)
+out <- data.frame(d = dtot, entry = entry, Jeffreys = Jef)
+ggplot(out) + geom_line(aes(x = d, y = Jeffreys, color=entry))
+```
+
+From the above plot we can notice that the less robust entries of the covariance matrix are the variance of `algebra`, the covariance between `algebra` and `analysis`, and the covariance between `algebra` and `vectors`.
+
+```{r}
+#KL_bounds(ci, 1)
+```
+
 

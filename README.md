@@ -88,13 +88,15 @@ c(class(gbn),class(ci))
 A varied GBN after a perturbation of an entry of the mean vector can be
 obtained with the function `mean_var`, which can only be applied to an
 object of class `GBN`. Below, we vary the fifth entry of the mean vector
-(statistics) by an additive factor 10.
+(statistics) by an additive factor
+10.
 
 ``` r
-rbind( t(gbn$mean),t(mean_var(gbn,entry = 5, delta = 10)$mean))
-#>          [,1]     [,2]     [,3]     [,4]     [,5]
-#> [1,] 38.95455 50.59091 50.60227 46.68182 42.30682
-#> [2,] 38.95455 50.59091 50.60227 46.68182 52.30682
+rbind(gbn$order,round(t(gbn$mean),2),round(t(mean_var(gbn,entry = 5, delta = 10)$mean),2))
+#>      [,1]        [,2]      [,3]      [,4]       [,5]        
+#> [1,] "mechanics" "vectors" "algebra" "analysis" "statistics"
+#> [2,] "38.95"     "50.59"   "50.6"    "46.68"    "42.31"     
+#> [3,] "38.95"     "50.59"   "50.6"    "46.68"    "52.31"
 ```
 
 The overall effect of such variations can be assessed in terms of
@@ -213,11 +215,37 @@ Having constructed various covariation matrices, we can assess how far
 apart the original and the perturbed distributions are for various
 covariations methods. Available dissimilarity measures are Frobenius
 norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey’s
-divergence (`Jeffreys`).
+divergence (`Jeffreys`). The code below computes the Jefrrey’s
+divergence for multiple variation values `d` for both the standard
+approach and the model-preserving one with a partial covariation matrix.
 
 ``` r
 d <- seq(-10,10,0.1)
 delta <- (d+gbn$covariance[2,5])/gbn$covariance[2,5]
-#standard <- Jeffreys(gbn,"covariance", c(2,5), d)
-#standard
+standard <- Jeffreys(gbn,"covariance", c(2,5), d)$Jeffreys
+partial <- Jeffreys(ci,"partial",c(2,5),delta)$Jeffreys
+```
+
+Let’s compare the methods.
+
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="45%" />
+
+The standard approach has the smallest Jeffreys divergence (this
+expected, although not guaranteed, since it changes the smallest number
+of parameters). Column-based and partial covariation have a similar
+Jeffreys divergence and not too far from the one of the standard method.
+
+As for the mean, we can check which entry of the covariance matrix has
+the biggest impact if varied. For simplicity here we pick the standard
+method only.
+
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="45%" />
+
+From the above plot we can notice that the less robust entries of the
+covariance matrix are the variance of `algebra`, the covariance between
+`algebra` and `analysis`, and the covariance between `algebra` and
+`vectors`.
+
+``` r
+#KL_bounds(ci, 1)
 ```
