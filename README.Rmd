@@ -37,6 +37,55 @@ install.packages("gRain")
 
 ## Overview
 
+#### Discrete Bayesian Networks
+The functionalities of `bnmonitor` for sensitivity analysis in Discrete Bayesian Networks are illustrated using the `fire_alarm` network bundled within the package representing a simple alarm system for fire accidents. 
+
+```{r out.width="50%"}
+library(bnlearn)
+graphviz.plot(fire_alarm)
+```
+
+The network consists of 6 nodes (`Fire`, `Smoke`, `Tampering`, `Alarm`, `Leaving` and `Report`) of either two or three levels. The conditional probability tables can be investigated by typing `fire_alarm`.
+
+
+```{r}
+fire_alarm
+```
+
+The aim of a sensitivity analysis is to assess how parameter changes affect output probabilities of interest. When one parameter changes than others need to covary in order to respect the sum to one condition of probabilities. In the binary case this is obvious, since the covaried probability is equal to one minus the varied one. However, when there are more than two probabilities there are multiple covariation schemes that can be applied, including `proportional`, `uniform` and `order-preserving`. Suppose we vary the probability that `Alarm = FALSE` given that `Fire = TRUE` and `Tampering = FALSE` from 0.01 to 0.1. The resulting probabilities from different covariation schemes can be computed as follows.
+
+```{r}
+proportional_covar(fire_alarm,"Alarm", "FALSE", c("TRUE","FALSE"), 0.1)$Alarm$prob
+uniform_covar(fire_alarm,"Alarm", "FALSE", c("TRUE","FALSE"), 0.1)$Alarm$prob
+orderp_covar(fire_alarm,"Alarm", "FALSE", c("TRUE","FALSE"), 0.1)$Alarm$prob
+```
+
+Suppose we are interested in the probability that `Report = TRUE` and how this varies with respect to the probability that `Alarm = FALSE` conditional on `Fire = TRUE` and `Tampering = FALSE`. This functional relationship is reported by the sensitivity function which can be computed and plotted using the function `sensitivity`.
+
+```{r out.width="35%"}
+sensitivity(fire_alarm, "Report", "TRUE" , node = "Alarm" , value_node = "FALSE", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
+```
+
+For all covariation schemes as the conditional probability of `Alarm = FALSE` increases, the probability of `Report = TRUE` decreases. The uniform covariation scheme is reported in red, the proportional in green and the order-preserving in blue.
+
+The function sensitivity also allows for conditional probabilities of interest, not only marginals, which can be set by the options `evidence_nodes` and `evidence_states`.
+
+For such changes in the probability distribution of a Bayesian networks, we can compute the distance between the original and the varied networks using the Chan-Darwiche distance (`CD`) and the Kullback-Leibler divergence (`KL`). As an example we use `CD` for `Alarm = MALFUNCTIOn` conditional on `Fire = TRUE` and `Tampering = FALSE`.
+
+```{r out.width="35%"}
+CD(fire_alarm, node = "Alarm" , value_node = "MALFUNCTION", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
+```
+
+As expected proportional covariation has the smallest CD distance of all covariation schemes.
+
+Another task in sensitivity analysis is to identify parameter changes that meet a specific constraint. As an example suppose we want the probability `Report = TRUE` to be equal to 0.4. Which parameters could we change to obtain such a probability? The answer can be obtained using the function `sensquery`.
+
+```{r}
+sensquery(fire_alarm,"Report","TRUE", 0.4)
+```
+
+In `sensquery` covarying parameters are always changed according to a proportional scheme. The output reports the parameters that could be changed, which value they need to be changed to, and the CD distance between the original and the varied network.
+
 ## Gaussian Bayesian Networks
 The functionalities of `bnmonitor` for sensitivity analysis in Gaussian Bayesian networks are illustrated next using the `mathmarks` dataset bundled within the package. 
 ```{r}
@@ -177,8 +226,11 @@ ggplot(out) + geom_line(aes(x = d, y = Jeffreys, color=entry))
 
 From the above plot we can notice that the less robust entries of the covariance matrix are the variance of `algebra`, the covariance between `algebra` and `analysis`, and the covariance between `algebra` and `vectors`.
 
+Another method to quickly have an overview of the effect of all parameters is `KL_bounds` which creates a table with upper bounds to the Kullback-Leibler divergence for all entries of the covariance matrix and all covariation methods.
+
 ```{r}
-#KL_bounds(ci, 1)
+KL_bounds(ci, 1.2)
 ```
 
+By looking at the standard method column, we have the confirmation that the 11th entry, corresponding to `algebra/analysis`, is the most critical for the robustness of the network.
 
