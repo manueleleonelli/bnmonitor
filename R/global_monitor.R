@@ -44,8 +44,7 @@ global.monitor.bn.node <- function(node.idx,dag,alpha,df){#j is the index of the
 global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
 
   node.scores <- map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)
-  result <- new_tibble(cbind(names(dag$nodes),node.scores))
-  result$node.scores <- as.numeric(result$node.scores)#return this result for each node
+  result <- data.frame(cbind(names(dag$nodes),node.scores))
   return(result)
 }
 
@@ -62,8 +61,8 @@ global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
 global.monitor.graph <- function(dag, alpha, df){#node.scores output from global.bn
 
   node.scores <- map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)
-  result <-new_tibble(cbind(names(dag$nodes),node.scores))
-  result$node.scores <- as.numeric(result$node.scores)#return this result for each node
+  result <- data.frame(cbind(names(dag$nodes),node.scores))
+
 
   my.colors = brewer.pal(length(names(dag$nodes)),"Blues")
   max.val <- ceiling(max(abs(node.scores)))

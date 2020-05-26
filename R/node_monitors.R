@@ -180,7 +180,7 @@ node.monitor <- function(dag, df){#node.scores output from global.bn
   marg.z.scores <- marg.z.score[match(names(df),names(marg.z.score))]
 
 
-  result <-new_tibble(cbind(names(df),as.numeric(marg.z.scores),as.numeric(cond.z.scores)))
+  result <- data.frame(cbind(names(df),as.numeric(marg.z.scores),as.numeric(cond.z.scores)))
   names(result) <- c('node','marg.z.score','cond.z.score')
   return(result)#TODO return the graph as well
 }
