@@ -51,7 +51,7 @@ marg.node.monitor.graph <- function(dag, df){#node.scores output from global.bn
   dag.bn.fit <- bn.fit(dag, df)
   dag.grain <- as.grain(dag.bn.fit)
   worst.level <- as.numeric(df[dim(df)[1],])
-  querygrain(dag.grain, nodes=colnames(df), type="marginal") ->ev
+  ev <- gRain::querygrain(dag.grain, nodes=colnames(df), type="marginal")
   final.z.score <- ev[match(names(df),names(ev))] %>%  map2_dbl(.y=worst.level,standardize)  #this returns the vvery last marginal
 
   my.colors = brewer.pal(length(names(dag$nodes)),"Greens")
