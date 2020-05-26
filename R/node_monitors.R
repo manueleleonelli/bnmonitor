@@ -159,6 +159,7 @@ cond.node.monitor.graph <- function(dag, df){#node.scores output from global.bn
 #'@rdname node
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain querygrain
+#'@importFrom tibble new_tibble
 #'@export
 node.monitor <- function(dag, df){#node.scores output from global.bn
   num.nodes <- length(nodes(dag))
@@ -178,7 +179,8 @@ node.monitor <- function(dag, df){#node.scores output from global.bn
   ev[match(names(df),names(ev))] %>% map2_dbl(.y=worst.level,standardize) -> marg.z.score #this returns the vvery last marginal
   marg.z.scores <- marg.z.score[match(names(df),names(marg.z.score))]
 
-  result <- data.frame(cbind(names(df),as.numeric(marg.z.scores),as.numeric(cond.z.scores)))
+
+  result <-new_tibble(cbind(names(df),as.numeric(marg.z.scores),as.numeric(cond.z.scores)))
   names(result) <- c('node','marg.z.score','cond.z.score')
   return(result)#TODO return the graph as well
 }
