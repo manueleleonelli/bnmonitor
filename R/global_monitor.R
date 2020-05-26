@@ -71,7 +71,7 @@ global.monitor.graph <- function(dag, alpha, df){#node.scores output from global
                           label=names(dag$nodes),
                           style="filled",
                           fontcolor="black",
-                          fillcolor=node.colors)
+                          fillcolor=node.colors, .name_repair = "unique")
 
   from.nodes <- map(dag$nodes, `[[`, "parents") %>% unlist %>% unname
   to.nodes <-map(dag$nodes, `[[`, "parents") %>% unlist %>% names %>% substr(1,1)
