@@ -159,7 +159,6 @@ cond.node.monitor.graph <- function(dag, df){#node.scores output from global.bn
 #'@rdname node
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain querygrain
-#'@importFrom tibble new_tibble
 #'@export
 node.monitor <- function(dag, df){#node.scores output from global.bn
   num.nodes <- length(nodes(dag))

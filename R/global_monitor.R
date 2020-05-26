@@ -38,7 +38,6 @@ global.monitor.bn.node <- function(node.idx,dag,alpha,df){#j is the index of the
 
 #'@rdname global
 #'@importFrom purrr map_dbl
-#'@importFrom tibble new_tibble
 #'@export
 #'
 global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
@@ -54,7 +53,6 @@ global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
 #'@importFrom purrr map_dbl map
 #'@importFrom grDevices colorRampPalette
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
-#'@importFrom tibble new_tibble
 #'
 #'@export
 #'
