@@ -35,7 +35,9 @@ marg.node.monitor <- function(dag,df,node.name){#returns the mth node monitor
       z[i] <- (cumsum(s)[i]-cumsum(e)[i])/sqrt(cumsum(v)[i])
     }
   }
-
+  plot(z)
+  title("Marginal Node Monitor")
+  xlab("Index")
   return(z)
 }
 

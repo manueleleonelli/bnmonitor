@@ -43,7 +43,7 @@ global.monitor.bn.node <- function(node.idx,dag,alpha,df){#j is the index of the
 global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
 
   node.scores <- map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)
-  result <- data.frame(cbind(names(dag$nodes),node.scores))
+  result <- data.frame(Vertex = cbind(names(dag$nodes), Score = node.scores))
   return(result)
 }
 
@@ -59,7 +59,7 @@ global.monitor <- function(dag, alpha, df){#node.scores output from global.bn
 global.monitor.graph <- function(dag, alpha, df){#node.scores output from global.bn
 
   node.scores <- map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)
-  result <- data.frame(cbind(names(dag$nodes),node.scores))
+  result <- data.frame(Vertex = cbind(names(dag$nodes),Score = node.scores))
 
 
   my.colors = brewer.pal(length(names(dag$nodes)),"Blues")
