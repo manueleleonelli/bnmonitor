@@ -23,19 +23,16 @@ node_monitor <- function(dag, df , plot = TRUE){
   i_df <- data.frame(
     x=1:length(colnames(df))
   )
- cond.z.scores <- i_df %>% pmap(~pass.ev(.x, df=df, dag.grain=dag.grain)) %>%
-    map2(worst.level,standardize) %>%
-    unlist %>% unname
+ cond.z.scores <- as.numeric(as.character(i_df %>% pmap(~pass.ev(.x, df=df, dag.grain=dag.grain)) %>% map2(worst.level,standardize) %>% unlist %>% unname))
 
   dag.bn.fit.marg <- bn.fit(dag, df)
   dag.grain.marg <- as.grain(dag.bn.fit.marg)
   querygrain(dag.grain.marg, nodes=colnames(df), type="marginal") ->ev
   ev[match(names(df),names(ev))] %>% map2_dbl(.y=worst.level,standardize) -> marg.z.score #this returns the vvery last marginal
-  marg.z.scores <- marg.z.score[match(names(df),names(marg.z.score))]
+  marg.z.scores <- as.numeric(as.character(marg.z.score[match(names(df),names(marg.z.score))]))
 
 
-  result <- data.frame(cbind(names(df),as.numeric(as.character(marg.z.scores)),as.numeric(as.character(cond.z.scores))))
-  names(result) <- c('node','marg.z.score','cond.z.score')
+  result <- data.frame(node = names(df),marg.z.score = marg.z.scores, cond.z.score = cond.z.scores)
 
   if(plot == TRUE){
     from.nodes <- map(dag$nodes, `[[`, "parents") %>% unlist %>% unname
