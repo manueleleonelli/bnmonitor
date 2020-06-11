@@ -1,10 +1,24 @@
-#' Node Monitor
+#' Node monitors
 #'
-#' Some text here
+#' Marginal and conditional node monitors for all vertices of a Bayesian network using the full dataset
 #'
-#' @param dag bnlearn object
-#' @param df dataset
-#' @param plot Boolean
+#' Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dataset \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} has been observed, where \eqn{\boldsymbol{y}_i=(y_{i1},\dots,y_{im})} and \eqn{y_{ij}} is the i-th observation of the j-th variable.
+#' Let \eqn{p_i} denote the marginal density of \eqn{Y_j} after the first \eqn{i-1} observations have been processed. Define
+#' \deqn{E_i = \sum_{k=1}^Kp_i(d_k)\log(p_i(d_k)),}
+#' \deqn{V_i = \sum_{k=1}^K p_i(d_k)\log^2(p_i(d_k))-E_i^2,}
+#' where \eqn{(d_1,\dots,d_K)} are the possible values of \eqn{Y_j}. The marginal node monitor for the vertex \eqn{Y_j} is defined as
+#' \deqn{Z_j=\frac{-\sum_{i=1}^N\log(p_i(y_{ij}))-\sum_{i=1}^N E_i}{\sqrt{\sum_{i=1}^NV_i}}.}
+#' Values of \eqn{Z_j} such that \eqn{|Z_j|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+#'
+#' The conditional node monitor for the vertex \eqn{Y_j} is defined as
+#'  \deqn{Z_j=\frac{-\sum_{i=1}^N\log(p_i(y_{ij}|y_{i1},\dots,y_{i(j-1)},y_{i(j+1)},\dots,y_{im}))-\sum_{i=1}^N E_i}{\sqrt{\sum_{i=1}^NV_i}},}
+#'  where \eqn{E_i} and \eqn{V_i} are computed with respect to \eqn{p_i(y_{ij}|y_{i1},\dots,y_{i(j-1)},y_{i(j+1)},\dots,y_{im})}. Again, values of \eqn{Z_j} such that \eqn{|Z_j|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+#'
+#' @return A dataframe including the names of the vertices, the marginal node monitors and the conditional node monitors. It also return two plots where vertices with a darker color have a higher marginal z-score or conditional z-score, respectively, in absolute value.
+#'
+#' @param dag an object of class \code{bn} from the \code{bnlearn} package
+#' @param df a base R style dataframe
+#' @param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain querygrain
@@ -13,6 +27,12 @@
 #'@importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
+#'
+#' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
+#' @references Cowell, R. G., Verrall, R. J., & Yoon, Y. K. (2007). Modeling operational risk with Bayesian networks. Journal of Risk and Insurance, 74(4), 795-827.
+#'
+#'
+#' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 node_monitor <- function(dag, df , plot = TRUE){
   #node.scores output from global.bn

@@ -6,7 +6,7 @@ Authors@R: c(
     person("Manuele", "Leonelli", email = "manuele.leonelli@ie.edu", role = c("aut","cre")),
     person("Ramsiya", "Ramanathan", email = "ramsiya.ramanathan@studio.unibo.it", role = "aut"),
     person("Rachel", "Wilkerson", email = "R.L.Wilkerson@warwick.ac.uk", role = "aut"))
-Description: An Implementation of Sensitivity and Robustness Methods in Bayesian Networks in R. It includes methods to perform parameter variations via a variety of covariation schemes, to compute sensitivity functions and to quantify the dissimilarity of two Bayesian networks via distances and divergences. It further includes prequential diagnostic methods to assess the goodness of fit of a Bayesian networks to data, including global, node and parent-child monitors.
+Description: An implementation of sensitivity and robustness methods in Bayesian networks in R. It includes methods to perform parameter variations via a variety of covariation schemes, to compute sensitivity functions and to quantify the dissimilarity of two Bayesian networks via distances and divergences. It further includes prequential diagnostic methods to assess the goodness of fit of a Bayesian networks to data, including global, node and parent-child monitors.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -1,6 +1,6 @@
 #' bnmonitor: A package for sensitivity analysis and robustness in Bayesian networks
 #'
-#' The package performs sensitivity analysis for Bayesian networks.
+#' The package performs sensitivity and robustness analysis for Bayesian networks.
 #'
 #' @details
 #'
@@ -10,6 +10,17 @@
 #'
 #' In the continuous case, both standard and model-preserving methods are available for perturbation of the mean vector and the covariance matrix.
 #'
+#' bnmonitor further provides function to perform robustness studies in DBNs using the prequential approach to verify how well a network fits a specific dataset.
+#'
+#' @section DBNs - Robustness:
+#' The available functions for robustness are:
+#' \itemize{
+#' \item \emph{Global monitor} (\code{\link{global_monitor}}): contribution of each vertex to the overall log-likelihood of the model.
+#' \item \emph{Observation's influence} (\code{\link{influential_obs}}): difference in the log-likelihood of a model learnt with the full dataset and with all but one observation.
+#' \item \emph{Node monitors} (\code{\link{node_monitor}}): marginal and conditional node monitors to assess the fit of a vertex distribution to the full dataset.
+#' \item \emph{Sequential node monitors} (\code{\link{seq_node_monitor}}): marginal and conditional node monitors for a specific vertex only using sequentially subsets of the dataset.
+#' \item \emph{Sequential parent-child monitor} (\code{\link{seq_pa_ch_monitor}}): parent-child node monitor for a specific vertex and a specific configuration of its parents using sequentially subsets of the dataset.
+#' }
 #'
 #' @section DBNs - Covariation schemes:
 #' The available co-variation schemes are:
