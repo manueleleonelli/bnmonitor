@@ -20,7 +20,6 @@
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
 #'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.
 #'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.
-#'@param ... additional parameters to be added to the plot.
 #'
 #'@references Chan, H., & Darwiche, A. (2005). A distance measure for bounding probabilistic belief change. International Journal of Approximate Reasoning, 38(2), 149-174.
 #'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International Journal of Approximate Reasoning, 55(4), 1022-1042.
@@ -34,7 +33,7 @@
 #'@importFrom graphics lines points
 #'@importClassesFrom bnlearn bn.fit
 #'@export
-CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = "proportional", plot = TRUE, ...) {
+CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = "proportional", plot = TRUE) {
     suppressWarnings(if (new_value == "all") {
       new_value2 <-
         sort(c(seq(0.05, 0.95, by = 0.05), coef(bnfit[[node]])[t(append(value_node, value_parents))]))

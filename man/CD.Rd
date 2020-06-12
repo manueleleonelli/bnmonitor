@@ -11,8 +11,7 @@ CD(
   value_parents,
   new_value,
   covariation = "proportional",
-  plot = TRUE,
-  ...
+  plot = TRUE
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ CD(
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
 
 \item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
-
-\item{...}{additional parameters to be added to the plot.}
 }
 \value{
 The function \code{CD} returns a dataframe including in the first column the variations performed, and in the following columns the corresponding CD distances for the chosen covariation schemes.
