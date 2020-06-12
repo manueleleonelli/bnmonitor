@@ -10,6 +10,7 @@
 #'
 #' For \code{orderp_covar}, if two or more parameters in a distribution have the same value, the order is given by the one in the respective conditional probability table. Furthermore, the parameter associated to the largest probability of the conditional probability law cannot be varied.
 #'
+#' @return An object of class \code{bn.fit} with updated probabilities.
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.

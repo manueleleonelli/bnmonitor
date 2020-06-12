@@ -37,6 +37,10 @@ where \eqn{(d_1,\dots,d_K)} are the possible values of \eqn{Y_j}. The sequential
  \deqn{Z_{ij}=\frac{-\sum_{k=1}^i\log(p_k(y_{kj}'|\pi_j))-\sum_{k=1}^i E_k}{\sqrt{\sum_{k=1}^iV_k}}.}
  Values of \eqn{Z_{ij}} such that \eqn{|Z_{ij}|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j} after the first i-1 observations have been processed.
 }
+\examples{
+seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3, FALSE)
+
+}
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 

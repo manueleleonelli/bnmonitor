@@ -24,6 +24,9 @@ uniform_covar(bnfit, node, value_node, value_parents, new_value)
 
 \item{new_value}{numeric value between 0 and 1. Value to which the parameter should be updated.}
 }
+\value{
+An object of class \code{bn.fit} with updated probabilities.
+}
 \description{
 Functions that return an updated Bayesian network using the proportional, uniform and order-preserving covariation schemes.
 }

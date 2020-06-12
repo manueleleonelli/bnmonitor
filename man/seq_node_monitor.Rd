@@ -38,6 +38,11 @@ The sequential conditional node monitor for the vertex \eqn{Y_j} is defined as
  \deqn{Z_{ij}=\frac{-\sum_{k=1}^i\log(p_k(y_{kj}|y_{k1},\dots,y_{k(j-1)},y_{k(j+1)},\dots,y_{km}))-\sum_{k=1}^i E_k}{\sqrt{\sum_{k=1}^iV_k}},}
  where \eqn{E_k} and \eqn{V_k} are computed with respect to \eqn{p_k(y_{kj}|y_{k1},\dots,y_{k(j-1)},y_{k(j+1)},\dots,y_{km})}. Again, values of \eqn{Z_{ij}} such that \eqn{|Z_{ij}|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
 }
+\examples{
+seq_marg_monitor(chds_bn, chds[1:200,], "Events", FALSE)
+seq_marg_monitor(chds_bn, chds[1:200,], "Admission", FALSE)
+
+}
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 

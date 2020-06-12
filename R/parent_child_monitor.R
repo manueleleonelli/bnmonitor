@@ -22,6 +22,9 @@
 #'@param alpha single integer, usually the number of max levels in \code{df}
 #'@param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
+#'
+#' @examples seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3, FALSE)
+#'
 #'@importFrom purrr map_dbl map map_int
 #'@importFrom rlang sym
 #' @importFrom dplyr "%>%"

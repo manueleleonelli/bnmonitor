@@ -27,6 +27,10 @@ Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dat
 where \eqn{\pi_{ij}} is the value of the parents of \eqn{Y_j} for the i-th observation. The contribution of the j-th vertex to the global monitor is thus
 \deqn{-\sum_{i=1}^n\log(p(y_{ij}|\pi_{ij})).}
 }
+\examples{
+global_monitor(chds_bn, chds, 3, FALSE)
+
+}
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 

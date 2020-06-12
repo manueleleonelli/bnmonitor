@@ -38,6 +38,9 @@ KL <- function (x, ...) {
 #'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.
 #'@param ... additional parameters to be added to the plot.
 #'
+#'
+#' @return A dataframe with the varied parameter and the KL divergence for different covariation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
+#'
 #'@references Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annals of mathematical statistics, 22(1), 79-86.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 #'
@@ -274,24 +277,24 @@ KL.bn.fit <-
       if (covariation == "all") {
         if (nrow(KL) == 1) {
           if(ncol(KL) == 3){
-            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = KL[,3]), col = "green", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = KL[,3]), col = "green", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
           } else{
-            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = KL[,3]), col = "green", na.rm = T) + geom_point(aes(y = KL[,4]), col = "blue", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = KL[,3]), col = "green", na.rm = T) + geom_point(aes(y = KL[,4]), col = "blue", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
           }
           }
           else{
           if(ncol(KL) == 3){
-          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = KL[,3]), col = "green", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = KL[,3]), col = "green", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
           } else{
-            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = KL[,3]), col = "green", na.rm = T) + geom_line(aes(y = KL[,4]), col = "blue", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+            plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = KL[,3]), col = "green", na.rm = T) + geom_line(aes(y = KL[,4]), col = "blue", na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
           }
           }
         }
        else{
         if (nrow(KL) == 1) {
-          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_point( na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
         } else{
-          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence")
+          plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
         }
       }
     }
@@ -417,15 +420,15 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
   if(plot == TRUE){
     if(type == "all"){
       if(nrow(KL_data) == 1){
-        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = KL_data$KL_partial), col = "red", na.rm = T) + geom_point(aes(y = KL_data$KL_row), col = "green", na.rm =T) + geom_point(aes(y = KL_data$KL_column), col= "pink", na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence")
+        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = KL_data$KL_partial), col = "red", na.rm = T) + geom_point(aes(y = KL_data$KL_row), col = "green", na.rm =T) + geom_point(aes(y = KL_data$KL_column), col= "pink", na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
       } else{
-        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = KL_data$KL_partial), col = "red", na.rm = T) + geom_line(aes(y = KL_data$KL_row), col = "green", na.rm =T) + geom_line(aes(y = KL_data$KL_column), col= "pink", na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence")
+        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = KL_data$KL_partial), col = "red", na.rm = T) + geom_line(aes(y = KL_data$KL_row), col = "green", na.rm =T) + geom_line(aes(y = KL_data$KL_column), col= "pink", na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
       }
     } else{
       if(nrow(KL_data) == 1){
-        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_point( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence")
+        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_point( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
       }else{
-       plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line(na.rm = T ) + labs(x = "delta", y = "KL", title = "KL divergence")
+       plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line(na.rm = T ) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
       }
     }
   }
@@ -493,9 +496,9 @@ KL.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
   KL_data <- data.frame(Variation = delta, KL=KL)
   if(plot == TRUE){
     if(nrow(KL_data)==1){
-      plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_point( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence")
+      plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_point( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
     }else{
-      plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence")
+      plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
     }
   }
   return(list(KL = KL_data, plot = plot))

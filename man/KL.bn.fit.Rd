@@ -32,6 +32,9 @@
 
 \item{...}{additional parameters to be added to the plot.}
 }
+\value{
+A dataframe with the varied parameter and the KL divergence for different covariation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
+}
 \description{
 \code{KL.bn.fit} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
 }

@@ -21,16 +21,19 @@ Marginal and conditional node monitors for all vertices of a Bayesian network us
 }
 \details{
 Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dataset \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} has been observed, where \eqn{\boldsymbol{y}_i=(y_{i1},\dots,y_{im})} and \eqn{y_{ij}} is the i-th observation of the j-th variable.
-Let \eqn{p_i} denote the marginal density of \eqn{Y_j} after the first \eqn{i-1} observations have been processed. Define
-\deqn{E_i = \sum_{k=1}^Kp_i(d_k)\log(p_i(d_k)),}
-\deqn{V_i = \sum_{k=1}^K p_i(d_k)\log^2(p_i(d_k))-E_i^2,}
+Let \eqn{p_n} denote the marginal density of \eqn{Y_j} after the first \eqn{n-1} observations have been processed. Define
+\deqn{E_n = \sum_{k=1}^Kp_n(d_k)\log(p_n(d_k)),}
+\deqn{V_n = \sum_{k=1}^K p_n(d_k)\log^2(p_n(d_k))-E_n^2,}
 where \eqn{(d_1,\dots,d_K)} are the possible values of \eqn{Y_j}. The marginal node monitor for the vertex \eqn{Y_j} is defined as
-\deqn{Z_j=\frac{-\sum_{i=1}^N\log(p_i(y_{ij}))-\sum_{i=1}^N E_i}{\sqrt{\sum_{i=1}^NV_i}}.}
-Values of \eqn{Z_j} such that \eqn{|Z_j|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+\deqn{Z_j=\frac{-\log(p_n(y_{ij}))- E_n}{\sqrt{V_n}}.}
+Higher values of \eqn{Z_j} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
 
 The conditional node monitor for the vertex \eqn{Y_j} is defined as
- \deqn{Z_j=\frac{-\sum_{i=1}^N\log(p_i(y_{ij}|y_{i1},\dots,y_{i(j-1)},y_{i(j+1)},\dots,y_{im}))-\sum_{i=1}^N E_i}{\sqrt{\sum_{i=1}^NV_i}},}
- where \eqn{E_i} and \eqn{V_i} are computed with respect to \eqn{p_i(y_{ij}|y_{i1},\dots,y_{i(j-1)},y_{i(j+1)},\dots,y_{im})}. Again, values of \eqn{Z_j} such that \eqn{|Z_j|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+ \deqn{Z_j=\frac{-\log(p_n(y_{nj}|y_{n1},\dots,y_{n(j-1)},y_{n(j+1)},\dots,y_{nm}))- E_n}{\sqrt{V_n}},}
+ where \eqn{E_n} and \eqn{V_n} are computed with respect to \eqn{p_n(y_{nj}|y_{n1},\dots,y_{n(j-1)},y_{n(j+1)},\dots,y_{nm})}. Again, higher values of \eqn{Z_j} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+}
+\examples{
+node_monitor(chds_bn, chds, FALSE)
 }
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.

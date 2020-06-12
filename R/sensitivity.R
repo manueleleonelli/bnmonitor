@@ -14,6 +14,8 @@
 #'
 #' @seealso \code{\link{covariation}}, \code{\link{sensquery}}
 #'
+#' @return A dataframe with the varied parameter values and the output probabilities for the covariation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
+#'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.
 #'@param interest_node_value character string. Level of \code{interest_node}.
@@ -25,7 +27,6 @@
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
 #'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.
 #'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes are plotted.  Set by default to \code{TRUE}.
-#'@param ... additional parameters to be added to the plot.
 #'
 #'@references Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
@@ -40,7 +41,7 @@
 #'@importFrom bnlearn as.grain
 #'@importFrom gRain setEvidence
 #'@importFrom gRain querygrain
-#'@importFrom graphics lines points
+#'@importFrom tidyr gather
 #'@importFrom gRbase compile
 #'@export
 sensitivity <- function(bnfit,
@@ -53,8 +54,7 @@ sensitivity <- function(bnfit,
                         value_parents,
                         new_value,
                         covariation = "proportional",
-                        plot = TRUE,
-                        ...)
+                        plot = TRUE)
 {
   if (!(interest_node %in% names(bnfit))) {
     stop("Invalid input for interest_node")
@@ -159,7 +159,7 @@ sensitivity <- function(bnfit,
     if (length(bnfit.new.scheme) == 2) {
       sens <-
         data.frame(new_value2, rep(NA, length(new_value2)), rep(NA, length(new_value2)))
-      colnames(sens) <- c("New value", "Uniform", "Proportional")
+      colnames(sens) <- c("New_value", "Uniform", "Proportional")
     } else{
       sens <-
         data.frame(new_value2,
@@ -167,14 +167,14 @@ sensitivity <- function(bnfit,
                    rep(NA, length(new_value2)),
                    rep(NA, length(new_value2)))
       colnames(sens) <-
-        c("New value",
+        c("New_value",
           "Uniform",
           "Proportional",
           "Order Preserving")
     }
   } else{
     sens <- data.frame(new_value2, rep(NA, length(new_value2)))
-    colnames(sens) <- c("New value", "Sensitivity")
+    colnames(sens) <- c("New_value", "Sensitivity")
   }
 
   if (length(new_value2) == length(new_value_op)) {
@@ -242,87 +242,25 @@ sensitivity <- function(bnfit,
   if (plot == TRUE) {
     if (covariation == "all") {
       if (nrow(sens) == 1) {
-        plot <-
-          plot(
-            x = sens[, 1],
-            y = sens[, 2],
-            main = "Sensitivity function",
-            xlab = "New_value",
-            ylab = "Sensitivity function",
-            col = "red",
-            xlim=c(0,1),
-            ylim=c(min(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))]),max(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))])),
-            pch = 16,
-            ...
-          )
-        points(
-          x = sens[, 1],
-          y = sens[, 3],
-          col = "green",
-          pch = 16,
-          ...
-        )
-        if (ncol(sens) == 4) {
-          points(
-            x = sens[, 1],
-            y = sens[, 4],
-            col = "blue",
-            pch = 16,
-            ...
-          )
-        }
+        ci <- gather(sens, key = "scheme", value = "value", - New_value)
+        New_value <- ci$New_value
+        value <- ci$value
+        scheme <- ci$scheme
+        Sensitivity <- ci$Sensitivity
+         plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_point(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
       } else{
-        plot <-
-          plot(
-            x = sens[, 1],
-            y = sens[, 2],
-            main = "Sensitivity function",
-            xlab = "New_value",
-            ylab = "Sensitivity function",
-            type = "l",
-            xlim=c(0,1),
-            ylim=c(min(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))]),max(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))])),
-            col = "red",
-            ...
-          )
-        lines(x = sens[, 1],
-              y = sens[, 3],
-              col = "green",
-              ...)
-        if (ncol(sens) == 4) {
-          lines(x = sens[, 1],
-                y = sens[, 4],
-                col = "blue",
-                ...)
-        }
-      }
+        ci <- gather(sens, key = "scheme", value = "value", - New_value)
+        New_value <- ci$New_value
+        value <- ci$value
+        scheme <- ci$scheme
+        Sensitivity <- ci$Sensitivity
+        plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_line(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
+}
     } else{
       if (nrow(sens) == 1) {
-        plot <-
-          plot(
-            x = sens[, 1],
-            y = sens[, 2],
-            main = "Sensitivity function",
-            xlab = "New_value",
-            ylab = "Sensitivity function",
-            xlim=c(0,1),
-            ylim=c(min(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))]),max(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))])),
-            pch = 16,
-            ...
-          )
+        plot <- ggplot(sens, aes(x = New_value, y = Sensitivity)) +geom_point() + theme_minimal()
       } else{
-        plot <-
-          plot(
-            x = sens[, 1],
-            y = sens[, 2],
-            main = "Sensitivity function",
-            xlab = "New_value",
-            ylab = "Sensitivity function",
-            xlim=c(0,1),
-            ylim=c(min(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))]),max(unlist(sens[,-1])[is.finite(unlist(sens[,-1]))])),
-            type = "l",
-            ...
-          )
+        plot <- ggplot(sens,aes(x = New_value, y = Sensitivity)) + geom_line() + theme_minimal()
       }
     }
   }

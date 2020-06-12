@@ -57,9 +57,9 @@ Fro.GBN <- function(x,entry,delta, plot = TRUE, log = TRUE, ...){
   if(log == TRUE){fro[,-1] <- log(fro[,-1])}
   if(plot == TRUE){
     if(nrow(fro)==1){
-      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm")
+      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
     }else{
-      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm")
+      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
     }
   }
   return(list(Frobenius = fro, plot = plot))
@@ -163,15 +163,15 @@ Fro.CI <- function(x, type, entry, delta, plot = TRUE, log = TRUE, ...){
   if(plot == TRUE){
     if(type == "all"){
       if(nrow(Fro_data) == 1){
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_point(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_point(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm")
+        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_point(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_point(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
       } else{
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_line(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_line(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm")
+        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_line(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_line(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
       }
     } else{
       if(nrow(Fro_data) == 1){
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_point( na.rm = T) + labs(x = "delta", y = "Frobenius", title = "Frobenius norm")
+        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_point( na.rm = T) + labs(x = "delta", y = "Frobenius", title = "Frobenius norm") + theme_minimal()
       }else{
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm")
+        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
       }
     }
   }

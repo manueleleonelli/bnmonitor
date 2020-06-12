@@ -27,6 +27,10 @@ The influence of an observation to the global monitor is defined as
 \deqn{|\log(p(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)) - \log(p(\boldsymbol{y}_{-i}))|.}
 High values of this index denote observations that highly contribute to the likelihood of the model.
 }
+\examples{
+influential_obs(chds_bn, chds[1:100,], 3, FALSE)
+
+}
 \seealso{
 \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 }

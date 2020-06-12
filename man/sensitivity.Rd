@@ -15,8 +15,7 @@ sensitivity(
   value_parents,
   new_value,
   covariation = "proportional",
-  plot = TRUE,
-  ...
+  plot = TRUE
 )
 }
 \arguments{
@@ -41,8 +40,9 @@ sensitivity(
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.}
 
 \item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes are plotted.  Set by default to \code{TRUE}.}
-
-\item{...}{additional parameters to be added to the plot.}
+}
+\value{
+A dataframe with the varied parameter values and the output probabilities for the covariation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
 }
 \description{
 \code{sensitivity} returns the sensitivity function for a probabilistic query of interest with respect to a parameter change defined by the user.

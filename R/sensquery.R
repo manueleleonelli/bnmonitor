@@ -13,6 +13,8 @@
 #'
 #' @seealso \code{\link{sensitivity}}
 #'
+#' @return A dataframe with the following columns: \code{node} - the vertex of the proposed change; \code{Value node} - the level of \code{node} to be changed; \code{Value parents} - the levels of the parent variables of \code{node}; \code{Original value} - the original probability defined by \code{Node}, \code{Value node} and \code{Value parents}; \code{Suggested change} - the new proposed value for the probability defined by \code{Node}, \code{Value node} and \code{Value parents}; \code{CD distance} - the CD distance between the original and new network with the \code{Suggested change}.
+#'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.
 #'@param interest_node_value character string. Level of \code{interest_node}.

@@ -14,6 +14,8 @@
 #' @param alpha single integer, usually the number of max levels in \code{df}
 #' @param plot boolean value. If \code{TRUE} the function returns a plot
 #'
+#' @examples global_monitor(chds_bn, chds, 3, FALSE)
+#'
 #' @importClassesFrom bnlearn bn.fit
 #'@importFrom purrr map map_int map_dbl
 #'@importFrom rlang is_empty syms
@@ -49,8 +51,8 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
                             fontcolor="black",
                             fillcolor=node.colors, .name_repair = "unique")
 
-    from.nodes <- map(dag$nodes, `[[`, "parents") %>% unlist %>% unname
-    to.nodes <-map(dag$nodes, `[[`, "parents") %>% unlist %>% names %>% substr(1,1)
+    from.nodes <- arcs(dag)[,1]
+    to.nodes <- arcs(dag)[,2]
 
     edges <- create_edge_df(from=match(from.nodes,names(dag$nodes)),
                             to=match(to.nodes,names(dag$nodes)))

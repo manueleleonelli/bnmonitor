@@ -26,6 +26,9 @@ sensquery(
 
 \item{evidence_states}{character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.}
 }
+\value{
+A dataframe with the following columns: \code{node} - the vertex of the proposed change; \code{Value node} - the level of \code{node} to be changed; \code{Value parents} - the levels of the parent variables of \code{node}; \code{Original value} - the original probability defined by \code{Node}, \code{Value node} and \code{Value parents}; \code{Suggested change} - the new proposed value for the probability defined by \code{Node}, \code{Value node} and \code{Value parents}; \code{CD distance} - the CD distance between the original and new network with the \code{Suggested change}.
+}
 \description{
 \code{sensquery} returns, for a given change in a probability of interest, the parameters' changes to achieve it together with the corresponding CD distances.
 }

@@ -76,9 +76,9 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
   KL <- data.frame(Variation = delta,Jeffreys=KL)
   if(plot == TRUE){
     if(nrow(KL)==1){
-      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence")
+      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
     }else{
-      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence")
+      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
     }
   }
   return(list(Jeffreys = KL, plot = plot))
@@ -202,15 +202,15 @@ Jeffreys.CI <- function(x, type, entry,delta, plot = TRUE, ...){
   if(plot == TRUE){
     if(type == "all"){
       if(nrow(J_data) == 1){
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_point(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence")
+        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_point(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       } else{
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_line(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence")
+        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_line(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }
     } else{
       if(nrow(J_data) == 1){
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence")
+        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }else{
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence")
+        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }
     }
   }

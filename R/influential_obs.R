@@ -9,7 +9,6 @@
 #'
 #' @return A vector including the influence of each observation.
 #'
-#'
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
 #' @param alpha single integer, usually the number of max levels in \code{df}
@@ -19,6 +18,7 @@
 #'@importFrom purrr  map_dbl
 #'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
 #'
+#' @examples influential_obs(chds_bn, chds[1:100,], 3, FALSE)
 #'
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
@@ -29,9 +29,9 @@ influential_obs <- function(dag, df, alpha, plot = TRUE){#j is the index of the 
     result[i] <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df[-i,], .f= global.monitor.bn.node))))
   }
   total <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node))))
-
-  score <- data.frame(score = abs(total - result))
+  score <- abs(total - result)
  if(plot == TRUE){
+   score <- data.frame(score = score)
     p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(df), y = score)) + geom_point() +  xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal() )
   return(list(score = score, plot = p ))
  }
