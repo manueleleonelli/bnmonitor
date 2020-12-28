@@ -47,7 +47,6 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 # Plot of global monitor
 
 #' @importClassesFrom bnlearn bn.fit
-#' @importMethodsFrom graphics plot
 #' @importFrom bnlearn arcs
 #'@importFrom purrr map map_int map_dbl
 #'@importFrom rlang is_empty syms
