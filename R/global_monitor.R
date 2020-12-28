@@ -16,7 +16,6 @@
 #' @examples global_monitor(chds_bn, chds, 3)
 #'
 #' @importClassesFrom bnlearn bn.fit
-#' @importFrom graphics plot.new
 #'@importFrom purrr map map_int map_dbl
 #'@importFrom rlang is_empty syms
 #'@importFrom dplyr "%>%"
@@ -24,9 +23,7 @@
 #'@importFrom tidyr complete
 #'@importFrom dplyr if_else
 #'@importFrom dplyr pull
-#'@importFrom RColorBrewer brewer.pal
-#'@importFrom grDevices colorRampPalette
-#'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
+#'@importFrom graphics plot.default
 #'
 #'
 #' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
@@ -40,30 +37,30 @@ global_monitor <- function(dag, df, alpha){
   node.scores <- as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)))
   result <- data.frame(Vertex = names(dag$nodes), Score = node.scores)
   result <- list(Global_Monitor = result, DAG = dag)
-  attr(result, 'class') <- 'global'
+  attr(result, 'class') <- 'global_monitor'
   return(result)
 }
 
-# Plot of global monitor
 
+#' Plot for global monitors
+#'
 #' @importClassesFrom bnlearn bn.fit
+#' @importFrom graphics plot.new
 #' @importFrom bnlearn arcs
-#'@importFrom purrr map map_int map_dbl
-#'@importFrom rlang is_empty syms
 #'@importFrom dplyr "%>%"
-#'@importFrom dplyr count
-#'@importFrom tidyr complete
-#'@importFrom dplyr if_else
-#'@importFrom dplyr pull
 #'@importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
 #'
+#'@param x The output of global_monitor
+#'@param ... additional inputs
 #'
+#' @method plot global_monitor
 #'@export
 #'
 #'
-plot.global <- function(x,...){
+
+plot.global_monitor <- function(x, ...){
     my.colors = brewer.pal(length(names(x$DAG$nodes)),"Blues")
     max.val <- ceiling(max(abs(x$Global_Monitor$Score)))
     my.palette <- colorRampPalette(my.colors)(max.val)
@@ -89,14 +86,14 @@ plot.global <- function(x,...){
     return(p)
 }
 
-# Print of global monitor
-
+#' Print of global monitor
 #' @importClassesFrom bnlearn bn.fit
 #'@export
 #'
+#'@param x The output of global_monitor
+#'@param ... additional inputs
 #'
-#'
-print.global <- function(x,...){
+print.global_monitor <- function(x,...){
   print(x$Global_Monitor)
   invisible(x)
 }

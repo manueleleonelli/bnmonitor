@@ -19,13 +19,12 @@
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
 #' @param node.name node over which to compute the monitor
-#' @param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
 #' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 #' @references Cowell, R. G., Verrall, R. J., & Yoon, Y. K. (2007). Modeling operational risk with Bayesian networks. Journal of Risk and Insurance, 74(4), 795-827.
 #'
-#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Events", FALSE)
-#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Admission", FALSE)
+#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Events")
+#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Admission")
 #'
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #' @name seq_node_monitor
@@ -34,10 +33,9 @@ NULL
 #'@rdname seq_node_monitor
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain querygrain
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
 #'@export
 #'
-seq_marg_monitor <- function(dag,df,node.name, plot = TRUE){#returns the mth node monitor
+seq_marg_monitor <- function(dag,df,node.name){#returns the mth node monitor
   node.idx <- which(colnames(df)==node.name)#TODO test that this exists
   s <- rep(0,dim(df)[1])
   e <- rep(0,dim(df)[1])
@@ -60,24 +58,49 @@ seq_marg_monitor <- function(dag,df,node.name, plot = TRUE){#returns the mth nod
     }
   }
   z[which(z==0)] <- NA
-  score <- data.frame(z.score = z)
-  if(plot == TRUE){
-  z.score <- z
-  p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(df), y = z.score)) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Marginal Node Monitor for ",node.name)))
-  return(list(score = score, plot =p ))
-  }
-  return(score = score)
+  score <- list(Seq_Marg_Monitor = z, node.name = node.name)
+  attr(score, 'class') <- 'seq_marg_monitor'
+  return(score)
 }
 
 
+#' Plot for sequential marginal monitors
+#'
+#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
+#'
+#'@param x The output of seq_marg_monitor
+#'@param ... additional inputs
+#'
+#' @method plot seq_marg_monitor
+#'@export
+#'
+#'
+plot.seq_marg_monitor <- function(x,...){
+  temp <- data.frame(x= 1:length(x$Seq_Marg_Monitor), y=x$Seq_Marg_Monitor[1:length(x$Seq_Marg_Monitor)])
+  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Marginal Node Monitor for ", x$node.name)))
+  return(p)
+}
 
+#' Print of sequential marginal monitor
+#'@export
+#'
+#'@param x The output of seq_marg_monitor
+#'@param ... additional inputs
+#'
+print.seq_marg_monitor <- function(x,...){
+  temp <- x$Seq_Cond_Monitor
+  temp <- temp[is.finite(temp)]
+ cat("Marginal Node Monitor for", x$node.name,"\n",
+     "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
+     "Maximum", "\t", max(temp,na.rm = TRUE))
+  invisible(x)
+}
 
 #'@rdname seq_node_monitor
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain setEvidence querygrain
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
 #'@export
-seq_cond_monitor <- function(dag,df,node.name, plot = TRUE){#returns the mth node monitor
+seq_cond_monitor <- function(dag,df,node.name){#returns the mth node monitor
   node.idx <- which(colnames(df)==node.name)#TODO test that this exists
   s <- rep(0,dim(df)[1]);
   e <- rep(0,dim(df)[1]);
@@ -100,12 +123,42 @@ seq_cond_monitor <- function(dag,df,node.name, plot = TRUE){#returns the mth nod
       }
   }
   z[which(z==0)] <- NA
-  score <- data.frame(z.score = z)
-  if(plot == TRUE){
-    z.score <- z
-    p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(df), y = z.score)) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Conditional Node Monitor for ",node.name)))
-    return(list(score = score, plot =p ))
-  }
-  return(score = score)
+  score <- list(Seq_Cond_Monitor = z, node.name = node.name)
+  attr(score, 'class') <- 'seq_cond_monitor'
+  return(score)
+}
 
+
+
+#' Plot for sequential conditional monitors
+#'
+#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
+#'
+#'@param x The output of seq_cond_monitor
+#'@param ... additional inputs
+#'
+#' @method plot seq_cond_monitor
+#'@export
+#'
+#'
+plot.seq_cond_monitor <- function(x,...){
+  temp <- data.frame(x= 1:length(x$Seq_Cond_Monitor), y=x$Seq_Cond_Monitor[1:length(x$Seq_Cond_Monitor)])
+  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Conditional Node Monitor for ", x$node.name)))
+  return(p)
+}
+
+#' Print of sequential conditional monitor
+#'@export
+#'
+#'
+#'@param x The output of seq_cond_monitor
+#'@param ... additional inputs
+#'
+print.seq_cond_monitor <- function(x,...){
+  temp <- x$Seq_Cond_Monitor
+  temp <- temp[is.finite(temp)]
+  cat("Conditional Node Monitor for", x$node.name,"\n",
+      "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
+      "Maximum", "\t", max(temp,na.rm = TRUE))
+  invisible(x)
 }

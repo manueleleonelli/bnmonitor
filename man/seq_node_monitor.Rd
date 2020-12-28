@@ -6,9 +6,9 @@
 \alias{seq_cond_monitor}
 \title{Sequential node monitors}
 \usage{
-seq_marg_monitor(dag, df, node.name, plot = TRUE)
+seq_marg_monitor(dag, df, node.name)
 
-seq_cond_monitor(dag, df, node.name, plot = TRUE)
+seq_cond_monitor(dag, df, node.name)
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
@@ -16,8 +16,6 @@ seq_cond_monitor(dag, df, node.name, plot = TRUE)
 \item{df}{a base R style dataframe}
 
 \item{node.name}{node over which to compute the monitor}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.}
 }
 \value{
 A vector including the scores \eqn{Z_{ij}}, either marginal or conditional.
@@ -39,8 +37,8 @@ The sequential conditional node monitor for the vertex \eqn{Y_j} is defined as
  where \eqn{E_k} and \eqn{V_k} are computed with respect to \eqn{p_k(y_{kj}|y_{k1},\dots,y_{k(j-1)},y_{k(j+1)},\dots,y_{km})}. Again, values of \eqn{Z_{ij}} such that \eqn{|Z_{ij}|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
 }
 \examples{
-seq_marg_monitor(chds_bn, chds[1:200,], "Events", FALSE)
-seq_marg_monitor(chds_bn, chds[1:200,], "Admission", FALSE)
+seq_marg_monitor(chds_bn, chds[1:200,], "Events")
+seq_marg_monitor(chds_bn, chds[1:200,], "Admission")
 
 }
 \references{

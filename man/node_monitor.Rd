@@ -4,14 +4,12 @@
 \alias{node_monitor}
 \title{Node monitors}
 \usage{
-node_monitor(dag, df, plot = TRUE)
+node_monitor(dag, df)
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
 
 \item{df}{a base R style dataframe}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.}
 }
 \value{
 A dataframe including the names of the vertices, the marginal node monitors and the conditional node monitors. It also return two plots where vertices with a darker color have a higher marginal z-score or conditional z-score, respectively, in absolute value.
@@ -33,7 +31,7 @@ The conditional node monitor for the vertex \eqn{Y_j} is defined as
  where \eqn{E_n} and \eqn{V_n} are computed with respect to \eqn{p_n(y_{nj}|y_{n1},\dots,y_{n(j-1)},y_{n(j+1)},\dots,y_{nm})}. Again, higher values of \eqn{Z_j} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
 }
 \examples{
-node_monitor(chds_bn, chds, FALSE)
+node_monitor(chds_bn, chds)
 }
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.

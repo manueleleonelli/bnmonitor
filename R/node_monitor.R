@@ -16,18 +16,13 @@
 #'
 #' @return A dataframe including the names of the vertices, the marginal node monitors and the conditional node monitors. It also return two plots where vertices with a darker color have a higher marginal z-score or conditional z-score, respectively, in absolute value.
 #'
-#' @examples node_monitor(chds_bn, chds, FALSE)
+#' @examples node_monitor(chds_bn, chds)
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
-#' @param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
 #'@importFrom bnlearn bn.fit as.grain
 #'@importFrom gRain querygrain
-#'@importFrom gridExtra grid.arrange
 #'@importFrom purrr pmap map2 map2_dbl
-#'@importFrom RColorBrewer brewer.pal
-#'@importFrom grDevices colorRampPalette
-#'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
 #'
 #' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 #' @references Cowell, R. G., Verrall, R. J., & Yoon, Y. K. (2007). Modeling operational risk with Bayesian networks. Journal of Risk and Insurance, 74(4), 795-827.
@@ -35,7 +30,7 @@
 #'
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
-node_monitor <- function(dag, df , plot = TRUE){
+node_monitor <- function(dag, df){
   #node.scores output from global.bn
   num.nodes <- length(nodes(dag))
   dag.bn.fit <- bn.fit(dag, df[1:(dim(df)[1]-1),])
@@ -53,51 +48,78 @@ node_monitor <- function(dag, df , plot = TRUE){
   marg.z.scores <- as.numeric(as.character(marg.z.score[match(names(df),names(marg.z.score))]))
 
 
-  result <- data.frame(node = names(df),marg.z.score = marg.z.scores, cond.z.score = cond.z.scores)
 
-  if(plot == TRUE){
+ temp <- data.frame(node = names(df),marg.z.score = marg.z.scores, cond.z.score = cond.z.scores)
+ result <- list(Node_Monitor = temp, DAG = dag)
+ attr(result,'class') <- 'node_monitor'
+  return(result)
+ }
 
-    from.nodes <- arcs(dag)[,1]
-    to.nodes <- arcs(dag)[,2]
+#' Plot for node monitors
+#'
+#'@importFrom RColorBrewer brewer.pal
+#'@importFrom graphics plot.new
+#'@importFrom grDevices colorRampPalette
+#'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
+#'@importFrom bnlearn arcs
+#'@param x The output of node_monitor.
+#'@param which select the monitor to plot, either "marginal" or "conditional".
+#'@param ... additional inputs
+#'@method plot node_monitor
+#'@export
+plot.node_monitor <- function(x, which, ...){
+  if(which!="marginal" & which!="conditional")stop("wrong input for which")
+  from.nodes <- arcs(x$DAG)[,1]
+  to.nodes <- arcs(x$DAG)[,2]
 
-    edges <- create_edge_df(from=match(from.nodes,names(df)),
-                            to=match(to.nodes,names(df)))
+  edges <- create_edge_df(from=match(from.nodes,x$Node_Monitor$node),
+                          to=match(to.nodes,x$Node_Monitor$node))
 
-  my.colors = brewer.pal(length(names(dag$nodes)),"Greens")
-  max.val <- ceiling(max(abs(marg.z.scores)))
-  max.val.cond <- ceiling(max(abs(cond.z.scores)))
+  my.colors = brewer.pal(length(names(x$DAG$nodes)),"Greens")
+  max.val <- ceiling(max(abs(x$Node_Monitor$marg.z.score)))
+  max.val.cond <- ceiling(max(abs(x$Node_Monitor$cond.z.score)))
   my.palette <- colorRampPalette(my.colors)(max.val)
   my.palette.cond <- colorRampPalette(my.colors)(max.val.cond)
-  node.colors <- my.palette[floor(abs(marg.z.scores))+1]
-  node.colors.cond <- my.palette.cond[floor(abs(cond.z.scores))+1]
-  nodes <- create_node_df(n=length(names(df)),
-                          type= names(df),
-                          label=names(df),
-                          nodes = names(df),
+  node.colors <- my.palette[floor(abs(x$Node_Monitor$marg.z.score))+1]
+  node.colors.cond <- my.palette.cond[floor(abs(x$Node_Monitor$cond.z.score))+1]
+  nodes <- create_node_df(n=length(x$Node_Monitor$node),
+                          type= x$Node_Monitor$node,
+                          label=x$Node_Monitor$node,
+                          nodes = x$Node_Monitor$node,
                           style="filled",
                           fontcolor="black",
                           fillcolor=node.colors)
 
-  nodes.cond <- create_node_df(n=length(names(df)),
-                          type= names(df),
-                          label=names(df),
-                          nodes = names(df),
-                          style="filled",
-                          fontcolor="black",
-                          fillcolor=node.colors.cond)
+  nodes.cond <- create_node_df(n=length(x$Node_Monitor$node),
+                               type= x$Node_Monitor$node,
+                               label=x$Node_Monitor$node,
+                               nodes = x$Node_Monitor$node,
+                               style="filled",
+                               fontcolor="black",
+                               fillcolor=node.colors.cond)
 
 
   graph <- create_graph(
     nodes_df = nodes,
     edges_df = edges)
-    plot <- suppressWarnings(render_graph(graph, title="Marginal Node Monitors",layout = "tree"))
+  plot <- suppressWarnings(render_graph(graph, title="Marginal Node Monitors",layout = "tree"))
 
-    graph.cond <- create_graph(
-      nodes_df = nodes.cond,
-      edges_df = edges)
-    plot.cond <- suppressWarnings(render_graph(graph.cond, title="Conditional Node Monitors",layout = "tree"))
-    return(list(table =result, marg.plot = plot, cond.plot = plot.cond))#TODO return the graph as well
+  graph.cond <- create_graph(
+    nodes_df = nodes.cond,
+    edges_df = edges)
+  plot.cond <- suppressWarnings(render_graph(graph.cond, title="Conditional Node Monitors",layout = "tree"))
+  if(which == "marginal"){return(plot)}
+  else if(which=="conditional"){return(plot.cond)}
+}
 
-    }
- return(result)
- }
+#' Print of node monitor
+#' @importClassesFrom bnlearn bn.fit
+#'@export
+#'
+#'@param x The output of node_monitor
+#'@param ... additional inputs
+#'
+print.node_monitor <- function(x,...){
+  print(x$Node_Monitor)
+  invisible(x)
+}
