@@ -48,6 +48,7 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 
 #' @importClassesFrom bnlearn bn.fit
 #' @importMethodsFrom graphics plot
+#' @importFrom bnlearn arcs
 #'@importFrom purrr map map_int map_dbl
 #'@importFrom rlang is_empty syms
 #'@importFrom dplyr "%>%"
@@ -75,8 +76,8 @@ plot.global <- function(result){
     from.nodes <- arcs(result$DAG)[,1]
     to.nodes <- arcs(result$DAG)[,2]
 
-    edges <- create_edge_df(from=match(from.nodes,names(result$DAG)),
-                            to=match(to.nodes,names(result$DAG)))
+    edges <- create_edge_df(from=match(from.nodes,names(result$DAG$nodes)),
+                            to=match(to.nodes,names(result$DAG$nodes)))
 
     p <- suppressWarnings(create_graph(
       nodes_df = nodes,
