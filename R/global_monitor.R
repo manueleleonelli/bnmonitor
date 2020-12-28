@@ -64,7 +64,7 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 #'@export
 #'
 #'
-plot.global <- function(result){
+plot.global <- function(result,...){
     my.colors = brewer.pal(length(names(result$DAG$nodes)),"Blues")
     max.val <- ceiling(max(abs(result$Global_Monitor$Score)))
     my.palette <- colorRampPalette(my.colors)(max.val)
