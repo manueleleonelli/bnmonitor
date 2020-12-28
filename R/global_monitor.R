@@ -17,6 +17,7 @@
 #' @examples global_monitor(chds_bn, chds, 3, FALSE)
 #'
 #' @importClassesFrom bnlearn bn.fit
+#' @importFrom graphics plot.new
 #'@importFrom purrr map map_int map_dbl
 #'@importFrom rlang is_empty syms
 #'@importFrom dplyr "%>%"
