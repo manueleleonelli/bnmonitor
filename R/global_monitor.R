@@ -88,3 +88,14 @@ plot.global <- function(result,...){
         render_graph(title="Global Monitors",layout="tree"))
     return(p)
 }
+
+# Print of global monitor
+
+#' @importClassesFrom bnlearn bn.fit
+#'@export
+#'
+#'
+#'
+print.global <- function(result,...){
+  result$Global_monitor
+}
