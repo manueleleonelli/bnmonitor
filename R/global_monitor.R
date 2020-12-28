@@ -61,6 +61,8 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
 #'
 #'
+#'@export
+#'
 plot.global <- function(result){
     my.colors = brewer.pal(length(names(result$DAG$nodes)),"Blues")
     max.val <- ceiling(max(abs(result$Global_Monitor$Score)))
