@@ -46,6 +46,20 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 
 # Plot of global monitor
 
+#' @importClassesFrom bnlearn bn.fit
+#' @importMethodsFrom graphics plot
+#'@importFrom purrr map map_int map_dbl
+#'@importFrom rlang is_empty syms
+#'@importFrom dplyr "%>%"
+#'@importFrom dplyr count
+#'@importFrom tidyr complete
+#'@importFrom dplyr if_else
+#'@importFrom dplyr pull
+#'@importFrom RColorBrewer brewer.pal
+#'@importFrom grDevices colorRampPalette
+#'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
+#'
+#'
 plot.global <- function(result){
     my.colors = brewer.pal(length(names(result$DAG$nodes)),"Blues")
     max.val <- ceiling(max(abs(result$Global_Monitor$Score)))
