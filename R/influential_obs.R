@@ -24,15 +24,23 @@
 #'@export
 #'
 influential_obs <- function(dag, df, alpha, plot = TRUE){#j is the index of the parent set
-  result <- rep(0,nrow(df))
-  for (i in 1:nrow(df)){
-    result[i] <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df[-i,], .f= global.monitor.bn.node))))
+  un <- unique(df)
+  result <- rep(0,nrow(un))
+  for(i in 1:nrow(un)){
+    a <- 0
+    j <- 0
+    while(a == 0){
+      j <- j +1
+      if(prod(un[i,] == df[j,]) == 1 ) {a <- 1}
+    }
+    result[i] <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df[-j,], .f= global.monitor.bn.node))))
   }
   total <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node))))
   score <- abs(total - result)
  if(plot == TRUE){
    score <- data.frame(score = score)
-    p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(df), y = score)) + geom_point() +  xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal() )
+   score <- cbind(score,un)
+    p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(un), y = score)) + geom_point() +  xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal() )
   return(list(score = score, plot = p ))
  }
   return(score)#returns global and pach monitor

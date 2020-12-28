@@ -33,6 +33,201 @@ install.packages("gRain")
 
 ## Overview
 
+The prequential diagnostics examine the forecasts that flow from a model
+in sequence. Each monitor given below indicates the probability of a
+particular observation based on the previous observations and the model
+structure. In the prequential mindset, we compute a probability of each
+subsequent observation based on all previous data points. These
+observations are then scored, and in this package we use the logarithmic
+score function. The observations are then standardized to give a z-score
+statistic. Following the recommendation of Cowell (2007), scores
+indicate a poor fit where |z| \> 1.96
+
+We demonstrate the efficacy of the prequential monitors with the Asia
+data set from the bnlearn package. Details of the variables (nodes) can
+be found in the documentation for bnlearn.
+
+``` r
+library(bnlearn)
+library(bnmonitor)
+data(asia)
+summary(asia)
+#>    A          S          T          L          B          E          X       
+#>  no :4958   no :2485   no :4956   no :4670   no :2451   no :4630   no :4431  
+#>  yes:  42   yes:2515   yes:  44   yes: 330   yes:2549   yes: 370   yes: 569  
+#>    D       
+#>  no :2650  
+#>  yes:2350
+```
+
+Lauritzen defines two candidate models we replicate
+below.
+
+``` r
+asia_bn <- bnlearn::model2network("[A][S][T|A][L|S][B|S][D|B:E][E|T:L][X|E]")
+bnlearn::graphviz.plot(asia_bn) 
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="50%" />
+
+``` r
+asia_bn_alt <-  bnlearn::model2network("[A][S][T|A][L|S][B|S][E|T:L][X|E][D|B:E:S]")
+bnlearn::graphviz.plot(asia_bn_alt) 
+```
+
+<img src="man/figures/README-unnamed-chunk-6-2.png" width="50%" />
+
+### Global monitor
+
+The global monitor is equivalent to the Bayes Factor and offers a good
+assessment of the model as a whole. It is primarily useful for
+differentiating between candidate models as the global monitor pinpoints
+the nodes with different contributions for two candidate models. We can
+assess the log likelihood contribution from each of the nodes and
+determine which nodes contribute the most to the global monitor.
+global.monitor.graph provides a quick visual for the entire network. The
+darker the color, the more substantial the contribution of that node to
+the log likelihood.
+
+The global monitor assesses the probability of observing the data given
+the model and as such does not particularly fit the prequential view.
+However, it is a quick and useful first diagnostic assessment.
+
+``` r
+global_monitor(asia_bn, asia, alpha = 3, FALSE)
+#>   Vertex       Score
+#> 1      A  -249.74568
+#> 2      B -3020.72273
+#> 3      D -2144.16059
+#> 4      E   -26.31263
+#> 5      L -1101.55381
+#> 6      S -3469.43743
+#> 7      T  -260.38452
+#> 8      X  -851.22579
+global_monitor(asia_bn_alt, asia, alpha = 3, FALSE)
+#>   Vertex       Score
+#> 1      A  -249.74568
+#> 2      B -3020.72273
+#> 3      D -2153.19484
+#> 4      E   -26.31263
+#> 5      L -1101.55381
+#> 6      S -3469.43743
+#> 7      T  -260.38452
+#> 8      X  -851.22579
+```
+
+In the alternative model, Dysnopea contributes more to the
+log-likelihood.
+
+### Node monitor
+
+We compute two variants of node monitors. The marginal node monitor
+computes the probability of the ith observation in the data set in turn
+after passing the evidence of the i-1 cases in the data set. The
+conditional node monitor computes the probability of the ith observation
+in the data set after passing evidence of the i-1 cases in the data set,
+and the evidence for all nodes in the ith case except the node of
+interest.
+
+As a quick survey of the nodes, the node\_monitor command computes the
+marginal and conditional monitors for the final observation in the data
+set.
+
+``` r
+node_monitor(asia_bn, asia, FALSE)
+#> Warning: package 'gRbase' was built under R version 3.6.3
+#> 
+#> Attaching package: 'gRbase'
+#> The following objects are masked from 'package:bnlearn':
+#> 
+#>     ancestors, children, parents
+#>   node marg.z.score cond.z.score
+#> 1    A   -0.1029759   -0.1029862
+#> 2    S -114.8350581 -118.7946397
+#> 3    T   -0.1054182   -0.1054288
+#> 4    L   -0.3013303   -0.3013649
+#> 5    B  -34.6833789  -35.0407002
+#> 6    E   -0.3226028   -0.3226405
+#> 7    X   -0.4234203   -0.4234785
+#> 8    D  -10.4048397  -10.3678671
+```
+
+The scores indicate a poor fit of the probability distributions
+specified for the Smoking, Bronchitis, and Dysnopea nodes. The modeller
+may decide which of these distributions is of the most interest. For the
+purposes of this vignette, we assume that we would like to check the
+forecasts for Dysnopea.
+
+The prequential monitor given by seq\_marg\_monitor give us a closer
+look at which particular forecasts in the data set might cause this
+difference. We examine the sequential monitor for both candidate models.
+
+``` r
+seq_marg_monitor(asia_bn, asia[1:200,], "D", TRUE)$plot
+```
+
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="50%" />
+
+``` r
+seq_marg_monitor(asia_bn_alt, asia[1:200,], "D", TRUE)$plot
+```
+
+<img src="man/figures/README-unnamed-chunk-9-2.png" width="50%" />
+
+Both sequential marginal node monitors fall within the recommendation of
+|z| \> 1.96, indicating that both models are appropriate. However, for
+later forecasts in the data set, Dysnopea tends to predict higher than
+average observations. The forecasts flowing from the alternative model
+are more accurate.
+
+### Parent Child monitor
+
+The parent child monitor computes the predictives for each subsequent
+observation given a particular set of parents. Whereas the node monitors
+use all observations, the parent child monitors only use the
+observations with the specified parents. This offers an important check
+for settings of parents for which the model forecasts are not
+appropriate.
+
+``` r
+seq_pa_ch_monitor(asia_bn_alt, asia, "D", "B", "yes", 3, TRUE)$plot
+```
+
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="50%" />
+
+``` r
+seq_pa_ch_monitor(asia_bn, asia, "D", "B", "no", 3, TRUE)$plot
+```
+
+<img src="man/figures/README-unnamed-chunk-10-2.png" width="50%" />
+
+These plots show that for our model under consideration, Dysnopea is
+adequately modeled for patients who have Bronchitis, as the z-scores
+largely fall in the recommended range. we might suggest examining the
+set of observations around index 1000 as those have a larger than
+expected z-score. However, for patients who do not have bronchitis, we
+see negative z-scores that indicate that the model maybe underestimating
+Dysnopea in patients who do not have bronchitis.
+
+### Influential observations
+
+The last diagnostic monitor in this package focuses on specific
+observations. We compute the log-log likelihood of a model omitting each
+subsequent data point, and plot the ratio of this log-likelihood over
+the one with the whole model. This Bayes factor indicates which
+observations are particularly surprising. Any patterns within this
+observation might indicate a subset of data for which the model is a
+particularly poor fit.
+
+For the Asia data set, we suggest examining observations with a leave
+one out score higher than 6.
+
+``` r
+influential_obs(asia_bn, asia[1:200,], 3, TRUE)$plot
+```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+
 #### Discrete Bayesian Networks
 
 The functionalities of `bnmonitor` for sensitivity analysis in Discrete
@@ -45,7 +240,7 @@ library(bnlearn)
 graphviz.plot(fire_alarm)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
 
 The network consists of 6 nodes (`Fire`, `Smoke`, `Tampering`, `Alarm`,
 `Leaving` and `Report`) of either two or three levels. The conditional
@@ -192,40 +387,34 @@ computed and plotted using the function
 
 ``` r
 sensitivity(fire_alarm, "Report", "TRUE" , node = "Alarm" , value_node = "FALSE", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
+#> $sensitivity
+#>    New_value   Uniform Proportional Order Preserving
+#> 1       0.01 0.3673824    0.3678447        0.3678447
+#> 2       0.05 0.3671492    0.3675928        0.3675543
+#> 3       0.10 0.3668576    0.3672779        0.3671913
+#> 4       0.15 0.3665661    0.3669630        0.3668282
+#> 5       0.20 0.3662746    0.3666482        0.3664652
+#> 6       0.25 0.3659830    0.3663333        0.3661022
+#> 7       0.30 0.3656915    0.3660184        0.3657392
+#> 8       0.35 0.3654000    0.3657035               NA
+#> 9       0.40 0.3651084    0.3653886               NA
+#> 10      0.45 0.3648169    0.3650738               NA
+#> 11      0.50 0.3645254    0.3647589               NA
+#> 12      0.55 0.3642339    0.3644440               NA
+#> 13      0.60 0.3639423    0.3641291               NA
+#> 14      0.65 0.3636508    0.3638142               NA
+#> 15      0.70 0.3633593    0.3634994               NA
+#> 16      0.75 0.3630677    0.3631845               NA
+#> 17      0.80 0.3627762    0.3628696               NA
+#> 18      0.85 0.3624847    0.3625547               NA
+#> 19      0.90 0.3621931    0.3622398               NA
+#> 20      0.95 0.3619016    0.3619250               NA
 #> 
-#> Attaching package: 'gRbase'
-#> The following objects are masked from 'package:bnlearn':
-#> 
-#>     ancestors, children, parents
+#> $plot
+#> Warning: Removed 13 row(s) containing missing values (geom_path).
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="35%" />
-
-    #> $sensitivity
-    #>    New value   Uniform Proportional Order Preserving
-    #> 1       0.01 0.3673824    0.3678447        0.3678447
-    #> 2       0.05 0.3671492    0.3675928        0.3675543
-    #> 3       0.10 0.3668576    0.3672779        0.3671913
-    #> 4       0.15 0.3665661    0.3669630        0.3668282
-    #> 5       0.20 0.3662746    0.3666482        0.3664652
-    #> 6       0.25 0.3659830    0.3663333        0.3661022
-    #> 7       0.30 0.3656915    0.3660184        0.3657392
-    #> 8       0.35 0.3654000    0.3657035               NA
-    #> 9       0.40 0.3651084    0.3653886               NA
-    #> 10      0.45 0.3648169    0.3650738               NA
-    #> 11      0.50 0.3645254    0.3647589               NA
-    #> 12      0.55 0.3642339    0.3644440               NA
-    #> 13      0.60 0.3639423    0.3641291               NA
-    #> 14      0.65 0.3636508    0.3638142               NA
-    #> 15      0.70 0.3633593    0.3634994               NA
-    #> 16      0.75 0.3630677    0.3631845               NA
-    #> 17      0.80 0.3627762    0.3628696               NA
-    #> 18      0.85 0.3624847    0.3625547               NA
-    #> 19      0.90 0.3621931    0.3622398               NA
-    #> 20      0.95 0.3619016    0.3619250               NA
-    #> 
-    #> $plot
-    #> NULL
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="35%" />
 
 For all covariation schemes as the conditional probability of `Alarm =
 FALSE` increases, the probability of `Report = TRUE` decreases. The
@@ -271,7 +460,7 @@ CD(fire_alarm, node = "Alarm" , value_node = "MALFUNCTION", value_parents = c("T
 #> $plot
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="35%" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="35%" />
 
 As expected proportional covariation has the smallest CD distance of all
 covariation schemes.
@@ -334,7 +523,7 @@ bn <- hc(mathmarks)
 plot(bn)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="50%" />
 
 ``` r
 bnfit <-bn.fit(bn,mathmarks)
@@ -379,11 +568,11 @@ mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))
 mean_var5$plot
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="35%" />
+<img src="man/figures/README-unnamed-chunk-22-1.png" width="35%" />
 
 More interestingly, one can check the different effect of variations of
 different paramenters.
-<img src="man/figures/README-unnamed-chunk-16-1.png" width="45%" /><img src="man/figures/README-unnamed-chunk-16-2.png" width="45%" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="45%" /><img src="man/figures/README-unnamed-chunk-23-2.png" width="45%" />
 
 Therefore, misspecifications of the mean of the algebra exam would have
 the biggest effect on the distribution of the Gaussian Bayesian network.
@@ -498,7 +687,7 @@ partial <- Jeffreys(ci,"partial",c(2,5),delta)$Jeffreys
 
 Let’s compare the methods.
 
-<img src="man/figures/README-unnamed-chunk-22-1.png" width="45%" />
+<img src="man/figures/README-unnamed-chunk-29-1.png" width="45%" />
 
 The standard approach has the smallest Jeffreys divergence (this
 expected, although not guaranteed, since it changes the smallest number
@@ -509,7 +698,7 @@ As for the mean, we can check which entry of the covariance matrix has
 the biggest impact if varied. For simplicity here we pick the standard
 method only.
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="45%" />
+<img src="man/figures/README-unnamed-chunk-30-1.png" width="45%" />
 
 From the above plot we can notice that the less robust entries of the
 covariance matrix are the variance of `algebra`, the covariance between

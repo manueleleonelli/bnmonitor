@@ -37,6 +37,104 @@ install.packages("gRain")
 
 ## Overview
 
+The prequential diagnostics examine the forecasts that flow from a model in sequence.
+Each monitor given below indicates the probability of a particular observation based on the previous observations and the model structure. 
+In the prequential mindset, we compute a probability of each subsequent observation based on all previous data points. 
+These observations are then scored, and in this package we use the logarithmic score function.
+The observations are then standardized to give a z-score statistic. 
+Following the recommendation of Cowell (2007), scores indicate a poor fit where |z| > 1.96 
+
+We demonstrate the efficacy of the prequential monitors with the Asia data set from the bnlearn package. Details of the variables (nodes) can be found in the documentation for bnlearn.
+
+``` {r}
+library(bnlearn)
+library(bnmonitor)
+data(asia)
+summary(asia)
+```
+
+Lauritzen defines two candidate models we replicate below.
+``` {r out.width="50%"}
+asia_bn <- bnlearn::model2network("[A][S][T|A][L|S][B|S][D|B:E][E|T:L][X|E]")
+bnlearn::graphviz.plot(asia_bn) 
+asia_bn_alt <-  bnlearn::model2network("[A][S][T|A][L|S][B|S][E|T:L][X|E][D|B:E:S]")
+bnlearn::graphviz.plot(asia_bn_alt) 
+```
+
+### Global monitor
+
+The global monitor is equivalent to the Bayes Factor and offers a good assessment of the model as a whole. 
+It is primarily useful for differentiating between candidate models as the global monitor pinpoints the nodes with different contributions for two candidate models.
+We can assess the log likelihood contribution from each of the nodes and determine which nodes contribute the most to the global monitor.
+global.monitor.graph provides a quick visual for the entire network. 
+The darker the color, the more substantial the contribution of that node to the log likelihood.
+
+The global monitor assesses the probability of observing the data given the model and as such does not particularly fit the prequential view. 
+However, it is a quick and useful first diagnostic assessment.
+
+``` {r}
+global_monitor(asia_bn, asia, alpha = 3, FALSE)
+global_monitor(asia_bn_alt, asia, alpha = 3, FALSE)
+```
+
+In the alternative model, Dysnopea contributes more to the log-likelihood. 
+
+
+### Node monitor 
+
+We compute two variants of node monitors. The marginal node monitor computes the probability of the ith observation in the data set in turn after passing the evidence of the i-1 cases in the data set.
+The conditional node monitor computes the probability of the ith observation in the data set after passing evidence of the i-1 cases in the data set, and the evidence for all nodes in the ith case except the node of interest.
+
+As a quick survey of the nodes, the node_monitor command computes the marginal and conditional monitors for the final observation in the data set. 
+
+``` {r echo=TRUE}
+node_monitor(asia_bn, asia, FALSE)
+```
+The scores indicate a poor fit of the probability distributions specified for the Smoking, Bronchitis, and Dysnopea nodes.
+The modeller may decide which of these distributions is of the most interest. 
+For the purposes of this vignette, we assume that we would like to check the forecasts for Dysnopea. 
+
+The prequential monitor given by seq_marg_monitor give us a closer look at which particular forecasts in the data set might cause this difference.
+We examine the sequential monitor for both candidate models.
+
+``` {r,echo=TRUE, result='hide',warning=FALSE,out.width="50%"}
+seq_marg_monitor(asia_bn, asia[1:200,], "D", TRUE)$plot
+seq_marg_monitor(asia_bn_alt, asia[1:200,], "D", TRUE)$plot
+```
+
+Both sequential marginal node monitors fall within the recommendation of |z| > 1.96, indicating that both models are appropriate. 
+However, for later forecasts in the data set, Dysnopea tends to predict higher than average observations. 
+The forecasts flowing from the alternative model are more accurate.
+
+
+### Parent Child monitor 
+
+The parent child monitor computes the predictives for each subsequent observation given a particular set of parents.
+Whereas the node monitors use all observations, the parent child monitors only use the observations with the specified parents.
+This offers an important check for settings of parents for which the model forecasts are not appropriate.
+
+``` {r echo=TRUE,warning=FALSE, out.width = "50%"}
+seq_pa_ch_monitor(asia_bn_alt, asia, "D", "B", "yes", 3, TRUE)$plot
+seq_pa_ch_monitor(asia_bn, asia, "D", "B", "no", 3, TRUE)$plot
+```
+
+These plots show that for our model under consideration, Dysnopea is adequately modeled for patients who have Bronchitis, as the z-scores largely fall in the recommended range. 
+we might suggest examining the set of observations around index 1000 as those have a larger than expected z-score.
+However, for patients who do not have bronchitis, we see negative z-scores that indicate that the model maybe underestimating Dysnopea in patients who do not have bronchitis.
+
+### Influential observations
+
+The last diagnostic monitor in this package focuses on specific observations.
+We compute the log-log likelihood of a model omitting each subsequent data point, and plot the ratio of this log-likelihood over the one with the whole model.
+This Bayes factor indicates which observations are particularly surprising. 
+Any patterns within this observation might indicate a subset of data for which the model is a particularly poor fit. 
+
+For the Asia data set, we suggest examining observations with a leave one out score higher than 6.
+```{r echo=TRUE, warning=FALSE}
+influential_obs(asia_bn, asia[1:200,], 3, TRUE)$plot
+```
+
+
 #### Discrete Bayesian Networks
 The functionalities of `bnmonitor` for sensitivity analysis in Discrete Bayesian Networks are illustrated using the `fire_alarm` network bundled within the package representing a simple alarm system for fire accidents. 
 
@@ -86,6 +184,8 @@ sensquery(fire_alarm,"Report","TRUE", 0.4)
 
 In `sensquery` covarying parameters are always changed according to a proportional scheme. The output reports the parameters that could be changed, which value they need to be changed to, and the CD distance between the original and the varied network.
 
+
+
 ## Gaussian Bayesian Networks
 The functionalities of `bnmonitor` for sensitivity analysis in Gaussian Bayesian networks are illustrated next using the `mathmarks` dataset bundled within the package. 
 ```{r}
@@ -109,6 +209,7 @@ ci <-  bn2ci(bnfit)
 c(class(gbn),class(ci))
 ```
 
+
 #### Perturbation of the mean vector
 
 A varied GBN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics) by an additive factor 10.
@@ -122,6 +223,7 @@ The overall effect of such variations can be assessed in terms of dissimilarity 
 mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))
 mean_var5$plot
 ```
+
 
 More interestingly, one can check the different effect of variations of different paramenters.
 ```{r echo = FALSE, out.width="45%", warning = FALSE}
@@ -139,9 +241,11 @@ mean_var3J <- Jeffreys(gbn, "mean", entry=3, delta = seq(-10,10,0.1))$Jeffreys
 mean_var4J <- Jeffreys(gbn, "mean", entry=4, delta = seq(-10,10,0.1))$Jeffreys
 mean_var5J <- Jeffreys(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$Jeffreys
 out1 <- data.frame(delta = rep(seq(-10,10,0.1),5), Jeffreys = c(mean_var1J[,2],mean_var2J[,2],mean_var3J[,2],mean_var4J[,2],mean_var5J[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
-ggplot(out) + geom_line(aes(x=delta,y=KL,color = Entry)) 
-ggplot(out1) + geom_line(aes(x=delta,y=Jeffreys,color = Entry)) 
+ggplot(out) + geom_line(aes(x=delta,y=KL,color = Entry)) + theme_minimal()
+ggplot(out1) + geom_line(aes(x=delta,y=Jeffreys,color = Entry)) + theme_minimal()
 ```
+
+
 
 Therefore, misspecifications of the mean of the algebra exam would have the biggest effect on the distribution of the Gaussian Bayesian network.
 
@@ -171,6 +275,7 @@ partial_covar_matrix(ci,c(2,5),delta)
 row_covar_matrix(ci,c(2,5),delta)
 col_covar_matrix(ci,c(2,5),delta)
 ```
+
 For any of the four available methods (`total`, `partial`, `row` and `column`) the perturbed covariance matrix can be calculated with the function `model_pres_cov`. For instance in the case of a partial covariation:
 ```{r}
 model_pres_cov(ci,"partial",c(2,5),delta)$covariance
@@ -184,6 +289,7 @@ delta <- (d+gbn$covariance[2,5])/gbn$covariance[2,5]
 standard <- Jeffreys(gbn,"covariance", c(2,5), d)$Jeffreys
 partial <- Jeffreys(ci,"partial",c(2,5),delta)$Jeffreys
 ```
+
 
 Let's compare the methods.
 
@@ -233,4 +339,8 @@ KL_bounds(ci, 1.2)
 ```
 
 By looking at the standard method column, we have the confirmation that the 11th entry, corresponding to `algebra/analysis`, is the most critical for the robustness of the network.
+
+
+
+
 

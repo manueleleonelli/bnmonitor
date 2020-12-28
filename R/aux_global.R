@@ -16,6 +16,6 @@ global.monitor.bn.node <- function(node.idx,dag,alpha,df){#j is the index of the
   n <- 0
   counts.vec <- df %>% count(!!!(syms(pa.names))) %>% complete(!!!(syms(pa.names)),fill = list(n = 0)) %>% pull(n)
   scores.vec <- map_dbl(1:num.pa.combo, ~get.pa.combo.score(.x, counts.vec, alpha.vec))
-  score <- unlist(sum(scores.vec))
+  score <- unlist(-sum(scores.vec))
   return(score)#returns global and pach monitor
 }
