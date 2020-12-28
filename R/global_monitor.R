@@ -97,5 +97,5 @@ plot.global <- function(result,...){
 #'
 #'
 print.global <- function(result,...){
-  result$Global_monitor
+  result$Global_Monitor
 }
