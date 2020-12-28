@@ -39,31 +39,34 @@
 global_monitor <- function(dag, df, alpha, plot = TRUE){
   node.scores <- as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)))
   result <- data.frame(Vertex = names(dag$nodes), Score = node.scores)
-  if (plot == TRUE){
-    my.colors = brewer.pal(length(names(dag$nodes)),"Blues")
-    max.val <- ceiling(max(abs(node.scores)))
+  result <- list(Global_Monitor = result, DAG = dag)
+  attr(result, 'class') <- 'global'
+  return(result)
+}
+
+# Plot of global monitor
+
+plot.global <- function(result){
+    my.colors = brewer.pal(length(names(result$DAG$nodes)),"Blues")
+    max.val <- ceiling(max(abs(result$Global_Monitor$Score)))
     my.palette <- colorRampPalette(my.colors)(max.val)
-    node.colors <- my.palette[floor(abs(node.scores))]
-    nodes <- create_node_df(n=length(dag$nodes),
-                            type= names(dag$nodes),
-                            label=names(dag$nodes),
+    node.colors <- my.palette[floor(abs(result$Global_Monitor$Score))]
+    nodes <- create_node_df(n=length(result$DAG$nodes),
+                            type= names(result$DAG$nodes),
+                            label=names(result$DAG$nodes),
                             style="filled",
                             fontcolor="black",
                             fillcolor=node.colors, .name_repair = "unique")
 
-    from.nodes <- arcs(dag)[,1]
-    to.nodes <- arcs(dag)[,2]
+    from.nodes <- arcs(result$DAG)[,1]
+    to.nodes <- arcs(result$DAG)[,2]
 
-    edges <- create_edge_df(from=match(from.nodes,names(dag$nodes)),
-                            to=match(to.nodes,names(dag$nodes)))
+    edges <- create_edge_df(from=match(from.nodes,names(result$DAG)),
+                            to=match(to.nodes,names(result$DAG)))
 
     p <- suppressWarnings(create_graph(
       nodes_df = nodes,
       edges_df = edges) %>%
-      render_graph(title="Global Monitors",layout="tree"))
-    return(list(table = result, plot = p))
-  }
-  return(result)
+        render_graph(title="Global Monitors",layout="tree"))
+    return(p)
 }
-
-
