@@ -4,7 +4,7 @@
 \alias{global_monitor}
 \title{Global monitor}
 \usage{
-global_monitor(dag, df, alpha, plot = TRUE)
+global_monitor(dag, df, alpha)
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
@@ -12,8 +12,6 @@ global_monitor(dag, df, alpha, plot = TRUE)
 \item{df}{a base R style dataframe}
 
 \item{alpha}{single integer, usually the number of max levels in \code{df}}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot}
 }
 \value{
 A dataframe including the name of the vertices and the contribution of the vertices to the global monitor. It also returns a plot where vertices with higher contributions in absolute value are darker.
@@ -28,7 +26,7 @@ where \eqn{\pi_{ij}} is the value of the parents of \eqn{Y_j} for the i-th obser
 \deqn{-\sum_{i=1}^n\log(p(y_{ij}|\pi_{ij})).}
 }
 \examples{
-global_monitor(chds_bn, chds, 3, FALSE)
+global_monitor(chds_bn, chds, 3)
 
 }
 \references{

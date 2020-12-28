@@ -12,9 +12,8 @@
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
 #' @param alpha single integer, usually the number of max levels in \code{df}
-#' @param plot boolean value. If \code{TRUE} the function returns a plot
 #'
-#' @examples global_monitor(chds_bn, chds, 3, FALSE)
+#' @examples global_monitor(chds_bn, chds, 3)
 #'
 #' @importClassesFrom bnlearn bn.fit
 #' @importFrom graphics plot.new
@@ -37,7 +36,7 @@
 #'
 #'@export
 #'
-global_monitor <- function(dag, df, alpha, plot = TRUE){
+global_monitor <- function(dag, df, alpha){
   node.scores <- as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)))
   result <- data.frame(Vertex = names(dag$nodes), Score = node.scores)
   result <- list(Global_Monitor = result, DAG = dag)
@@ -64,28 +63,29 @@ global_monitor <- function(dag, df, alpha, plot = TRUE){
 #'@export
 #'
 #'
-plot.global <- function(result,...){
-    my.colors = brewer.pal(length(names(result$DAG$nodes)),"Blues")
-    max.val <- ceiling(max(abs(result$Global_Monitor$Score)))
+plot.global <- function(x,...){
+    my.colors = brewer.pal(length(names(x$DAG$nodes)),"Blues")
+    max.val <- ceiling(max(abs(x$Global_Monitor$Score)))
     my.palette <- colorRampPalette(my.colors)(max.val)
-    node.colors <- my.palette[floor(abs(result$Global_Monitor$Score))]
-    nodes <- create_node_df(n=length(result$DAG$nodes),
-                            type= names(result$DAG$nodes),
-                            label=names(result$DAG$nodes),
+    node.colors <- my.palette[floor(abs(x$Global_Monitor$Score))]
+    nodes <- create_node_df(n=length(x$DAG$nodes),
+                            type= names(x$DAG$nodes),
+                            label=names(x$DAG$nodes),
                             style="filled",
                             fontcolor="black",
                             fillcolor=node.colors, .name_repair = "unique")
 
-    from.nodes <- arcs(result$DAG)[,1]
-    to.nodes <- arcs(result$DAG)[,2]
+    from.nodes <- arcs(x$DAG)[,1]
+    to.nodes <- arcs(x$DAG)[,2]
 
-    edges <- create_edge_df(from=match(from.nodes,names(result$DAG$nodes)),
-                            to=match(to.nodes,names(result$DAG$nodes)))
+    edges <- create_edge_df(from=match(from.nodes,names(x$DAG$nodes)),
+                            to=match(to.nodes,names(x$DAG$nodes)))
 
     p <- suppressWarnings(create_graph(
       nodes_df = nodes,
-      edges_df = edges) %>%
-        render_graph(title="Global Monitors",layout="tree"))
+      edges_df = edges)
+      %>%  render_graph(title="Global Monitors",layout="tree")
+      )
     return(p)
 }
 
@@ -96,6 +96,7 @@ plot.global <- function(result,...){
 #'
 #'
 #'
-print.global <- function(result,...){
-  result$Global_Monitor
+print.global <- function(x,...){
+  print(x$Global_Monitor)
+  invisible(x)
 }
