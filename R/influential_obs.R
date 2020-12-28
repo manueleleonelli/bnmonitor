@@ -23,7 +23,7 @@
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 #'
-influential_obs <- function(dag, df, alpha, plot = TRUE){#j is the index of the parent set
+influential_obs <- function(dag, df, alpha){#j is the index of the parent set
   un <- unique(df)
   result <- rep(0,nrow(un))
   for(i in 1:nrow(un)){
@@ -37,11 +37,30 @@ influential_obs <- function(dag, df, alpha, plot = TRUE){#j is the index of the 
   }
   total <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node))))
   score <- abs(total - result)
- if(plot == TRUE){
-   score <- data.frame(score = score)
-   score <- cbind(score,un)
-    p <- suppressWarnings(ggplot(score, aes(x = 1:nrow(un), y = score)) + geom_point() +  xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal() )
-  return(list(score = score, plot = p ))
- }
-  return(score)#returns global and pach monitor
+  out <- data.frame(un,score)
+  attr(out,'class') <- c('influential_obs','data.frame')
+
+  return(out)#returns global and pach monitor
 }
+
+#' Plot for influential observations
+#'
+#'
+#'@param x The output of influential_obs
+#'@param ... additional inputs
+#'
+#' @method plot influential_obs
+#'@export
+#'
+#' @importFrom ggplot2  xlab ylab theme_minimal
+
+plot.influential_obs <- function(x,...){
+  index <- 1:length(x$score)
+  value <- x$score
+  data <- data.frame(index=index, value = value)
+  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal())
+  return(p)
+}
+
+
+

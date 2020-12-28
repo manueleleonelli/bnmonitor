@@ -84,8 +84,8 @@ bnlearn::graphviz.plot(asia_bn_alt)
 A first useful diagnostic is the `global_monitor`, reporting the contribution of each vertex to the log-likelihood of the model.
 
 ``` {r}
-glob_asia <- global_monitor(asia_bn, asia, alpha = 3)
-glob_asia_alt <- global_monitor(asia_bn_alt, asia, alpha = 3)
+glob_asia <- global_monitor(dag = asia_bn, df = asia, alpha = 3)
+glob_asia_alt <- global_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
 glob_asia
 glob_asia_alt
 ```
@@ -94,7 +94,7 @@ In the alternative model, Dysnopea contributes more to the log-likelihood.
 
 Global monitors can be plotted giving a quick view of the decomposition of the log-likelihood. The darker the color, the more substantial the contribution of a vertex.
 
-```{r}
+```{r out.width = "50%"}
 plot(glob_asia)
 ```
 
@@ -109,13 +109,13 @@ There are two variants of node monitors.
 As a quick survey of the nodes, the `node_monitor` command computes the marginal and conditional monitors for the final observation in the data set. 
 
 ``` {r echo=TRUE, message = FALSE, warning = FALSE}
-node_asia <- node_monitor(asia_bn, asia)
+node_asia <- node_monitor(dag = asia_bn, df = asia)
 node_asia
 ```
 
 The scores indicate a poor fit of the probability distributions specified for the Smoking, Bronchitis, and Dysnopea nodes, since these are larger than 1.96 in absolute value. Plots can also be created to give a visual counterpart of the node monitors.
 
-```{r}
+```{r out.width="50%"}
 plot(node_asia, which = "marginal")
 ```
 
@@ -126,31 +126,50 @@ As an illustration we investigate further the fit of the variable Dysnopea.
 
 The sequential marginal monitor `seq_marg_monitor` gives us a closer look at which particular forecasts in the data set might cause this poor fit. We examine the sequential monitor for both candidate models.
 
+
 ``` {r warning=FALSE}
-seq_asia <- seq_marg_monitor(asia_bn, asia, "D")
-seq_asia_alt <- seq_marg_monitor(asia_bn_alt, asia, "D")
+seq_asia <- seq_marg_monitor(dag = asia_bn, df = asia, node.name = "D")
+seq_asia_alt <- seq_marg_monitor(dag = asia_bn_alt, df = asia, node.name = "D")
 seq_asia
 seq_asia_alt
 ```
+
 
 ```{r out.width="50%",warning=FALSE}
 library(gridExtra)
 grid.arrange(plot(seq_asia),plot(seq_asia_alt),ncol=2)
 ```
 
-Both sequential marginal node monitors fall within the recommendation of |z| > 1.96, indicating that both models are appropriate. 
-However, for later forecasts in the data set, Dysnopea tends to predict higher than average observations. 
-The forecasts flowing from the alternative model are more accurate.
+Both monitors indicate that for some observations there is a poor fit (score above 1.96 in absolute value). In particular for the alternative models the marginal monitor has larger values in absolute value. 
+
+A similar analysis can be conducted with `seq_marg_monitor`, which would show that the model fits well (not reported here).
 
 
-``` {r warning=FALSE}
-seq_asia <- seq_cond_monitor(asia_bn, asia, "D")
-seq_asia_alt <- seq_cond_monitor(asia_bn_alt, asia, "D")
-seq_asia
-seq_asia_alt
+### Parent Child monitor 
+
+Once a vertex has been identified as a poor fit, further investigation can be carried out to check for which values of the parents the model provides a bad representation. This can be achieved with the `seq_pa_ch_monitor` function.
+
+As an illustration consider the `asia_bn` BN, the vertex `D` (Dysnopea), the parent variable `B` (Bronchitis) which can take values `yes` and `no`.
+
+``` {r warning=FALSE, out.width="50%"}
+asia_pa_ch1 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.names =  "B", pa.val =  "yes", alpha = 3)
+asia_pa_ch1
+asia_pa_ch2 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.names = "B", pa.val = "no", alpha = 3)
+asia_pa_ch2
+grid.arrange(plot(asia_pa_ch1),plot(asia_pa_ch2))
+```
+
+For this model, Dysnopea is adequately modeled for both values of Bronchitis, since most scores largely fall in the recommended range.
+
+### Influential observations
+
+The last robustness tool is the absolute value of the log-likelihood ratio between a model learnt without one observation and the one learnt with the full dataset. Larger values are associated to atomic events which influence the structural learning. 
+
+
+```{r warning=FALSE, out.width="50%"}
+influence <- influential_obs(dag = asia_bn, df = asia, alpha = 3)
+head(influence)
+plot(influence)
 ```
 
 
-```{r out.width="50%",warning=FALSE}
-grid.arrange(plot(seq_asia),plot(seq_asia_alt),ncol=2)
-```

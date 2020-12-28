@@ -4,7 +4,7 @@
 \alias{influential_obs}
 \title{Influential observations}
 \usage{
-influential_obs(dag, df, alpha, plot = TRUE)
+influential_obs(dag, df, alpha)
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}

@@ -88,7 +88,7 @@ plot.seq_marg_monitor <- function(x,...){
 #'@param ... additional inputs
 #'
 print.seq_marg_monitor <- function(x,...){
-  temp <- x$Seq_Cond_Monitor
+  temp <- x$Seq_Marg_Monitor
   temp <- temp[is.finite(temp)]
  cat("Marginal Node Monitor for", x$node.name,"\n",
      "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",

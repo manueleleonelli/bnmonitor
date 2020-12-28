@@ -4,7 +4,7 @@
 \alias{seq_pa_ch_monitor}
 \title{Sequential parent-child node monitors}
 \usage{
-seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha, plot = TRUE)
+seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha)
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
@@ -18,8 +18,6 @@ seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha, plot = TRUE)
 \item{pa.val}{vector including the levels of \code{pa.names} considered}
 
 \item{alpha}{single integer, usually the number of max levels in \code{df}}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.}
 }
 \value{
 A vector including the scores \eqn{Z_{ij}}.
@@ -38,7 +36,7 @@ where \eqn{(d_1,\dots,d_K)} are the possible values of \eqn{Y_j}. The sequential
  Values of \eqn{Z_{ij}} such that \eqn{|Z_{ij}|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j} after the first i-1 observations have been processed.
 }
 \examples{
-seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3, FALSE)
+seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3)
 
 }
 \references{

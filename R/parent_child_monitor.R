@@ -20,16 +20,14 @@
 #'@param pa.names vector including the names of the parents of \code{node.name}
 #'@param pa.val vector including the levels of \code{pa.names} considered
 #'@param alpha single integer, usually the number of max levels in \code{df}
-#'@param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
 #'
-#' @examples seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3, FALSE)
+#' @examples seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3)
 #'
 #'@importFrom purrr map_dbl map map_int
 #'@importFrom rlang sym
 #' @importFrom dplyr "%>%"
 #'@importFrom dplyr if_else filter
-#' @importFrom ggplot2 ggtitle xlab ylab theme_minimal theme scale_colour_discrete
 #' @importFrom reshape2 melt
 #'
 #' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
@@ -40,9 +38,9 @@
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 
-seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val,alpha, plot = TRUE){#takes input from bnlearn
+seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val,alpha){#takes input from bnlearn
   for (i in length(pa.names)){
-  df <- dplyr::filter(df,!!(sym(pa.names[i]))==pa.val[i])
+    df <- dplyr::filter(df,!!(sym(pa.names[i]))==pa.val[i])
   }
   nodes <-nodes(dag)
   num.nodes <- length(dag$nodes)
@@ -89,22 +87,50 @@ seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val,alpha, plot =
       new.alpha[as.numeric(df[i,node.idx])] <- new.alpha[as.numeric(df[i,node.idx])] + 1
       next
     }
-
-
-  }
-
-  if (plot == TRUE){
-    t <- 1:length(z.learn[which(z.learn!=0)])
-    pa.title <- toString(paste0(pa.names," = ",pa.val))
-    data <- as.data.frame(cbind(t,z.learn[which(z.learn!=0)]))
-    data <- melt(data,id='t')
-    value <- data$value
-    variable <- data$variable
-    p <- ggplot(data, aes(x=t, y=value)) + geom_point() + xlab('Relevant sample size') + ylab('Standardized Z Statistic') + theme_minimal()
-    z.learn[which(z.learn==0)] <- NA
-    return(list(z.score <- z.learn, plot = p))
   }
 
   z.learn[which(z.learn==0)] <- NA
-  return(data.frame(z.score = z.learn))
+  score <-  z.learn
+  attr(score, 'class') <- 'seq_pa_ch_monitor'
+  return(score)
 }
+
+
+#' Plot for sequential marginal monitors
+#'
+#' @importFrom ggplot2 ggtitle xlab ylab theme_minimal theme scale_colour_discrete
+#'
+#'@param x The output of seq_pa_ch_monitor
+#'@param ... additional inputs
+#'
+#' @method plot seq_pa_ch_monitor
+#'@export
+#'
+#' @importFrom ggplot2  xlab ylab theme_minimal
+
+plot.seq_pa_ch_monitor <- function(x,...){
+  index <- 1:length(x)
+  value <- x[1:length(x)]
+  data <- data.frame(index=index, value = value)
+  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Relevant sample size') + ylab('Standardized Z Statistic') + theme_minimal())
+  return(p)
+}
+
+
+
+#' Print of  sequential parent child monitor
+#'@export
+#'
+#'
+#'@param x The output of seq_pa_ch_monitor
+#'@param ... additional inputs
+#'
+print.seq_pa_ch_monitor <- function(x,...){
+  temp <- x[1:length(x)]
+  temp <- temp[is.finite(temp)]
+  cat("Parent Child Node Monitor","\n",
+      "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
+      "Maximum", "\t", max(temp,na.rm = TRUE))
+  invisible(x)
+}
+

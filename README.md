@@ -115,8 +115,8 @@ A first useful diagnostic is the `global_monitor`, reporting the
 contribution of each vertex to the log-likelihood of the model.
 
 ``` r
-glob_asia <- global_monitor(asia_bn, asia, alpha = 3)
-glob_asia_alt <- global_monitor(asia_bn_alt, asia, alpha = 3)
+glob_asia <- global_monitor(dag = asia_bn, df = asia, alpha = 3)
+glob_asia_alt <- global_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
 glob_asia
 #>   Vertex      Score
 #> 1      A  249.74568
@@ -150,7 +150,7 @@ contribution of a vertex.
 plot(glob_asia)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="50%" />
 
 ### Node monitor
 
@@ -170,7 +170,7 @@ marginal and conditional monitors for the final observation in the data
 set.
 
 ``` r
-node_asia <- node_monitor(asia_bn, asia)
+node_asia <- node_monitor(dag = asia_bn, df = asia)
 node_asia
 #>   node marg.z.score cond.z.score
 #> 1    A   -0.1029759   -0.1029862
@@ -193,7 +193,7 @@ monitors.
 plot(node_asia, which = "marginal")
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="50%" />
 
 <!-- The modeller may decide which of these distributions is of the most interest.  -->
 
@@ -207,8 +207,8 @@ look at which particular forecasts in the data set might cause this poor
 fit. We examine the sequential monitor for both candidate models.
 
 ``` r
-seq_asia <- seq_marg_monitor(asia_bn, asia, "D")
-seq_asia_alt <- seq_marg_monitor(asia_bn_alt, asia, "D")
+seq_asia <- seq_marg_monitor(dag = asia_bn, df = asia, node.name = "D")
+seq_asia_alt <- seq_marg_monitor(dag = asia_bn_alt, df = asia, node.name = "D")
 seq_asia
 #> Marginal Node Monitor for D 
 #>  Minimum      -2.182895 
@@ -226,27 +226,61 @@ grid.arrange(plot(seq_asia),plot(seq_asia_alt),ncol=2)
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
 
-Both sequential marginal node monitors fall within the recommendation of
-|z| \> 1.96, indicating that both models are appropriate. However, for
-later forecasts in the data set, Dysnopea tends to predict higher than
-average observations. The forecasts flowing from the alternative model
-are more accurate.
+Both monitors indicate that for some observations there is a poor fit
+(score above 1.96 in absolute value). In particular for the alternative
+models the marginal monitor has larger values in absolute value.
+
+A similar analysis can be conducted with `seq_marg_monitor`, which would
+show that the model fits well (not reported here).
+
+### Parent Child monitor
+
+Once a vertex has been identified as a poor fit, further investigation
+can be carried out to check for which values of the parents the model
+provides a bad representation. This can be achieved with the
+`seq_pa_ch_monitor` function.
+
+As an illustration consider the `asia_bn` BN, the vertex `D` (Dysnopea),
+the parent variable `B` (Bronchitis) which can take values `yes` and
+`no`.
 
 ``` r
-seq_asia <- seq_cond_monitor(asia_bn, asia, "D")
-seq_asia_alt <- seq_cond_monitor(asia_bn_alt, asia, "D")
-seq_asia
-#> Conditional Node Monitor for D 
-#>  Minimum      -1.658465 
-#>  Maximum      1.862883
-seq_asia_alt
-#> Conditional Node Monitor for D 
-#>  Minimum      -1.534081 
-#>  Maximum      2.118901
+asia_pa_ch1 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.names =  "B", pa.val =  "yes", alpha = 3)
+asia_pa_ch1
+#> Parent Child Node Monitor 
+#>  Minimum      -1.674971 
+#>  Maximum      2.158953
+asia_pa_ch2 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.names = "B", pa.val = "no", alpha = 3)
+asia_pa_ch2
+#> Parent Child Node Monitor 
+#>  Minimum      -1.911069 
+#>  Maximum      1.629946
+grid.arrange(plot(asia_pa_ch1),plot(asia_pa_ch2))
 ```
 
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" />
+
+For this model, Dysnopea is adequately modeled for both values of
+Bronchitis, since most scores largely fall in the recommended range.
+
+### Influential observations
+
+The last robustness tool is the absolute value of the log-likelihood
+ratio between a model learnt without one observation and the one learnt
+with the full dataset. Larger values are associated to atomic events
+which influence the structural learning.
+
 ``` r
-grid.arrange(plot(seq_asia),plot(seq_asia_alt),ncol=2)
+influence <- influential_obs(dag = asia_bn, df = asia, alpha = 3)
+head(influence)
+#>    A   S   T  L   B   E   X   D    score
+#> 1 no yes  no no yes  no  no yes 1.448996
+#> 2 no yes  no no  no  no  no  no 2.246368
+#> 3 no  no yes no  no yes yes yes 6.218600
+#> 4 no  no  no no yes  no  no yes 2.223474
+#> 5 no  no  no no  no  no  no yes 3.435658
+#> 6 no yes  no no  no  no  no yes 4.443592
+plot(influence)
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" />
