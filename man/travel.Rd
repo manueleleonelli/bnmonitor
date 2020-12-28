@@ -4,7 +4,8 @@
 \name{travel}
 \alias{travel}
 \title{Bayesian network on travel survey}
-\format{The Bayesian network \code{travel} includes the following nodes:
+\format{
+The Bayesian network \code{travel} includes the following nodes:
 \itemize{
   \item \bold{A}: three-level factor with levels \code{young}, \code{adult}, \code{old}. It indicates the age of an individual.
   \item \bold{S}: two level-factor with levels \code{M} (male) and \code{F} (female). It indicates the gender of an individual.
@@ -12,7 +13,8 @@
   \item \bold{O}: two level-factor with levels \code{emp} (employed) and \code{self} (self-employed). It indicates the occupation of an individual.
   \item \bold{R}: two level-factor with levels \code{small} and \code{big}. It indicates the size of the residence of an individual.
   \item \bold{T}: three level-factor with levels \code{car}, \code{train} and \code{other}. It ndicates the preferred mean of transportation by an individual.
-}}
+}
+}
 \source{
 Scutari, M., & Denis, J. B. (2014). Bayesian networks: with examples in R. Chapman and Hall/CRC.
 }

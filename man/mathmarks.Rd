@@ -4,14 +4,16 @@
 \name{mathmarks}
 \alias{mathmarks}
 \title{Math Marks Data}
-\format{A dataframe with 88 observations on the following 5 variables
+\format{
+A dataframe with 88 observations on the following 5 variables
 \itemize{
    \item \bold{mechanics}: mark out of 100 for mechanics
    \item \bold{vectors}: mark out of 100 for vectors
    \item \bold{algebra}: mark out of 100 for algebra
    \item \bold{analysis}: mark out of 100 for analysis
    \item \bold{statistics}: mark out of 100 for statistics
-}}
+}
+}
 \source{
 Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979) Multivariate Analysis. London: Academic Press.
 }

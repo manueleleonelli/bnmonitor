@@ -6,7 +6,8 @@
 \alias{chds_bn}
 \alias{chds_bn.fit}
 \title{Christchurch Health and Development Study}
-\format{The dataframe \code{chds} includes 500 observations randomly simulated from the \code{bn.fit} object \code{chds_bn.fit}. It has four variables:
+\format{
+The dataframe \code{chds} includes 500 observations randomly simulated from the \code{bn.fit} object \code{chds_bn.fit}. It has four variables:
 \itemize{
    \item \bold{Social}: family's social background with levels \code{"High"} and \code{"Low"}
    \item \bold{Economic}: family's economic status with levels \code{"High"} and \code{"Low"}
@@ -14,7 +15,14 @@
    \item \bold{Admission}: hospital admission of the child with levels \code{"yes"} and \code{"no"}
    \item \bold{statistics}: mark out of 100 for statistics
 }
-\code{chds_bn} is an object of class \code{bn} including the MAP Bayesian network from Barclay et al. (2013) and \code{chds_bn.fit} is an object of class \code{bn.fit} including the probabilities from the same article.}
+\code{chds_bn} is an object of class \code{bn} including the MAP Bayesian network from Barclay et al. (2013) and \code{chds_bn.fit} is an object of class \code{bn.fit} including the probabilities from the same article.
+
+An object of class \code{data.frame} with 500 rows and 4 columns.
+
+An object of class \code{bn} of length 3.
+
+An object of class \code{bn.fit} (inherits from \code{bn.fit.dnet}) of length 4.
+}
 \usage{
 chds
 

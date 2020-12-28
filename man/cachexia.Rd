@@ -9,10 +9,22 @@
 \alias{control_ci}
 \alias{cachexia_data}
 \title{Bayesian networks for a cachexia study}
-\format{Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fumarate (F), Glucose (GC), Glutamine (GM) and Valine (V).
+\format{
+Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fumarate (F), Glucose (GC), Glutamine (GM) and Valine (V).
     The networks \code{cachexia_gbn} and \code{cachexia_ci} are for people suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
     The networks \code{control_gbn} and \code{control_ci} are for people not suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
-    The original dataset is stored in \code{cachexia_data}.}
+    The original dataset is stored in \code{cachexia_data}.
+
+An object of class \code{GBN} of length 3.
+
+An object of class \code{CI} of length 4.
+
+An object of class \code{GBN} of length 3.
+
+An object of class \code{CI} of length 4.
+
+An object of class \code{data.table} (inherits from \code{data.frame}) with 77 rows and 7 columns.
+}
 \source{
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }

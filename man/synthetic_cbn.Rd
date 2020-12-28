@@ -6,8 +6,14 @@
 \alias{synthetic_gbn}
 \alias{synthetic_ci}
 \title{A synthetic continuous Bayesian network}
-\format{A continuous Bayesian networks over four variables ("y1", "y2", "y3", "y4"), embedding the statement "y1" independent of "y3" given "y2".
-    The Bayesian network is available both as an object of class \code{GBN} and as an object of class \code{CI}.}
+\format{
+A continuous Bayesian networks over four variables ("y1", "y2", "y3", "y4"), embedding the statement "y1" independent of "y3" given "y2".
+    The Bayesian network is available both as an object of class \code{GBN} and as an object of class \code{CI}.
+
+An object of class \code{GBN} of length 3.
+
+An object of class \code{CI} of length 4.
+}
 \source{
 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 }
