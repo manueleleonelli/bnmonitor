@@ -26,14 +26,13 @@
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
 #'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes are plotted.  Set by default to \code{TRUE}.
 #'
 #'@references Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 #'
 #'@examples sensitivity(synthetic_bn, "y2", "3", node = "y1",value_node = "1", value_parents = NULL,
-#'    new_value = "all", covariation = "all", plot = FALSE)
-#'@examples sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all", FALSE)
+#'    new_value = "all", covariation = "all")
+#'@examples sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all")
 #'
 #'@import bnlearn
 #'@importClassesFrom bnlearn bn.fit
@@ -53,8 +52,8 @@ sensitivity <- function(bnfit,
                         value_node,
                         value_parents,
                         new_value,
-                        covariation = "proportional",
-                        plot = TRUE)
+                        covariation = "proportional"
+                        )
 {
   if (!(interest_node %in% names(bnfit))) {
     stop("Invalid input for interest_node")
@@ -235,11 +234,10 @@ sensitivity <- function(bnfit,
       }
     }
   }
-  if (all(is.na(sens[, -1]))) {
-    plot <- FALSE
-    warning("The plot won't be showed since all the values are not possible")
-  }
-  if (plot == TRUE) {
+ # if (all(is.na(sens[, -1]))) {
+#    plot <- FALSE
+#    warning("The plot won't be showed since all the values are not possible")
+#  }
     if (covariation == "all") {
       if (nrow(sens) == 1) {
         ci <- gather(sens, key = "scheme", value = "value", - New_value)
@@ -247,7 +245,7 @@ sensitivity <- function(bnfit,
         value <- ci$value
         scheme <- ci$scheme
         Sensitivity <- ci$Sensitivity
-         plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_point(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
+        plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_point(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
       } else{
         ci <- gather(sens, key = "scheme", value = "value", - New_value)
         New_value <- ci$New_value
@@ -255,7 +253,7 @@ sensitivity <- function(bnfit,
         scheme <- ci$scheme
         Sensitivity <- ci$Sensitivity
         plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_line(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
-}
+      }
     } else{
       if (nrow(sens) == 1) {
         plot <- ggplot(sens, aes(x = New_value, y = Sensitivity)) +geom_point() + theme_minimal()
@@ -263,6 +261,32 @@ sensitivity <- function(bnfit,
         plot <- ggplot(sens,aes(x = New_value, y = Sensitivity)) + geom_line() + theme_minimal()
       }
     }
-  }
-  return(list(sensitivity = sens, plot = plot))
+  out <- list(sensitivity = sens, plot = plot)
+  attr(out,'class') <- 'sensitivity'
+  return(out)
 }
+
+
+#' Print of sensitivity function
+#'@export
+#'
+#'
+#'@param x The output of sensitivity
+#'@param ... additional inputs
+#'
+print.sensitivity <- function(x,...){
+  print(x$sensitivity)
+  invisible(x)
+}
+
+#' Plot of sensitivity
+#'@export
+#'
+#'@method plot sensitivity
+#'@param x The output of sensitivity
+#'@param ... additional inputs
+#'
+plot.sensitivity <- function(x,...){
+  x$plot
+}
+

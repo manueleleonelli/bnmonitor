@@ -109,8 +109,7 @@ sensquery <- function(bnfit,
           value_node = as.character(final_query[t, 2]),
           value_parents = unlist(strsplit(as.character(final_query[t, 3]), ",")),
           new_value = final_query[t, 5],
-          covariation = "proportional",
-          plot = F
+          covariation = "proportional"
         )$CD[, 2]
     }
     final_query[, 6] <- dist

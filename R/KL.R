@@ -35,7 +35,6 @@ KL <- function (x, ...) {
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
 #'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.
 #'@param ... additional parameters to be added to the plot.
 #'
 #'
@@ -44,8 +43,8 @@ KL <- function (x, ...) {
 #'@references Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annals of mathematical statistics, 22(1), 79-86.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 #'
-#'@examples KL(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
-#'@examples KL(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+#'@examples KL(synthetic_bn, "y2", "1", "2", "all", "all")
+#'@examples KL(synthetic_bn, "y1", "2", NULL, 0.3, "all")
 #'
 #'@importClassesFrom bnlearn bn.fit
 #'@importFrom stats coef
@@ -68,7 +67,7 @@ KL.bn.fit <-
            value_parents,
            new_value,
            covariation = "proportional",
-           plot = TRUE, ...) {
+           ...) {
     bnfit <- x
     suppressWarnings(if (new_value == "all") {
       new_value2 <-
@@ -269,11 +268,10 @@ KL.bn.fit <-
         }
       }
     }
-    if (all(is.na(KL[,-1]))) {
-      plot <- FALSE
-      warning("The plot won't be showed since all the values are not possible")
-    }
-    if (plot == TRUE) {
+   # if (all(is.na(KL[,-1]))) {
+  #    plot <- FALSE
+  #    warning("The plot won't be showed since all the values are not possible")
+   # }
       if (covariation == "all") {
         if (nrow(KL) == 1) {
           if(ncol(KL) == 3){
@@ -296,10 +294,36 @@ KL.bn.fit <-
         } else{
           plot <- ggplot(data = KL, mapping = aes(x = KL[,1], y = KL[,2])) + geom_line( na.rm = T) + labs(x = "New value", y = "KL", title = "KL divergence") + theme_minimal()
         }
-      }
-    }
-    return(list(KL = KL, plot = plot))
+       }
+    out <- list(KL = KL, plot = plot)
+    attr(out,'class') <- 'kl'
+    return(out)
   }
+
+
+#' Print of KL divergence
+#'@export
+#'
+#'
+#'@param x The output of KL
+#'@param ... additional inputs
+#'
+print.kl <- function(x,...){
+  print(x$KL)
+  invisible(x)
+}
+
+#' Plot of  KL divergence
+#'@export
+#'
+#'@method plot kl
+#'@param x The output of \code{KL}
+#'@param ... additional inputs
+#'
+plot.kl <- function(x,...){
+  x$plot
+}
+
 
 
 #' KL Divergence for \code{CI}
@@ -312,7 +336,6 @@ KL.bn.fit <-
 #'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the KL divergence is computed for every type of covariation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding KL divergences for the chosen model-preserving covariations.
@@ -321,11 +344,11 @@ KL.bn.fit <-
 #'
 #'@seealso \code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
-#'@examples KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01), FALSE)
-#'@examples KL(synthetic_ci, "partial", c(1,4), seq(0.9,1.1,0.01), FALSE)
-#'@examples KL(synthetic_ci, "column", c(1,2), seq(0.9,1.1,0.01), FALSE)
-#'@examples KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01), FALSE)
-#'@examples KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01), FALSE)
+#'@examples KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01))
+#'@examples KL(synthetic_ci, "partial", c(1,4), seq(0.9,1.1,0.01))
+#'@examples KL(synthetic_ci, "column", c(1,2), seq(0.9,1.1,0.01))
+#'@examples KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01))
+#'@examples KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01))
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
@@ -336,7 +359,7 @@ KL.bn.fit <-
 #'@export
 #'
 
-KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
+KL.CI <- function(x, type, entry, delta,  ...){
   ci <- x
   KL <- numeric(length(delta))
   det_or <- det(ci$covariance)
@@ -417,7 +440,6 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
   }
   if(type == "all"){KL_data <- data.frame(Variation = delta, KL_total = KL[,1], KL_partial = KL[,2], KL_row = KL[,3], KL_column = KL[,4])}
   else{ KL_data <- data.frame(Variation = delta, KL= KL)}
-  if(plot == TRUE){
     if(type == "all"){
       if(nrow(KL_data) == 1){
         plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = KL_data$KL_partial), col = "red", na.rm = T) + geom_point(aes(y = KL_data$KL_row), col = "green", na.rm =T) + geom_point(aes(y = KL_data$KL_column), col= "pink", na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
@@ -431,8 +453,9 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
        plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line(na.rm = T ) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
       }
     }
-  }
-  return(list(KL = KL_data, plot = plot))
+  out <- list(KL = KL_data, plot = plot)
+  attr(out,'class') <- 'kl'
+  return(out)
 }
 
 
@@ -448,7 +471,6 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
 #'@param where character string: either \code{mean} or \code{covariance} for variations of the mean vector and covariance matrix respectively.
 #'@param entry if \code{where == "mean"}, \code{entry} is the index of the entry of the mean vector to vary. If \code{where == "covariance"}, entry is a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector, including the variation parameters that act additively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@references Gómez-Villegas, M. A., Maín, P., & Susi, R. (2007). Sensitivity analysis in Gaussian Bayesian networks using a divergence measure. Communications in Statistics—Theory and Methods, 36(3), 523-539.
@@ -456,8 +478,8 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
 #'
 #'@seealso \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
-#'@examples KL(synthetic_gbn,"mean",2,seq(-1,1,0.1), FALSE)
-#'@examples KL(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1), FALSE)
+#'@examples KL(synthetic_gbn,"mean",2,seq(-1,1,0.1))
+#'@examples KL(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1))
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
@@ -468,7 +490,7 @@ KL.CI <- function(x, type, entry, delta, plot = TRUE, ...){
 #'@export
 #'
 #'
-KL.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
+KL.GBN <- function(x,where,entry,delta,  ...){
   gbn <- x
   if(where != "mean" & where!= "covariance") stop("where is either mean or covariance")
   KL <- numeric(length(delta))
@@ -494,13 +516,14 @@ KL.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
     }
   }
   KL_data <- data.frame(Variation = delta, KL=KL)
-  if(plot == TRUE){
     if(nrow(KL_data)==1){
       plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_point( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
     }else{
       plot <- ggplot(data = KL_data, mapping = aes(x = KL_data$Variation, y = KL_data$KL)) + geom_line( na.rm = T) + labs(x = "delta", y = "KL", title = "KL divergence") + theme_minimal()
     }
-  }
-  return(list(KL = KL_data, plot = plot))
+  out <- list(KL = KL_data, plot = plot)
+  attr(out,'class') <- 'kl'
+  return(out)
 }
+
 

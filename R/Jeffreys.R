@@ -29,15 +29,14 @@ Jeffreys <- function (x, ...) {
 #'@param where character string: either \code{mean} or \code{covariance} for variations of the mean vector and covariance matrix respectively.
 #'@param entry if \code{where == "mean"}, \code{entry} is the index of the entry of the mean vector to vary. If \code{where == "covariance"}, entry is a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector, including the variation parameters that act additively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 #'
 #'@seealso \code{\link{KL.GBN}}\code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.CI}}
 #'
-#'@examples Jeffreys(synthetic_gbn,"mean",2,seq(-1,1,0.1), FALSE)
-#'@examples Jeffreys(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1), FALSE)
+#'@examples Jeffreys(synthetic_gbn,"mean",2,seq(-1,1,0.1))
+#'@examples Jeffreys(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1))
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
@@ -48,7 +47,7 @@ Jeffreys <- function (x, ...) {
 #'@export
 #'
 #'
-Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
+Jeffreys.GBN <- function(x,where,entry,delta,  ...){
   gbn <- x
   if(where != "mean" & where!= "covariance") stop("where is either mean or covariance")
   KL <- numeric(length(delta))
@@ -74,14 +73,16 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
     }
   }
   KL <- data.frame(Variation = delta,Jeffreys=KL)
-  if(plot == TRUE){
+  Variation <- KL$Variation
+  Jeffreys <- KL$Jeffreys
     if(nrow(KL)==1){
-      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+      plot <- ggplot(data = KL, mapping = aes(x = Variation, y = Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
     }else{
-      plot <- ggplot(data = KL, mapping = aes(x = KL$Variation, y = KL$Jeffreys)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+      plot <- ggplot(data = KL, mapping = aes(x = Variation, y = Jeffreys)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
     }
-  }
-  return(list(Jeffreys = KL, plot = plot))
+  out <- list(Jeffreys = KL, plot = plot)
+  attr(out,'class') <- 'jeffreys'
+  return(out)
 }
 
 #' Jeffreys Divergence for \code{CI}
@@ -94,7 +95,6 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
 #'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the Jeffreys divergence is computed for every type of covariation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Jeffreys divergences for the chosen model-preserving covariations.
@@ -103,11 +103,11 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
 #'
 #'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}
 #'
-#'@examples Jeffreys(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01), FALSE)
-#'@examples Jeffreys(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01), FALSE)
-#'@examples Jeffreys(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01), FALSE)
-#'@examples Jeffreys(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01), FALSE)
-#'@examples Jeffreys(synthetic_ci,"all",c(3,2),seq(0.9,1.1,0.01), FALSE)
+#'@examples Jeffreys(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01))
+#'@examples Jeffreys(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01))
+#'@examples Jeffreys(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01))
+#'@examples Jeffreys(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01))
+#'@examples Jeffreys(synthetic_ci,"all",c(3,2),seq(0.9,1.1,0.01))
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
@@ -118,7 +118,7 @@ Jeffreys.GBN <- function(x,where,entry,delta, plot = TRUE, ...){
 #'@export
 #'
 
-Jeffreys.CI <- function(x, type, entry,delta, plot = TRUE, ...){
+Jeffreys.CI <- function(x, type, entry,delta, ...){
   ci <- x
   J <- numeric(length(delta))
   det_or <- det(ci$covariance)
@@ -199,21 +199,50 @@ Jeffreys.CI <- function(x, type, entry,delta, plot = TRUE, ...){
   }
   if(type == "all"){J_data <- data.frame(Variation = delta, Jeffreys_total = J[,1], Jeffreys_partial = J[,2], Jeffreys_row = J[,3], Jeffreys_column = J[,4])}
   else{ J_data <- data.frame(Variation = delta, Jeffreys= J)}
-  if(plot == TRUE){
     if(type == "all"){
+      Variation <- J_data$Variation
+      Jeffreys_total <- J_data$Jeffreys_total
+      Jeffreys_partial <- J_data$Jeffreys_partial
+      Jeffreys_row <- J_data$Jeffreys_row
+      Jeffreys_column <- J_data$Jeffreys_column
       if(nrow(J_data) == 1){
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_point(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_point(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Jeffreys_partial), col = "red", na.rm = T) + geom_point(aes(y = Jeffreys_row), col = "green", na.rm =T) + geom_point(aes(y = Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       } else{
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$J_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_partial), col = "red", na.rm = T) + geom_line(aes(y = J_data$Jeffreys_row), col = "green", na.rm =T) + geom_line(aes(y = J_data$Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Jeffreys_partial), col = "red", na.rm = T) + geom_line(aes(y = Jeffreys_row), col = "green", na.rm =T) + geom_line(aes(y = Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }
     } else{
       if(nrow(J_data) == 1){
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }else{
-        plot <- ggplot(data = J_data, mapping = aes(x = J_data$Variation, y = J_data$Jeffreys)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }
     }
-  }
-  return(list(Jeffreys = J_data, plot = plot))
+  out <- list(Jeffreys = J_data, plot = plot)
+  attr(out,'class') <- 'jeffreys'
+  return(out)
+}
+
+
+#' Print of Jeffreys distance
+#'@export
+#'
+#'
+#'@param x The output of Jeffreys
+#'@param ... additional inputs
+#'
+print.jeffreys <- function(x,...){
+  print(x$Jeffreys)
+  invisible(x)
+}
+
+#' Plot of  Jeffreys distance
+#'@export
+#'
+#'@method plot jeffreys
+#'@param x The output of \code{Jeffreys}
+#'@param ... additional inputs
+#'
+plot.jeffreys <- function(x,...){
+  x$plot
 }
 

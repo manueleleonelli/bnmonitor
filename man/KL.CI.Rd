@@ -4,7 +4,7 @@
 \alias{KL.CI}
 \title{KL Divergence for \code{CI}}
 \usage{
-\method{KL}{CI}(x, type, entry, delta, plot = TRUE, ...)
+\method{KL}{CI}(x, type, entry, delta, ...)
 }
 \arguments{
 \item{x}{object of class \code{CI}.}
@@ -14,8 +14,6 @@
 \item{entry}{a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
 \item{delta}{numeric vector with positive elements, including the variation parameters that act multiplicatively.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.}
 
 \item{...}{additional arguments for compatibility.}
 }
@@ -29,11 +27,11 @@ A dataframe including in the first column the variations performed, and in the f
 Computation of the KL divergence between a Bayesian network and its updated version after a model-preserving variation.
 }
 \examples{
-KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01), FALSE)
-KL(synthetic_ci, "partial", c(1,4), seq(0.9,1.1,0.01), FALSE)
-KL(synthetic_ci, "column", c(1,2), seq(0.9,1.1,0.01), FALSE)
-KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01), FALSE)
-KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01), FALSE)
+KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01))
+KL(synthetic_ci, "partial", c(1,4), seq(0.9,1.1,0.01))
+KL(synthetic_ci, "column", c(1,2), seq(0.9,1.1,0.01))
+KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01))
+KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01))
 
 }
 \references{

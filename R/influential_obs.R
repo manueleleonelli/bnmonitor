@@ -12,13 +12,12 @@
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
 #' @param alpha single integer, usually the number of max levels in \code{df}
-#' @param plot boolean value. If \code{TRUE} the function returns a plot.
 #'
 #' @importClassesFrom bnlearn bn.fit
 #'@importFrom purrr  map_dbl
 #'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
 #'
-#' @examples influential_obs(chds_bn, chds[1:100,], 3, FALSE)
+#' @examples influential_obs(chds_bn, chds[1:100,], 3)
 #'
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export

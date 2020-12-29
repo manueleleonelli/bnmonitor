@@ -11,7 +11,6 @@
   value_parents,
   new_value,
   covariation = "proportional",
-  plot = TRUE,
   ...
 )
 }
@@ -27,8 +26,6 @@
 \item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
 
 \item{...}{additional parameters to be added to the plot.}
 }
@@ -46,8 +43,8 @@ The parameter variation specified by the function is:
  P ( \code{node} = \code{value_node} | parents = \code{value_parents} ) = \code{new_value}
 }
 \examples{
-KL(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
-KL(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+KL(synthetic_bn, "y2", "1", "2", "all", "all")
+KL(synthetic_bn, "y1", "2", NULL, 0.3, "all")
 
 }
 \references{

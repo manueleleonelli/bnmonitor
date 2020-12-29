@@ -4,7 +4,7 @@
 \alias{Fro.CI}
 \title{Frobenius norm for \code{CI}}
 \usage{
-\method{Fro}{CI}(x, type, entry, delta, plot = TRUE, log = TRUE, ...)
+\method{Fro}{CI}(x, type, entry, delta, log = TRUE, ...)
 }
 \arguments{
 \item{x}{object of class \code{CI}.}
@@ -14,8 +14,6 @@
 \item{entry}{a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
 \item{delta}{numeric vector with positive elements, including the variation parameters that act multiplicatively.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.}
 
 \item{log}{boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.}
 
@@ -31,10 +29,10 @@ A dataframe including in the first column the variations performed, and in the f
 Computation of the Frobenius norm between a Bayesian network and its updated version after a model-preserving variation.
 }
 \examples{
-Fro(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01), FALSE)
-Fro(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01), FALSE)
-Fro(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01), FALSE)
-Fro(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01), FALSE)
+Fro(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01))
+Fro(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01))
+Fro(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01))
+Fro(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01))
 
 }
 \references{

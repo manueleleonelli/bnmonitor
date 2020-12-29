@@ -4,7 +4,7 @@
 \alias{Fro.GBN}
 \title{Frobenius norm for \code{GBN}}
 \usage{
-\method{Fro}{GBN}(x, entry, delta, plot = TRUE, log = TRUE, ...)
+\method{Fro}{GBN}(x, entry, delta, log = TRUE, ...)
 }
 \arguments{
 \item{x}{object of class \code{GBN}.}
@@ -12,8 +12,6 @@
 \item{entry}{a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
 \item{delta}{numeric vector, including the variation parameters that act additively.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.}
 
 \item{log}{boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.}
 
@@ -29,7 +27,7 @@ A dataframe including in the first column the variations performed and in the se
 Computation of the Frobenius norm between a Bayesian network and the additively perturbed Bayesian network, where the perturbation is either to the mean vector or to the covariance matrix. The Frobenius norm is not computed for perturbations of the mean since it is always equal to zero.
 }
 \examples{
-Fro(synthetic_gbn,c(3,3),seq(-1,1,0.1), FALSE)
+Fro(synthetic_gbn,c(3,3),seq(-1,1,0.1))
 
 }
 \seealso{

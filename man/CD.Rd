@@ -10,8 +10,7 @@ CD(
   value_node,
   value_parents,
   new_value,
-  covariation = "proportional",
-  plot = TRUE
+  covariation = "proportional"
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ CD(
 \item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the CD-distance for uniform (red), proportional (green), order-preserving (blue) co-variation schemes is plotted.  Set by default to \code{TRUE}.}
 }
 \value{
 The function \code{CD} returns a dataframe including in the first column the variations performed, and in the following columns the corresponding CD distances for the chosen covariation schemes.
@@ -46,8 +43,8 @@ The CD distance between two probability distributions \eqn{P} and \eqn{P'} defin
 \deqn{CD(P,P')= \log\max_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right) - \log\min_{y\in\mathcal{Y}}\left(\frac{P(y)}{P'(y)}\right)}
 }
 \examples{
-CD(synthetic_bn, "y2", "1", "2", "all", "all", FALSE)
-CD(synthetic_bn, "y1", "2", NULL, 0.3, "all", FALSE)
+CD(synthetic_bn, "y2", "1", "2", "all", "all")
+CD(synthetic_bn, "y1", "2", NULL, 0.3, "all")
 
 }
 \references{

@@ -23,13 +23,12 @@ Fro <- function (x, ...) {
 #'@param x object of class \code{GBN}.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector, including the variation parameters that act additively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.
 #'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@return A dataframe including in the first column the variations performed and in the second column the corresponding Frobenius norm.
 #'
-#'@examples Fro(synthetic_gbn,c(3,3),seq(-1,1,0.1), FALSE)
+#'@examples Fro(synthetic_gbn,c(3,3),seq(-1,1,0.1))
 #'
 #' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
@@ -41,7 +40,7 @@ Fro <- function (x, ...) {
 #'@importFrom ggplot2 labs
 #'@importFrom ggplot2 aes
 #'
-Fro.GBN <- function(x,entry,delta, plot = TRUE, log = TRUE, ...){
+Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
   gbn <- x
   fro <- numeric(length(delta))
     D <- matrix(0,length(gbn$mean),length(gbn$mean))
@@ -55,14 +54,16 @@ Fro.GBN <- function(x,entry,delta, plot = TRUE, log = TRUE, ...){
     }
   fro <- data.frame(Variation = delta,Frobenius=fro)
   if(log == TRUE){fro[,-1] <- log(fro[,-1])}
-  if(plot == TRUE){
+  Variation <- fro$Variation
+  Frobenius <- fro$Frobenius
     if(nrow(fro)==1){
-      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
+      plot <- suppressWarnings(ggplot(data = fro, mapping = aes(x = Variation, y = Frobenius)) + geom_point( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal())
     }else{
-      plot <- ggplot(data = fro, mapping = aes(x = fro$Variation, y = fro$Frobenius)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
+      plot <- suppressWarnings(ggplot(data = fro, mapping = aes(x = Variation, y = Frobenius)) + geom_line( na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal())
     }
-  }
-  return(list(Frobenius = fro, plot = plot))
+  out <- list(Frobenius = fro, plot = plot)
+  attr(out,'class') <- 'fro'
+  return(out)
 }
 
 #' Frobenius norm for \code{CI}
@@ -75,7 +76,6 @@ Fro.GBN <- function(x,entry,delta, plot = TRUE, log = TRUE, ...){
 #'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of covariation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
-#'@param plot boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, the KL-divergence for total (blue), partial (red), row-based (green) and column-based (pink) covariations is plotted.  Set by default to \code{TRUE}.
 #'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
@@ -85,16 +85,16 @@ Fro.GBN <- function(x,entry,delta, plot = TRUE, log = TRUE, ...){
 #'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
 #'
-#'@examples Fro(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01), FALSE)
-#'@examples Fro(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01), FALSE)
-#'@examples Fro(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01), FALSE)
-#'@examples Fro(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01), FALSE)
+#'@examples Fro(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01))
+#'@examples Fro(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01))
+#'@examples Fro(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01))
+#'@examples Fro(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01))
 #'
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 #'
 
-Fro.CI <- function(x, type, entry, delta, plot = TRUE, log = TRUE, ...){
+Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
   ci <- x
   fro <- numeric(length(delta))
   if(type == "total"){
@@ -157,24 +157,60 @@ Fro.CI <- function(x, type, entry, delta, plot = TRUE, log = TRUE, ...){
       else{fro[i,4]<- NA}
     }
   }
-  if(type == "all"){Fro_data <- data.frame(Variation = delta, Fro_total = fro[,1], Fro_partial = fro[,2], Fro_row = fro[,3], Fro_column = fro[,4])}
-  else{ Fro_data <- data.frame(Variation = delta, Frobenius= fro)}
+  if(type == "all")
+    {
+    Fro_data <- data.frame(Variation = delta, Fro_total = fro[,1], Fro_partial = fro[,2], Fro_row = fro[,3], Fro_column = fro[,4])
+    }
+  else{
+    Fro_data <- data.frame(Variation = delta, Frobenius= fro)
+    }
   if(log == TRUE){Fro_data[,-1] <- log(Fro_data[,-1])}
-  if(plot == TRUE){
     if(type == "all"){
+      Variation <- Fro_data$Variation
+      Fro_total <- Fro_data$Fro_total
+      Fro_partial <- Fro_data$Fro_partial
+      Fro_row <- Fro_data$Fro_row
+      Fro_column <- Fro_data$Fro_column
       if(nrow(Fro_data) == 1){
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_point(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_point(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
+        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Fro_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Fro_partial), col = "red", na.rm = T) + geom_point(aes(y = Fro_row), col = "green", na.rm =T) + geom_point(aes(y = Fro_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm") + theme_minimal())
       } else{
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Fro_data$Fro_partial), col = "red", na.rm = T) + geom_line(aes(y = Fro_data$Fro_row), col = "green", na.rm =T) + geom_line(aes(y = Fro_data$Fro_column), col= "pink", na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
+        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Fro_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Fro_partial), col = "red", na.rm = T) + geom_line(aes(y = Fro_row), col = "green", na.rm =T) + geom_line(aes(y = Fro_column), col= "pink", na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm") + theme_minimal())
       }
     } else{
+      Variation <- Fro_data$Variation
+      Frobenius <- Fro_data$Frobenius
       if(nrow(Fro_data) == 1){
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_point( na.rm = T) + labs(x = "delta", y = "Frobenius", title = "Frobenius norm") + theme_minimal()
+        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Frobenius)) + geom_point( na.rm = T) + labs(x = "delta", y = "Frobenius", title = "Frobenius norm") + theme_minimal())
       }else{
-        plot <- ggplot(data = Fro_data, mapping = aes(x = Fro_data$Variation, y = Fro_data$Fro)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal()
+        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Frobenius)) + geom_line(na.rm = T ) + labs(x = "delta",  y = "Frobenius", title = "Frobenius norm") + theme_minimal())
       }
     }
-  }
-  return(list(Frobenius = Fro_data, plot = plot))
+  out <- list(Frobenius = Fro_data, plot = plot)
+  attr(out,'class') <- 'fro'
+  return(out)
 
 }
+
+#' Print of Frobenius norm
+#'@export
+#'
+#'
+#'@param x The output of \code{Fro}
+#'@param ... additional inputs
+#'
+print.fro <- function(x,...){
+  print(x$Frobenius)
+  invisible(x)
+}
+
+#' Plot of Frobenius
+#'@export
+#'
+#'@method plot fro
+#'@param x The output of \code{Fro}
+#'@param ... additional inputs
+#'
+plot.fro <- function(x,...){
+  x$plot
+}
+

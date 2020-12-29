@@ -4,7 +4,7 @@
 \alias{Jeffreys.GBN}
 \title{Jeffreys Divergence for \code{GBN}}
 \usage{
-\method{Jeffreys}{GBN}(x, where, entry, delta, plot = TRUE, ...)
+\method{Jeffreys}{GBN}(x, where, entry, delta, ...)
 }
 \arguments{
 \item{x}{object of class \code{GBN}.}
@@ -14,8 +14,6 @@
 \item{entry}{if \code{where == "mean"}, \code{entry} is the index of the entry of the mean vector to vary. If \code{where == "covariance"}, entry is a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
 \item{delta}{numeric vector, including the variation parameters that act additively.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.  Set by default to \code{TRUE}.}
 
 \item{...}{additional arguments for compatibility.}
 }
@@ -29,8 +27,8 @@ A dataframe including in the first column the variations performed and in the se
 Computation of the Jeffreys divergence between a Bayesian network and the additively perturbed Bayesian network, where the perturbation is either to the mean vector or to the covariance matrix.
 }
 \examples{
-Jeffreys(synthetic_gbn,"mean",2,seq(-1,1,0.1), FALSE)
-Jeffreys(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1), FALSE)
+Jeffreys(synthetic_gbn,"mean",2,seq(-1,1,0.1))
+Jeffreys(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1))
 
 }
 \references{
