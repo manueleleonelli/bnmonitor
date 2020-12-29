@@ -12,8 +12,6 @@ influential_obs(dag, df, alpha)
 \item{df}{a base R style dataframe}
 
 \item{alpha}{single integer, usually the number of max levels in \code{df}}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot.}
 }
 \value{
 A vector including the influence of each observation.
@@ -28,7 +26,7 @@ The influence of an observation to the global monitor is defined as
 High values of this index denote observations that highly contribute to the likelihood of the model.
 }
 \examples{
-influential_obs(chds_bn, chds[1:100,], 3, FALSE)
+influential_obs(chds_bn, chds[1:100,], 3)
 
 }
 \seealso{

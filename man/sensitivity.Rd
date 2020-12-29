@@ -14,8 +14,7 @@ sensitivity(
   value_node,
   value_parents,
   new_value,
-  covariation = "proportional",
-  plot = TRUE
+  covariation = "proportional"
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ sensitivity(
 \item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
 \item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.}
-
-\item{plot}{boolean value. If \code{TRUE} the function returns a plot. If \code{covariation = "all"}, sensitivity function for uniform (red), proportional (green), order-preserving (blue) co-variation schemes are plotted.  Set by default to \code{TRUE}.}
 }
 \value{
 A dataframe with the varied parameter values and the output probabilities for the covariation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
@@ -60,8 +57,8 @@ and the probabilistic query of interest is:
 }
 \examples{
 sensitivity(synthetic_bn, "y2", "3", node = "y1",value_node = "1", value_parents = NULL,
-   new_value = "all", covariation = "all", plot = FALSE)
-sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all", FALSE)
+   new_value = "all", covariation = "all")
+sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all")
 
 }
 \references{
