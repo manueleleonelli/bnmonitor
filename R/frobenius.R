@@ -159,22 +159,21 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
   }
   if(type == "all")
     {
-    Fro_data <- data.frame(Variation = delta, Fro_total = fro[,1], Fro_partial = fro[,2], Fro_row = fro[,3], Fro_column = fro[,4])
+    Fro_data <- data.frame(Variation = delta, Total = fro[,1], Partial = fro[,2], Row_based = fro[,3], Column_based = fro[,4])
     }
   else{
     Fro_data <- data.frame(Variation = delta, Frobenius= fro)
     }
   if(log == TRUE){Fro_data[,-1] <- log(Fro_data[,-1])}
     if(type == "all"){
-      Variation <- Fro_data$Variation
-      Fro_total <- Fro_data$Fro_total
-      Fro_partial <- Fro_data$Fro_partial
-      Fro_row <- Fro_data$Fro_row
-      Fro_column <- Fro_data$Fro_column
+    ci <- gather(Fro_data, "scheme", "value", - Variation)
+    scheme <- ci$scheme
+    value <- ci$value
+    Variation <- ci$Variation
       if(nrow(Fro_data) == 1){
-        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Fro_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Fro_partial), col = "red", na.rm = T) + geom_point(aes(y = Fro_row), col = "green", na.rm =T) + geom_point(aes(y = Fro_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm") + theme_minimal())
+        plot <-  ggplot(data = ci, mapping = aes(x = Variation, y = value)) + geom_point(aes(color = scheme)) + labs( x = "delta", y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
       } else{
-        plot <- suppressWarnings(ggplot(data = Fro_data, mapping = aes(x = Variation, y = Fro_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Fro_partial), col = "red", na.rm = T) + geom_line(aes(y = Fro_row), col = "green", na.rm =T) + geom_line(aes(y = Fro_column), col= "pink", na.rm = T) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm") + theme_minimal())
+        plot <-  ggplot(data = ci, mapping = aes(x = Variation, y = value)) + geom_line(aes(color = scheme)) + labs(x = "delta",  y = "Frobenius", title = "Frobenius Norm") + theme_minimal()
       }
     } else{
       Variation <- Fro_data$Variation

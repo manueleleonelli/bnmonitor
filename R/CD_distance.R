@@ -30,6 +30,7 @@
 #'
 #'@importFrom stats coef
 #'@importFrom graphics lines points
+#'@importFrom tidyr gather
 #'@importClassesFrom bnlearn bn.fit
 #'@export
 CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = "proportional") {
@@ -128,7 +129,7 @@ CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = 
       if (length(bnfit.new.scheme) == 2) {
         CD <-
           data.frame(new_value2, rep(NA, length(new_value2)), rep(NA, length(new_value2)))
-        colnames(CD) <- c("New value", "Uniform", "Proportional")
+        colnames(CD) <- c("New_value", "Uniform", "Proportional")
       } else{
         CD <-
           data.frame(new_value2,
@@ -136,14 +137,14 @@ CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = 
                      rep(NA, length(new_value2)),
                      rep(NA, length(new_value2)))
         colnames(CD) <-
-          c("New value",
+          c("New_value",
             "Uniform",
             "Proportional",
             "Order Preserving")
       }
     } else{
       CD <- data.frame(new_value2, rep(NA, length(new_value2)))
-      colnames(CD) <- c("New value", "CD_distance")
+      colnames(CD) <- c("New_value", "CD_distance")
     }
 
     if (length(new_value2) == length(new_value_op)) {
@@ -213,19 +214,23 @@ CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = 
   #    plot <- FALSE
   #    warning("The plot won't be showed since all the values are not possible")
   #  }
+    ci <- gather(CD, key = "scheme", value = "value", - New_value)
+    New_value <- ci$New_value
+    scheme <- ci$scheme
+    value <- ci$value
       if (covariation == "all") {
         if (nrow(CD) == 1) {
           if(ncol(CD) == 3){
-            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = CD[,3]), col = "green", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
+            plot <- ggplot(data = ci, mapping = aes(x = New_value, y = value)) + geom_point(aes(color = scheme))  + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
           } else{
-            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_point( na.rm = T, col = "red") +  geom_point(aes(y = CD[,3]), col = "green", na.rm = T) + geom_point(aes(y = CD[,4]), col = "blue", na.rm = T) + labs( x = "new value",y = "CD", title = "CD distance") + theme_minimal()
+            plot <- ggplot(data = ci, mapping = aes(x = New_value, y = value)) + geom_point(aes(color = scheme))  + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
           }
         }
         else{
           if(ncol(CD) == 3){
-            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = CD[,3]), col = "green", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
+            plot <- ggplot(data = ci, mapping = aes(x = New_value, y = value)) + geom_line(aes(color = scheme))  + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
           } else{
-            plot <- ggplot(data = CD, mapping = aes(x = CD[,1], y = CD[,2])) + geom_line( na.rm = T, col = "red") +  geom_line(aes(y = CD[,3]), col = "green", na.rm = T) + geom_line(aes(y = CD[,4]), col = "blue", na.rm = T) + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
+            plot <- ggplot(data = ci, mapping = aes(x = New_value, y = value)) + geom_line(aes(color = scheme))  + labs(x = "new value", y = "CD", title = "CD distance") + theme_minimal()
           }
         }
       }

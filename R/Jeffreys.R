@@ -197,18 +197,21 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       else{J[i,4]<- NA}
     }
   }
-  if(type == "all"){J_data <- data.frame(Variation = delta, Jeffreys_total = J[,1], Jeffreys_partial = J[,2], Jeffreys_row = J[,3], Jeffreys_column = J[,4])}
-  else{ J_data <- data.frame(Variation = delta, Jeffreys= J)}
+  if(type == "all"){
+    J_data <- data.frame(Variation = delta, Total = J[,1], Partial = J[,2], Row_based = J[,3], Column_based = J[,4])}
+   else{
+    J_data <- data.frame(Variation = delta, Jeffreys= J)
+    Variation <- J_data$Variation
+    Jeffreys <- J_data$Jeffreys}
     if(type == "all"){
-      Variation <- J_data$Variation
-      Jeffreys_total <- J_data$Jeffreys_total
-      Jeffreys_partial <- J_data$Jeffreys_partial
-      Jeffreys_row <- J_data$Jeffreys_row
-      Jeffreys_column <- J_data$Jeffreys_column
+      ci <- gather(J_data, key = "scheme", value = "value", - Variation)
+      Variation <- ci$Variation
+      scheme <- ci$scheme
+      value <- ci$value
       if(nrow(J_data) == 1){
-        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys_total)) + geom_point(col = "blue", na.rm = T) + geom_point(aes(y = Jeffreys_partial), col = "red", na.rm = T) + geom_point(aes(y = Jeffreys_row), col = "green", na.rm =T) + geom_point(aes(y = Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = ci, mapping = aes(x = Variation, y = value)) + geom_point(aes(color = scheme)) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       } else{
-        plot <- ggplot(data = J_data, mapping = aes(x = Variation, y = Jeffreys_total)) + geom_line(col = "blue", na.rm = T) + geom_line(aes(y = Jeffreys_partial), col = "red", na.rm = T) + geom_line(aes(y = Jeffreys_row), col = "green", na.rm =T) + geom_line(aes(y = Jeffreys_column), col= "pink", na.rm = T) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
+        plot <- ggplot(data = ci, mapping = aes(x = Variation, y = value)) + geom_line(aes(color = scheme)) + labs( x = "delta", y = "Jeffreys", title = "Jeffreys divergence") + theme_minimal()
       }
     } else{
       if(nrow(J_data) == 1){
