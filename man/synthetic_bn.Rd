@@ -19,6 +19,6 @@ Manuele Leonelli, Eva Riccomagno (2018). "A geometric characterisation of sensit
 synthetic_bn
 }
 \description{
-\code{synthetic_bn} is a bn.fit object for a simple Bayesian network involving three variables.
+\code{synthetic_bn} is a \code{bn.fit} object for a simple Bayesian network involving three variables.
 }
 \keyword{datasets}

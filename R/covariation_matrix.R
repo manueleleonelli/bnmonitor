@@ -17,7 +17,7 @@
 #'@param entry a vector of length two specifying the entry of the covariance matrix to vary.
 #'@param delta multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.
 #'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #' @name covariation_matrix
 NULL
 

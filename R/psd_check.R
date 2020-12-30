@@ -2,13 +2,28 @@
 #'
 #' \code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semidefinite.
 #'
-#' The details depend on the class the method \code{KL} is applied to.
+#' The details depend on the class the method \code{psd_check} is applied to.
+#'
+#' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semidefinite if
+#' \deqn{\rho(D)\leq \lambda_{\min}(\Sigma)}
+#' where \eqn{\lambda_{\min}} is the smallest eigenvalue end \eqn{\rho} is the spectral radius.
+#'
 #'
 #' @param x object of class \code{GBN} or \code{CI}.
-#' @param ... parameters specific to the class used.
+#' @param type character string. Type of model-preserving covariation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of covariation matrix.
+#'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
+#'@param delta numeric vector, including the variation parameters that act additively.
+#'@param ... additional arguments for compatibility.
 #'
+#'@return A dataframe including the variations performed and the check for positive semidefinitess.
 #'
-#' @seealso \code{\link{psd_check.GBN}}, \code{\link{psd_check.CI}}
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
+#'
+#'@examples psd_check(synthetic_gbn,c(2,4),-3)
+#'@examples psd_check(synthetic_gbn,c(2,3),seq(-1,1,0.1))
+#'@examples psd_check(synthetic_ci,"partial",c(2,4),0.95)
+#'@examples psd_check(synthetic_ci,"all",c(2,3),seq(0.9,1.1,0.01))
+#
 #'
 #' @export
 #'
@@ -17,31 +32,9 @@ psd_check <- function (x, ...) {
   UseMethod("psd_check", x)
 }
 
-#' Check for positive semidefiniteness after a perturbation for \code{GBN}
-#'
-#' \code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semidefinite.
-#'
-#' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semidefinite if
-#' \deqn{\rho(D)\leq \lambda_{\min}(\Sigma)}
-#' where \eqn{\lambda_{\min}} is the smallest eigenvalue end \eqn{\rho} is the spectral radius.
-#'
-#'@seealso \code{\link{psd_check.CI}}
-#'
-#'@param x object of class \code{GBN}.
-#'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
-#'@param delta numeric vector, including the variation parameters that act additively.
-#'@param ... additional arguments for compatibility.
-#'
-#'@return A dataframe including the variations performed and the check for positive semidefinitess.
-#'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
-#'
-#'@examples psd_check(synthetic_gbn,c(2,4),-3)
-#'@examples psd_check(synthetic_gbn,c(2,3),seq(-1,1,0.1))
-#'
-#'@export
-#'
-#'
+
+#'@describeIn psd_check \code{psd_check} for objects \code{GBN}
+#' @export
 
 psd_check.GBN <- function (x,entry,delta,...){
  gbn <- x
@@ -57,31 +50,8 @@ psd_check.GBN <- function (x,entry,delta,...){
 }
 
 
-#' Check for positive semidefiniteness after a perturbation for \code{CI}
-#'
-#' \code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semidefinite.
-#'
-#' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network, \eqn{\Delta} be a perturbation matrix acting multiplicatively and \eqn{\tilde\Delta} a model-preserving covariation. The perturbed covariance matrix \eqn{\tilde\Delta\circ\Delta\circ\Sigma} is positive semidefinite if
-#' \deqn{\rho(\tilde\Delta\circ\Delta\circ\Sigma-\Sigma)\leq \lambda_{\min}(\Sigma)}
-#' where \eqn{\lambda_{\min}} is the smallest eigenvalue, \eqn{\rho} is the spectral radius and \eqn{\circ} is the Schur or elementwise product.
-#'
-#'@seealso \code{\link{psd_check.GBN}}
-#'
-#'@param x object of class \code{CI}.
-#'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the check is performed for every type of covariation matrix.
-#'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
-#'@param delta numeric vector, including the variation parameters that act multiplicatively.
-#'@param ... additional arguments for compatibility.
-#'
-#'@return A dataframe including the variations performed and the check for positive semidefinitess.
-#'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
-#'
-#'@examples psd_check(synthetic_ci,"partial",c(2,4),0.95)
-#'@examples psd_check(synthetic_ci,"all",c(2,3),seq(0.9,1.1,0.01))
-#'@export
-#'
-#'
+#'@describeIn psd_check \code{psd_check} for objects \code{CI}
+#' @export
 
 psd_check.CI <- function (x,type,entry,delta,...){
   ci <- x
