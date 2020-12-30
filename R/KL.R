@@ -34,11 +34,11 @@ KL <- function (x, ...) {
 #'@param value_node character string. Level of \code{node}.
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then it should be set to \code{NULL}.
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
-#'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.
+#'@param covariation character string. Co-variation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.
 #'@param ... additional parameters to be added to the plot.
 #'
 #'
-#' @return A dataframe with the varied parameter and the KL divergence for different covariation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
+#' @return A dataframe with the varied parameter and the KL divergence for different co-variation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
 #'
 #'@references Kullback, S., & Leibler, R. A. (1951). On information and sufficiency. The annals of mathematical statistics, 22(1), 79-86.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
@@ -316,12 +316,12 @@ KL.bn.fit <-
 #' Computation of the KL divergence between a Bayesian network and its updated version after a model-preserving variation.
 #'
 #'@param x object of class \code{CI}.
-#'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the KL divergence is computed for every type of covariation matrix.
+#'@param type character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the KL divergence is computed for every type of co-variation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
 #'@param ... additional arguments for compatibility.
 #'
-#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding KL divergences for the chosen model-preserving covariations.
+#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding KL divergences for the chosen model-preserving co-variations.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'@seealso \code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}

@@ -2,14 +2,14 @@
 % Please edit documentation in R/model_pres_cov.R
 \name{model_pres_cov}
 \alias{model_pres_cov}
-\title{Model-Preserving covariation}
+\title{Model-Preserving co-variation}
 \usage{
 model_pres_cov(ci, type, entry, delta)
 }
 \arguments{
 \item{ci}{object of class \code{CI}.}
 
-\item{type}{character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row} or \code{column}.}
+\item{type}{character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row} or \code{column}.}
 
 \item{entry}{a vector of length two specifying the entry of the covariance matrix to vary.}
 
@@ -19,7 +19,7 @@ model_pres_cov(ci, type, entry, delta)
 If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifiying that the covariance matrix is not positive semi-definite.
 }
 \description{
-Model-preserving covariation for objects of class \code{CI}.
+Model-preserving co-variation for objects of class \code{CI}.
 }
 \details{
 Let the original Bayesian network have a Normal distribution \eqn{\mathcal{N}(\mu,\Sigma)} and let \code{entry} be equal to \eqn{(i,j)}. For a multiplicative variation of the covariance matrix by an amount \eqn{\delta}, a variation matrix \eqn{\Delta} is constructed as
@@ -30,7 +30,7 @@ Let the original Bayesian network have a Normal distribution \eqn{\mathcal{N}(\m
 0 & \mbox{otherwise}
 \end{array}
 \right.}
-A covariation matrix \eqn{\tilde\Delta} is then constructed and the resulting distribution after the variation is \eqn{\mathcal{N}(\mu,\tilde\Delta\circ\Delta\circ\Sigma)}, assuming \eqn{\tilde\Delta\circ\Delta\circ\Sigma} is positive semi-definite and where \eqn{\circ} denotes the Schur (or element-wise) product. The matrix \eqn{\tilde\Delta} is so constructed to ensure that all conditional independence in the original Bayesian networks are retained after the parameter variation.
+A co-variation matrix \eqn{\tilde\Delta} is then constructed and the resulting distribution after the variation is \eqn{\mathcal{N}(\mu,\tilde\Delta\circ\Delta\circ\Sigma)}, assuming \eqn{\tilde\Delta\circ\Delta\circ\Sigma} is positive semi-definite and where \eqn{\circ} denotes the Schur (or element-wise) product. The matrix \eqn{\tilde\Delta} is so constructed to ensure that all conditional independence in the original Bayesian networks are retained after the parameter variation.
 }
 \examples{
 model_pres_cov(synthetic_ci,"partial",c(1,3),1.1)

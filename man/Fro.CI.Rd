@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{object of class \code{CI}.}
 
-\item{type}{character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of covariation matrix.}
+\item{type}{character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of co-variation matrix.}
 
 \item{entry}{a vector of length 2 indicating the entry of the covariance matrix to vary.}
 
@@ -20,7 +20,7 @@
 \item{...}{additional arguments for compatibility.}
 }
 \value{
-A dataframe including in the first column the variations performed, and in the following columns the corresponding Frobenius norms for the chosen model-preserving covariations.
+A dataframe including in the first column the variations performed, and in the following columns the corresponding Frobenius norms for the chosen model-preserving co-variations.
 }
 \description{
 \code{Fro.CI} returns the Frobenius norm between an object of class \code{CI}  and its update after a model-preserving parameter variation.

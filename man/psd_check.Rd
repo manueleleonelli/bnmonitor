@@ -21,7 +21,7 @@ psd_check(x, ...)
 
 \item{delta}{numeric vector, including the variation parameters that act additively.}
 
-\item{type}{character string. Type of model-preserving covariation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of covariation matrix.}
+\item{type}{character string. Type of model-preserving co-variation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of co-variation matrix.}
 }
 \value{
 A dataframe including the variations performed and the check for positive semidefinitess.

@@ -1,6 +1,6 @@
-#' Covariation schemes
+#' Co-variation schemes
 #'
-#' Functions that return an updated Bayesian network using the proportional, uniform and order-preserving covariation schemes.
+#' Functions that return an updated Bayesian network using the proportional, uniform and order-preserving co-variation schemes.
 #'
 #' The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.
 #' The name of the node to be varied, its level and its parent's levels should be specified.
@@ -97,7 +97,7 @@ orderp_covar <-
       ))[1]) == value_node))]
     if (s == length.node) {
       stop (
-        "Order preserving covariation scheme can't work by varying the last parameter in the increasing order of the parameters"
+        "Order preserving co-variation scheme can't work by varying the last parameter in the increasing order of the parameters"
       )
     }
     if (new_value > 1 / (1 + dim(coef(bnfit[[node]]))[1] - s)) {

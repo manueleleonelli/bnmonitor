@@ -37,8 +37,8 @@ The sequential conditional node monitor for the vertex \eqn{Y_j} is defined as
  where \eqn{E_k} and \eqn{V_k} are computed with respect to \eqn{p_k(y_{kj}|y_{k1},\dots,y_{k(j-1)},y_{k(j+1)},\dots,y_{km})}. Again, values of \eqn{Z_{ij}} such that \eqn{|Z_{ij}|> 1.96} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
 }
 \examples{
-seq_marg_monitor(chds_bn, chds[1:200,], "Events")
-seq_marg_monitor(chds_bn, chds[1:200,], "Admission")
+seq_marg_monitor(chds_bn, chds[1:100,], "Events")
+seq_marg_monitor(chds_bn, chds[1:100,], "Admission")
 
 }
 \references{

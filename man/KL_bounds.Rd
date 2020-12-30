@@ -12,14 +12,14 @@ KL_bounds(ci, delta)
 \item{delta}{multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.}
 }
 \value{
-A dataframe including the KL-divergence bound for each covariation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
+A dataframe including the KL-divergence bound for each co-variation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
 }
 \description{
 Computation of the bounds of the KL-divergence for variations of each paramater of a \code{CI} object.
 }
 \details{
 Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network with \eqn{n} vertices.
-Let \eqn{D} and \eqn{\Delta} be  variation matrices acting additively on \eqn{\Sigma}. Let also \eqn{\tilde\Delta} be a model-preserving covariation matrix.
+Let \eqn{D} and \eqn{\Delta} be  variation matrices acting additively on \eqn{\Sigma}. Let also \eqn{\tilde\Delta} be a model-preserving co-variation matrix.
 Denote with \eqn{Y} and \eqn{\tilde{Y}} the original and the perturbed random vectors. Then for a standard sensitivity analysis
 \deqn{KL(\tilde{Y}||Y)\leq 0.5n\max\left\{f(\lambda_{\max}(D\Sigma^{-1})),f(\lambda_{\min}(D\Sigma^{-1}))\right\}}
 whilst for a model-preserving one

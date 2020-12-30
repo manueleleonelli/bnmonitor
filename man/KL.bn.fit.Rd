@@ -25,12 +25,12 @@
 
 \item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. In the case of more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also be set to the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
-\item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
+\item{covariation}{character string. Co-variation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are used. Set by default to \code{proportional}.}
 
 \item{...}{additional parameters to be added to the plot.}
 }
 \value{
-A dataframe with the varied parameter and the KL divergence for different covariation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
+A dataframe with the varied parameter and the KL divergence for different co-variation schemes. If \code{plot = TRUE} the function returns a plot of the KL divergences.
 }
 \description{
 \code{KL.bn.fit} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.

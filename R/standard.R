@@ -44,7 +44,7 @@ mean_var <- function(gbn,entry,delta){
 #'
 #'@param gbn object of class \code{GBN}.
 #'@param entry a vector of length 2 specifying the entry of the covariance matrix to vary.
-#'@param delta additive variation coefficient for the entry of the covariation matrix given in \code{entry}.
+#'@param delta additive variation coefficient for the entry of the co-variation matrix given in \code{entry}.
 #'
 #'@seealso \code{\link{mean_var}}, \code{\link{model_pres_cov}}
 #'

@@ -16,7 +16,7 @@
 #'
 #' @return A dataframe including the names of the vertices, the marginal node monitors and the conditional node monitors. It also return two plots where vertices with a darker color have a higher marginal z-score or conditional z-score, respectively, in absolute value.
 #'
-#' @examples node_monitor(chds_bn, chds)
+#' @examples node_monitor(chds_bn, chds[1:100,])
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
 #'

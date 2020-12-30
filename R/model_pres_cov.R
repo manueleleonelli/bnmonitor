@@ -1,6 +1,6 @@
-#' Model-Preserving covariation
+#' Model-Preserving co-variation
 #'
-#' Model-preserving covariation for objects of class \code{CI}.
+#' Model-preserving co-variation for objects of class \code{CI}.
 #'
 #' Let the original Bayesian network have a Normal distribution \eqn{\mathcal{N}(\mu,\Sigma)} and let \code{entry} be equal to \eqn{(i,j)}. For a multiplicative variation of the covariance matrix by an amount \eqn{\delta}, a variation matrix \eqn{\Delta} is constructed as
 #' \deqn{\Delta_{k,l}=\left\{
@@ -10,7 +10,7 @@
 #' 0 & \mbox{otherwise}
 #' \end{array}
 #' \right.}
-#' A covariation matrix \eqn{\tilde\Delta} is then constructed and the resulting distribution after the variation is \eqn{\mathcal{N}(\mu,\tilde\Delta\circ\Delta\circ\Sigma)}, assuming \eqn{\tilde\Delta\circ\Delta\circ\Sigma} is positive semi-definite and where \eqn{\circ} denotes the Schur (or element-wise) product. The matrix \eqn{\tilde\Delta} is so constructed to ensure that all conditional independence in the original Bayesian networks are retained after the parameter variation.
+#' A co-variation matrix \eqn{\tilde\Delta} is then constructed and the resulting distribution after the variation is \eqn{\mathcal{N}(\mu,\tilde\Delta\circ\Delta\circ\Sigma)}, assuming \eqn{\tilde\Delta\circ\Delta\circ\Sigma} is positive semi-definite and where \eqn{\circ} denotes the Schur (or element-wise) product. The matrix \eqn{\tilde\Delta} is so constructed to ensure that all conditional independence in the original Bayesian networks are retained after the parameter variation.
 
 
 #'@seealso \code{\link{covariance_var}}, \code{\link{covariation_matrix}}
@@ -24,7 +24,7 @@
 #'
 #'
 #'@param ci object of class \code{CI}.
-#'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row} or \code{column}.
+#'@param type character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row} or \code{column}.
 #'@param entry a vector of length two specifying the entry of the covariance matrix to vary.
 #'@param delta multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.
 #'
@@ -38,7 +38,7 @@
 model_pres_cov <- function(ci, type, entry, delta){
   if (delta <= 0){stop("delta must be strictly positive")}
   if (length(entry)!= 2){stop("entry must be a vector of length 2")}
-  if (type != "total" & type != "partial" & type != "row" & type != "column"){stop("wrong covariation scheme")}
+  if (type != "total" & type != "partial" & type != "row" & type != "column"){stop("wrong co-variation scheme")}
   var_matrix <- variation_mat(ci,entry,delta)
   test <- rep(F,length(ci$cond_ind))
   for(i in 1:length(ci$cond_ind)){

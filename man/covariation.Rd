@@ -5,7 +5,7 @@
 \alias{proportional_covar}
 \alias{orderp_covar}
 \alias{uniform_covar}
-\title{Covariation schemes}
+\title{Co-variation schemes}
 \usage{
 proportional_covar(bnfit, node, value_node, value_parents, new_value)
 
@@ -28,7 +28,7 @@ uniform_covar(bnfit, node, value_node, value_parents, new_value)
 An object of class \code{bn.fit} with updated probabilities.
 }
 \description{
-Functions that return an updated Bayesian network using the proportional, uniform and order-preserving covariation schemes.
+Functions that return an updated Bayesian network using the proportional, uniform and order-preserving co-variation schemes.
 }
 \details{
 The Bayesian network on which parameter variation is being conducted should be expressed as a \code{bn.fit} object.

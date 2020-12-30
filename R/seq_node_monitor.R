@@ -23,8 +23,8 @@
 #' @references Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
 #' @references Cowell, R. G., Verrall, R. J., & Yoon, Y. K. (2007). Modeling operational risk with Bayesian networks. Journal of Risk and Insurance, 74(4), 795-827.
 #'
-#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Events")
-#' @examples seq_marg_monitor(chds_bn, chds[1:200,], "Admission")
+#' @examples seq_marg_monitor(chds_bn, chds[1:100,], "Events")
+#' @examples seq_marg_monitor(chds_bn, chds[1:100,], "Admission")
 #'
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #' @name seq_node_monitor

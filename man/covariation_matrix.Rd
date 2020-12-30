@@ -6,7 +6,7 @@
 \alias{col_covar_matrix}
 \alias{partial_covar_matrix}
 \alias{row_covar_matrix}
-\title{Covariation matrices}
+\title{Co-variation matrices}
 \usage{
 total_covar_matrix(ci, entry, delta)
 
@@ -24,13 +24,13 @@ row_covar_matrix(ci, entry, delta)
 \item{delta}{multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.}
 }
 \value{
-A covariation matrix of the same size of the covariance matrix of \code{CI}.
+A co-variation matrix of the same size of the covariance matrix of \code{CI}.
 }
 \description{
-Construction of model-preserving covariation matrices for objects of class \code{CI}.
+Construction of model-preserving co-variation matrices for objects of class \code{CI}.
 }
 \details{
-Functions to compute total, partial, row-based and column-based covariation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no covariation is required for model-preservation the functions return a matrix filled with ones (no covariation).
+Functions to compute total, partial, row-based and column-based co-variation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no co-variation is required for model-preservation the functions return a matrix filled with ones (no co-variation).
 }
 \examples{
 total_covar_matrix(synthetic_ci,c(1,1),0.3)

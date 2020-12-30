@@ -10,11 +10,11 @@ Sensitivity and robustness analysis for Bayesian networks.
 \details{
 bnmonitor provides functions to perform sensitivity analysis for both discrete Bayesian networks (DBNs) and Gaussian Bayesian networks (GBNs).
 
-In the discrete case, it provides three categories of functions: covariation schemes, dissimilarity measures and sensitivity related functions.
+In the discrete case, it provides three categories of functions: co-variation schemes, dissimilarity measures and sensitivity related functions.
 
-In the continuous case, both standard and model-preserving methods are available for perturbation of the mean vector and the covariance matrix.
+In the continuous case, both standard and model-preserving methods are available for perturbation of the mean vector and the co-variance matrix.
 
-bnmonitor further provides function to perform robustness studies in DBNs using the prequential approach to verify how well a network fits a specific dataset.
+bnmonitor further provides function to perform robustness studies in DBNs to verify how well a network fits a specific dataset.
 }
 \section{DBNs - Robustness}{
 
@@ -28,7 +28,7 @@ The available functions for robustness are:
 }
 }
 
-\section{DBNs - Covariation schemes}{
+\section{DBNs - Co-variation schemes}{
 
 The available co-variation schemes are:
  \itemize{
@@ -59,12 +59,12 @@ The available functions for sensitivity analysis are:
 
 \section{GBNs - Model-Preserving matrices}{
 
-The available functions to construct model-preserving covariation matrices are:
+The available functions to construct model-preserving co-variation matrices are:
 \itemize{
- \item \emph{Total covariation matrix} (\code{\link{total_covar_matrix}}).
- \item \emph{Partial covariation matrix} (\code{\link{partial_covar_matrix}}).
- \item \emph{Row-based covariation matrix} (\code{\link{row_covar_matrix}}).
- \item \emph{Column-based covariation matrix} (\code{\link{col_covar_matrix}}).
+ \item \emph{Total co-variation matrix} (\code{\link{total_covar_matrix}}).
+ \item \emph{Partial co-variation matrix} (\code{\link{partial_covar_matrix}}).
+ \item \emph{Row-based co-variation matrix} (\code{\link{row_covar_matrix}}).
+ \item \emph{Column-based co-variation matrix} (\code{\link{col_covar_matrix}}).
 }
 }
 

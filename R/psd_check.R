@@ -10,7 +10,7 @@
 #'
 #'
 #' @param x object of class \code{GBN} or \code{CI}.
-#' @param type character string. Type of model-preserving covariation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of covariation matrix.
+#' @param type character string. Type of model-preserving co-variation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of co-variation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector, including the variation parameters that act additively.
 #'@param ... additional arguments for compatibility.

@@ -73,14 +73,14 @@ Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
 #' Computation of the Frobenius norm between a Bayesian network and its updated version after a model-preserving variation.
 #'
 #'@param x object of class \code{CI}.
-#'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of covariation matrix.
+#'@param type character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of co-variation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
 #'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'
-#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Frobenius norms for the chosen model-preserving covariations.
+#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Frobenius norms for the chosen model-preserving co-variations.
 #'
 #'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.

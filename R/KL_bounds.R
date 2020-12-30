@@ -4,7 +4,7 @@
 #'
 #'
 #' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network with \eqn{n} vertices.
-#' Let \eqn{D} and \eqn{\Delta} be  variation matrices acting additively on \eqn{\Sigma}. Let also \eqn{\tilde\Delta} be a model-preserving covariation matrix.
+#' Let \eqn{D} and \eqn{\Delta} be  variation matrices acting additively on \eqn{\Sigma}. Let also \eqn{\tilde\Delta} be a model-preserving co-variation matrix.
 #' Denote with \eqn{Y} and \eqn{\tilde{Y}} the original and the perturbed random vectors. Then for a standard sensitivity analysis
 #' \deqn{KL(\tilde{Y}||Y)\leq 0.5n\max\left\{f(\lambda_{\max}(D\Sigma^{-1})),f(\lambda_{\min}(D\Sigma^{-1}))\right\}}
 #' whilst for a model-preserving one
@@ -19,7 +19,7 @@
 #'@param ci object of class \code{CI}.
 #'@param delta multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.
 #'
-#'@return A dataframe including the KL-divergence bound for each covariation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
+#'@return A dataframe including the KL-divergence bound for each co-variation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'@importFrom matrixcalc is.positive.semi.definite

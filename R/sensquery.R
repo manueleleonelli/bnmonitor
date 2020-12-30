@@ -9,7 +9,7 @@
 #'
 #'  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states}  ) = \code{new_value}
 #'
-#' Only the  proportional covariation scheme is used.
+#' Only the  proportional co-variation scheme is used.
 #'
 #' @seealso \code{\link{sensitivity}}
 #'

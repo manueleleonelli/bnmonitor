@@ -39,7 +39,7 @@ The probability of interest is specified as follows:
 
  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states}  ) = \code{new_value}
 
-Only the  proportional covariation scheme is used.
+Only the  proportional co-variation scheme is used.
 }
 \examples{
 sensquery(synthetic_bn,"y3", "3", 0.3)

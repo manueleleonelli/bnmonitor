@@ -1,10 +1,10 @@
-#' Covariation matrices
+#' Co-variation matrices
 #'
-#' Construction of model-preserving covariation matrices for objects of class \code{CI}.
+#' Construction of model-preserving co-variation matrices for objects of class \code{CI}.
 #'
-#' Functions to compute total, partial, row-based and column-based covariation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no covariation is required for model-preservation the functions return a matrix filled with ones (no covariation).
+#' Functions to compute total, partial, row-based and column-based co-variation matrices to ensure the conditional independences of the original Bayesian network hold after a variation. If no co-variation is required for model-preservation the functions return a matrix filled with ones (no co-variation).
 #'
-#'@return A covariation matrix of the same size of the covariance matrix of \code{CI}.
+#'@return A co-variation matrix of the same size of the covariance matrix of \code{CI}.
 #'
 #'@examples total_covar_matrix(synthetic_ci,c(1,1),0.3)
 #'@examples total_covar_matrix(synthetic_ci,c(1,2),0.3)

@@ -92,12 +92,12 @@ Jeffreys.GBN <- function(x,where,entry,delta,  ...){
 #' Computation of the Jeffreys divergence between a Bayesian network and its updated version after a model-preserving variation.
 #'
 #'@param x object of class \code{CI}.
-#'@param type character string. Type of model-preserving covariation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the Jeffreys divergence is computed for every type of covariation matrix.
+#'@param type character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row},\code{column} or \code{all}. If \code{all} the Jeffreys divergence is computed for every type of co-variation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
 #'@param ... additional arguments for compatibility.
 #'
-#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Jeffreys divergences for the chosen model-preserving covariations.
+#'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Jeffreys divergences for the chosen model-preserving co-variations.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'

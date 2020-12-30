@@ -14,7 +14,7 @@
 #'
 #' @seealso \code{\link{covariation}}, \code{\link{sensquery}}
 #'
-#' @return A dataframe with the varied parameter values and the output probabilities for the covariation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
+#' @return A dataframe with the varied parameter values and the output probabilities for the co-variation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
 #'
 #'@param bnfit object of class \code{bn.fit}.
 #'@param interest_node character string. Node of the probability query of interest.
@@ -25,7 +25,7 @@
 #'@param value_node character string. Level of \code{node}.
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.
 #'@param new_value numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.
-#'@param covariation character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.
+#'@param covariation character string. Co-variation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.
 #'
 #'@references Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
@@ -120,7 +120,7 @@ sensitivity <- function(bnfit,
       ))[1]) == value_node))]
     if (s == length.node & covariation == "orderp") {
       stop (
-        "Order preserving covariation scheme can't work by varying the last parameter in the increasing order of the parameters."
+        "Order preserving co-variation scheme can't work by varying the last parameter in the increasing order of the parameters."
       )
     }
     if (s == length.node & covariation == "all") {

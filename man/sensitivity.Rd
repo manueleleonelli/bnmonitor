@@ -36,10 +36,10 @@ sensitivity(
 
 \item{new_value}{numeric vector with elements between 0 and 1. Values to which the parameter should be updated. It can take a specific value or more than one. For more than one value, these should be defined through a vector with an increasing order of the elements. \code{new_value} can also take as value the character string \code{all}: in this case a sequence of possible parameter changes ranging from 0.05 to 0.95 is considered.}
 
-\item{covariation}{character string. Covariation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.}
+\item{covariation}{character string. Co-variation scheme to be used for the updated Bayesian network. Can take values \code{uniform}, \code{proportional}, \code{orderp}, \code{all}. If equal to \code{all}, uniform, proportional and order-preserving co-variation schemes are considered. Set by default to \code{proportional}.}
 }
 \value{
-A dataframe with the varied parameter values and the output probabilities for the covariation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
+A dataframe with the varied parameter values and the output probabilities for the co-variation schemes selected. If \code{plot = TRUE} the function also returns a plot of the sensitivity function.
 }
 \description{
 \code{sensitivity} returns the sensitivity function for a probabilistic query of interest with respect to a parameter change defined by the user.
