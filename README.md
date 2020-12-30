@@ -26,7 +26,7 @@ depends on packages that are on Bioconductor both directly and through
 the `gRbase` package, which depends on `RBGL`:
 
 ``` r
-BiocManager::install()
+install.packages("BiocManager")
 BiocManager::install(c("graph", "Rgraphviz", "RBGL"))
 install.packages("gRain")
 ```
