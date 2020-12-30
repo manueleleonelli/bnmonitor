@@ -9,7 +9,7 @@
 #' @aliases synthetic_cbn
 #' @name synthetic_cbn
 #'
-#'@source	 Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'@source	 C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 NULL
 
 #'

@@ -21,7 +21,7 @@
 #'
 #'@return A dataframe including the KL-divergence bound for each covariation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
 #'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 

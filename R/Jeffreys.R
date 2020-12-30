@@ -99,7 +99,7 @@ Jeffreys.GBN <- function(x,where,entry,delta,  ...){
 #'
 #'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Jeffreys divergences for the chosen model-preserving covariations.
 #'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'
 #'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}
 #'
@@ -225,27 +225,4 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
   return(out)
 }
 
-
-#' Print of Jeffreys distance
-#'@export
-#'
-#'
-#'@param x The output of Jeffreys
-#'@param ... additional inputs
-#'
-print.jeffreys <- function(x,...){
-  print(x$Jeffreys)
-  invisible(x)
-}
-
-#' Plot of  Jeffreys distance
-#'@export
-#'
-#'@method plot jeffreys
-#'@param x The output of \code{Jeffreys}
-#'@param ... additional inputs
-#'
-plot.jeffreys <- function(x,...){
-  x$plot
-}
 

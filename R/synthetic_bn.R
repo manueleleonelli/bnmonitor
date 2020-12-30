@@ -1,6 +1,6 @@
 #' A synthetic Bayesian network
 #'
-#'\code{synthetic_bn} is a bn.fit object for a simple Bayesian network involving three variables.
+#'\code{synthetic_bn} is a \code{bn.fit} object for a simple Bayesian network involving three variables.
 #'
 #' @docType data
 #'

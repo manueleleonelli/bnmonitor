@@ -305,28 +305,7 @@ KL.bn.fit <-
   }
 
 
-#' Print of KL divergence
-#'@export
-#'
-#'
-#'@param x The output of KL
-#'@param ... additional inputs
-#'
-print.kl <- function(x,...){
-  print(x$KL)
-  invisible(x)
-}
 
-#' Plot of  KL divergence
-#'@export
-#'
-#'@method plot kl
-#'@param x The output of \code{KL}
-#'@param ... additional inputs
-#'
-plot.kl <- function(x,...){
-  x$plot
-}
 
 
 
@@ -344,8 +323,7 @@ plot.kl <- function(x,...){
 #'
 #'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding KL divergences for the chosen model-preserving covariations.
 #'
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
-#'
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'@seealso \code{\link{KL.GBN}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
 #'@examples KL(synthetic_ci, "total", c(1,1), seq(0.9,1.1,0.01))

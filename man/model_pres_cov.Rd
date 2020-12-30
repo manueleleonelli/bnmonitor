@@ -42,7 +42,7 @@ model_pres_cov(synthetic_ci,"column",c(1,3),0.98)
 
 }
 \references{
-Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 }
 \seealso{
 \code{\link{covariance_var}}, \code{\link{covariation_matrix}}

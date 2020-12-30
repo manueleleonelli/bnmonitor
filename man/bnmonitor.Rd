@@ -5,7 +5,7 @@
 \alias{bnmonitor}
 \title{bnmonitor: A package for sensitivity analysis and robustness in Bayesian networks}
 \description{
-The package performs sensitivity and robustness analysis for Bayesian networks.
+Sensitivity and robustness analysis for Bayesian networks.
 }
 \details{
 bnmonitor provides functions to perform sensitivity analysis for both discrete Bayesian networks (DBNs) and Gaussian Bayesian networks (GBNs).

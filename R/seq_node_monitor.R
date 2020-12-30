@@ -64,37 +64,9 @@ seq_marg_monitor <- function(dag,df,node.name){#returns the mth node monitor
 }
 
 
-#' Plot for sequential marginal monitors
-#'
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
-#'
-#'@param x The output of seq_marg_monitor
-#'@param ... additional inputs
-#'
-#' @method plot seq_marg_monitor
-#'@export
-#'
-#'
-plot.seq_marg_monitor <- function(x,...){
-  temp <- data.frame(x= 1:length(x$Seq_Marg_Monitor), y=x$Seq_Marg_Monitor[1:length(x$Seq_Marg_Monitor)])
-  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Marginal Node Monitor for ", x$node.name)))
-  return(p)
-}
 
-#' Print of sequential marginal monitor
-#'@export
-#'
-#'@param x The output of seq_marg_monitor
-#'@param ... additional inputs
-#'
-print.seq_marg_monitor <- function(x,...){
-  temp <- x$Seq_Marg_Monitor
-  temp <- temp[is.finite(temp)]
- cat("Marginal Node Monitor for", x$node.name,"\n",
-     "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
-     "Maximum", "\t", max(temp,na.rm = TRUE))
-  invisible(x)
-}
+
+
 
 #'@rdname seq_node_monitor
 #'@importFrom bnlearn bn.fit as.grain
@@ -130,35 +102,6 @@ seq_cond_monitor <- function(dag,df,node.name){#returns the mth node monitor
 
 
 
-#' Plot for sequential conditional monitors
-#'
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
-#'
-#'@param x The output of seq_cond_monitor
-#'@param ... additional inputs
-#'
-#' @method plot seq_cond_monitor
-#'@export
-#'
-#'
-plot.seq_cond_monitor <- function(x,...){
-  temp <- data.frame(x= 1:length(x$Seq_Cond_Monitor), y=x$Seq_Cond_Monitor[1:length(x$Seq_Cond_Monitor)])
-  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Conditional Node Monitor for ", x$node.name)))
-  return(p)
-}
 
-#' Print of sequential conditional monitor
-#'@export
-#'
-#'
-#'@param x The output of seq_cond_monitor
-#'@param ... additional inputs
-#'
-print.seq_cond_monitor <- function(x,...){
-  temp <- x$Seq_Cond_Monitor
-  temp <- temp[is.finite(temp)]
-  cat("Conditional Node Monitor for", x$node.name,"\n",
-      "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
-      "Maximum", "\t", max(temp,na.rm = TRUE))
-  invisible(x)
-}
+
+

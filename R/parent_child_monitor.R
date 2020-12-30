@@ -96,41 +96,5 @@ seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val,alpha){#takes
 }
 
 
-#' Plot for sequential marginal monitors
-#'
-#' @importFrom ggplot2 ggtitle xlab ylab theme_minimal theme scale_colour_discrete
-#'
-#'@param x The output of seq_pa_ch_monitor
-#'@param ... additional inputs
-#'
-#' @method plot seq_pa_ch_monitor
-#'@export
-#'
-#' @importFrom ggplot2  xlab ylab theme_minimal
 
-plot.seq_pa_ch_monitor <- function(x,...){
-  index <- 1:length(x)
-  value <- x[1:length(x)]
-  data <- data.frame(index=index, value = value)
-  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Relevant sample size') + ylab('Standardized Z Statistic') + theme_minimal())
-  return(p)
-}
-
-
-
-#' Print of  sequential parent child monitor
-#'@export
-#'
-#'
-#'@param x The output of seq_pa_ch_monitor
-#'@param ... additional inputs
-#'
-print.seq_pa_ch_monitor <- function(x,...){
-  temp <- x[1:length(x)]
-  temp <- temp[is.finite(temp)]
-  cat("Parent Child Node Monitor","\n",
-      "Minimum ", "\t", min(temp,na.rm = TRUE), "\n",
-      "Maximum", "\t", max(temp,na.rm = TRUE))
-  invisible(x)
-}
 

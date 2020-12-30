@@ -19,3 +19,5 @@ global.monitor.bn.node <- function(node.idx,dag,alpha,df){#j is the index of the
   score <- unlist(-sum(scores.vec))
   return(score)#returns global and pach monitor
 }
+
+

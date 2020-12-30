@@ -42,24 +42,6 @@ influential_obs <- function(dag, df, alpha){#j is the index of the parent set
   return(out)#returns global and pach monitor
 }
 
-#' Plot for influential observations
-#'
-#'
-#'@param x The output of influential_obs
-#'@param ... additional inputs
-#'
-#' @method plot influential_obs
-#'@export
-#'
-#' @importFrom ggplot2  xlab ylab theme_minimal
-
-plot.influential_obs <- function(x,...){
-  index <- 1:length(x$score)
-  value <- x$score
-  data <- data.frame(index=index, value = value)
-  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Index') + ylab('Leave-One-Out Score') + theme_minimal())
-  return(p)
-}
 
 
 

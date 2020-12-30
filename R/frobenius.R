@@ -83,7 +83,7 @@ Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
 #'@return A dataframe including in the first column the variations performed, and in the following columns the corresponding Frobenius norms for the chosen model-preserving covariations.
 #'
 #'@seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
-#'@references Goergen, C., & Leonelli, M. (2018). Model-preserving sensitivity analysis for families of Gaussian distributions. arXiv preprint arXiv:1809.10794.
+#'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'
 #'@examples Fro(synthetic_ci,"total",c(1,1),seq(0.9,1.1,0.01))
 #'@examples Fro(synthetic_ci,"partial",c(1,4),seq(0.9,1.1,0.01))
@@ -190,17 +190,7 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
 
 }
 
-#' Print of Frobenius norm
-#'@export
-#'
-#'
-#'@param x The output of \code{Fro}
-#'@param ... additional inputs
-#'
-print.fro <- function(x,...){
-  print(x$Frobenius)
-  invisible(x)
-}
+
 
 #' Plot of Frobenius
 #'@export

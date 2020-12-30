@@ -1,6 +1,6 @@
 #' Christchurch Health and Development Study
 #'
-#' Marks out of 100 for 88 students taking examinations in mechanics (C), vectors (C), algebra (0), analysis (O) and statistics (O), where C indicates closed and O indicates open book examination.
+#' Simulated data and Bayesian networks from the Christchurch Health and Development Study
 #'
 #' @docType data
 #'

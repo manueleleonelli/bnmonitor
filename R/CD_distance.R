@@ -245,27 +245,3 @@ CD <- function(bnfit, node, value_node, value_parents, new_value, covariation = 
     attr(out,'class') <- 'CD'
     return(out)
 }
-
-#' Print of  CD distance
-#'@export
-#'
-#'
-#'@param x The output of CD
-#'@param ... additional inputs
-#'
-print.CD <- function(x,...){
-  print(x$CD)
-  invisible(x)
-}
-
-#' Plot of  CD distance
-#'@export
-#'
-#'@method plot CD
-#'@param x The output of CD
-#'@param ... additional inputs
-#'
-plot.CD <- function(x,...){
- x$plot
-}
-

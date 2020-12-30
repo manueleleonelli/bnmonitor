@@ -31,7 +31,7 @@ chds_bn
 chds_bn.fit
 }
 \description{
-Marks out of 100 for 88 students taking examinations in mechanics (C), vectors (C), algebra (0), analysis (O) and statistics (O), where C indicates closed and O indicates open book examination.
+Simulated data and Bayesian networks from the Christchurch Health and Development Study
 }
 \references{
 Fergusson, D. M., Horwood, L. J., & Shannon, F. T. (1986). Social and family factors in childhood hospital admission. Journal of Epidemiology & Community Health, 40(1), 50-58.

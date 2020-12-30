@@ -266,27 +266,3 @@ sensitivity <- function(bnfit,
   return(out)
 }
 
-
-#' Print of sensitivity function
-#'@export
-#'
-#'
-#'@param x The output of sensitivity
-#'@param ... additional inputs
-#'
-print.sensitivity <- function(x,...){
-  print(x$sensitivity)
-  invisible(x)
-}
-
-#' Plot of sensitivity
-#'@export
-#'
-#'@method plot sensitivity
-#'@param x The output of sensitivity
-#'@param ... additional inputs
-#'
-plot.sensitivity <- function(x,...){
-  x$plot
-}
-
