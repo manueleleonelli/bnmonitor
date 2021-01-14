@@ -145,6 +145,7 @@ plot.node_monitor <- function(x, which, ...){
   from.nodes <- arcs(x$DAG)[,1]
   to.nodes <- arcs(x$DAG)[,2]
 
+
   edges <- create_edge_df(from=match(from.nodes,x$Node_Monitor$node),
                           to=match(to.nodes,x$Node_Monitor$node))
   l <- length(names(x$DAG$nodes))
