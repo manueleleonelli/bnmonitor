@@ -27,7 +27,7 @@ Sequential node monitor for a vertex of a Bayesian network for a specific config
 }
 \details{
 Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dataset \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} has been observed, where \eqn{\boldsymbol{y}_i=(y_{i1},\dots,y_{im})} and \eqn{y_{ij}} is the i-th observation of the j-th variable.
-Consider a configuration \eqn{\pi_j} of the parents and consider the subvector \eqn{\boldsymbol{y}'=(\boldsymbol{y}_1',\dots,\boldsymbol{y}_{N'}')} of \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} including observations where the parents of \eqn{Y_j} take value \eqn{\pi_j} only.
+Consider a configuration \eqn{\pi_j} of the parents and consider the sub-vector \eqn{\boldsymbol{y}'=(\boldsymbol{y}_1',\dots,\boldsymbol{y}_{N'}')} of \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} including observations where the parents of \eqn{Y_j} take value \eqn{\pi_j} only.
 Let \eqn{p_i(\cdot|\pi_j)} be the conditional distribution of \eqn{Y_j} given that its parents take value \eqn{\pi_j} after the first i-1 observations have been processed. Define
 \deqn{E_i = \sum_{k=1}^Kp_i(d_k|\pi_j)\log(p_i(d_k|\pi_j)),}
 \deqn{V_i = \sum_{k=1}^K p_i(d_k|\pi_j)\log^2(p_i(d_k|\pi_j))-E_i^2,}

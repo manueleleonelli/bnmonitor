@@ -28,7 +28,7 @@
 #'@param entry a vector of length two specifying the entry of the covariance matrix to vary.
 #'@param delta multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.
 #'
-#'@return If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifiying that the covariance matrix is not positive semi-definite.
+#'@return If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifying that the covariance matrix is not positive semi-definite.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'@importFrom matrixcalc is.positive.semi.definite

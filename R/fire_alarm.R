@@ -17,5 +17,5 @@
 #'   \item \bold{Report}: two level-factor with levels \code{TRUE} and \code{FALSE}. It indicates if the incident has been reported or not.
 #' }
 #'
-#' @source Hei Chan, Adnan Darwiche (2002). "When do numbers really matter?". Journal of Articial Intelligence Research 17 (265-287).
+#' @source Hei Chan, Adnan Darwiche (2002). "When do numbers really matter?". Journal of Artificial Intelligence Research 17 (265-287).
 "fire_alarm"

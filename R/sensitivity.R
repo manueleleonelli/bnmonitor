@@ -20,7 +20,7 @@
 #'@param interest_node character string. Node of the probability query of interest.
 #'@param interest_node_value character string. Level of \code{interest_node}.
 #'@param evidence_nodes character string. Evidence nodes. If \code{NULL} no evidence is considered. Set by default to \code{NULL}.
-#'@param evidence_states character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.
+#'@param evidence_states character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considered. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.
 #'@param node character string. Node of which the conditional probability distribution is being changed.
 #'@param value_node character string. Level of \code{node}.
 #'@param value_parents character string. Levels of \code{node}'s parents. The levels should be defined according to the order of the parents in \code{bnfit[[node]][["parents"]]}. If \code{node} has no parents, then should be set to \code{NULL}.

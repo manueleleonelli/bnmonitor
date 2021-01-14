@@ -1,10 +1,10 @@
-#' Check for positive semidefiniteness after a perturbation
+#' Check for positive semi-definiteness after a perturbation
 #'
-#' \code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semidefinite.
+#' \code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semi-definite.
 #'
 #' The details depend on the class the method \code{psd_check} is applied to.
 #'
-#' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semidefinite if
+#' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semi-definite if
 #' \deqn{\rho(D)\leq \lambda_{\min}(\Sigma)}
 #' where \eqn{\lambda_{\min}} is the smallest eigenvalue end \eqn{\rho} is the spectral radius.
 #'
@@ -15,7 +15,7 @@
 #'@param delta numeric vector, including the variation parameters that act additively.
 #'@param ... additional arguments for compatibility.
 #'
-#'@return A dataframe including the variations performed and the check for positive semidefinitess.
+#'@return A dataframe including the variations performed and the check for positive semi-definiteness.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 #'

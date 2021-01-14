@@ -16,7 +16,7 @@ model_pres_cov(ci, type, entry, delta)
 \item{delta}{multiplicative variation coefficient for the entry of the covariance matrix given in \code{entry}.}
 }
 \value{
-If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifiying that the covariance matrix is not positive semi-definite.
+If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifying that the covariance matrix is not positive semi-definite.
 }
 \description{
 Model-preserving co-variation for objects of class \code{CI}.

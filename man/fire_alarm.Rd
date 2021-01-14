@@ -16,7 +16,7 @@ The Bayesian network \code{fire_alarm} includes the following nodes:
 }
 }
 \source{
-Hei Chan, Adnan Darwiche (2002). "When do numbers really matter?". Journal of Articial Intelligence Research 17 (265-287).
+Hei Chan, Adnan Darwiche (2002). "When do numbers really matter?". Journal of Artificial Intelligence Research 17 (265-287).
 }
 \usage{
 fire_alarm

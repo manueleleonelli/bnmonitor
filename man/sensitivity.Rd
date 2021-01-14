@@ -26,7 +26,7 @@ sensitivity(
 
 \item{evidence_nodes}{character string. Evidence nodes. If \code{NULL} no evidence is considered. Set by default to \code{NULL}.}
 
-\item{evidence_states}{character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.}
+\item{evidence_states}{character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considered. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.}
 
 \item{node}{character string. Node of which the conditional probability distribution is being changed.}
 

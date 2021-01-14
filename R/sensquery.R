@@ -20,7 +20,7 @@
 #'@param interest_node_value character string. Level of \code{interest_node}.
 #'@param new_value numeric value between 0 and 1. New value of the probability of interest.
 #'@param evidence_nodes character string. Evidence nodes. Set by default to \code{NULL}.
-#'@param evidence_states character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considerated. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.
+#'@param evidence_states character string. Levels of \code{evidence_nodes}. If \code{NULL} no evidence is considered. If \code{evidence_nodes="NULL"}, \code{evidence_states} should be set to \code{NULL}. Set by default to \code{NULL}.
 #'
 #'@examples sensquery(synthetic_bn,"y3", "3", 0.3)
 #'

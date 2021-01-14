@@ -194,7 +194,7 @@ The functions `uniform_covar` and `orderp_covar` have the same inputs and return
 
 ### Sensitivity functions
 
-Suppose we are interested in the probability that `Report = TRUE` and how this varies with respect to the probability that `Alarm = FALSE` conditional on `Fire = TRUE` and `Tampering = FALSE`. This can be coputed with the function `sensitivity`.
+Suppose we are interested in the probability that `Report = TRUE` and how this varies with respect to the probability that `Alarm = FALSE` conditional on `Fire = TRUE` and `Tampering = FALSE`. This can be computed with the function `sensitivity`.
 
 ```{r out.width="50%", warning = FALSE}
 sens <- sensitivity(bnfit = fire_alarm, interest_node = "Report", interest_node_value =  "TRUE" , node = "Alarm" , value_node = "FALSE", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
@@ -205,7 +205,7 @@ For all covariation schemes as the conditional probability of `Alarm = FALSE` in
 
 The function sensitivity also allows for conditional probabilities of interest, not only marginals, which can be set by the options `evidence_nodes` and `evidence_states`.
 
-For such changes in the probability distribution of a BN, we can compute the distance between the original and the varied networks using the Chan-Darwiche distance (`CD`) and the Kullback-Leibler divergence (`KL`). As an example cosnider `Alarm = MALFUNCTIOn` conditional on `Fire = TRUE` and `Tampering = FALSE`.
+For such changes in the probability distribution of a BN, we can compute the distance between the original and the varied networks using the Chan-Darwiche distance (`CD`) and the Kullback-Leibler divergence (`KL`). As an example consider `Alarm = MALFUNCTIOn` conditional on `Fire = TRUE` and `Tampering = FALSE`.
 
 ```{r out.width="50%", warning = FALSE}
 cd_distance <- CD(fire_alarm, node = "Alarm", value_node = "MALFUNCTION", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
@@ -267,7 +267,7 @@ jef_var5 <- Jeffreys(gbn, where = "mean", entry = 5, delta = seq(-10,10,0.1))
 grid.arrange(plot(kl_var5), plot(jef_var5), ncol = 2)
 ```
 
-More interestingly, one can check the different effect of variations of different paramenters (code not shown).
+More interestingly, one can check the different effect of variations of different parameters (code not shown).
 
 ```{r echo = FALSE, out.width="50%", warning = FALSE}
 library(ggplot2)
@@ -296,7 +296,7 @@ Care must be taken when performing perturbations of the covariance matrix, for t
 
  - the perturbed matrix may not be positive semidefinite; 
  
- - the perturbed matrix may not respect the conditional indepedences of the underlying BN.
+ - the perturbed matrix may not respect the conditional independences of the underlying BN.
  
 Suppose we are interested in assessing the effect of varying the covariance between `Statistics` and `Vectors`.
 
@@ -308,7 +308,7 @@ gbn$covariance
 
 The parameter of interest correspond to the entry (2,5) of the covariance matrix.
 
-A standard perturbated covariance matrix can be constructed with the `covariance_var` function. Suppose we want to increase the covariance between `Statistics` and `Vectors` by an additive factor of 10. 
+A standard perturbed covariance matrix can be constructed with the `covariance_var` function. Suppose we want to increase the covariance between `Statistics` and `Vectors` by an additive factor of 10. 
 ```{r}
 d <- 10
 covariance_var(gbn, entry = c(2,5), delta = d)$covariance
@@ -332,7 +332,7 @@ For any of the four available methods (`total`, `partial`, `row` and `column`) t
 model_pres_cov(ci, type = "partial", entry = c(2,5), delta = delta)$covariance
 ```
 
-Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariation methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). Let's consider the Froenius norm.
+Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariation methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). Let's consider the Frobenius norm.
 ```{r out.width = "50%"}
 d <- seq(-10, 10, 0.1)
 delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]

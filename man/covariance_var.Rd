@@ -14,7 +14,7 @@ covariance_var(gbn, entry, delta)
 \item{delta}{additive variation coefficient for the entry of the co-variation matrix given in \code{entry}.}
 }
 \value{
-If the resulting covariance is positive semi-definite, \code{covariance_var} returns an object of class \code{GBN} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.gbn}, which has the same components of \code{GBN} but also has a warning entry specifiying that the covariance matrix is not positive semi-definite.
+If the resulting covariance is positive semi-definite, \code{covariance_var} returns an object of class \code{GBN} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.gbn}, which has the same components of \code{GBN} but also has a warning entry specifying that the covariance matrix is not positive semi-definite.
 }
 \description{
 Computation of an updated \code{GBN} object after a variation of the covariance matrix.

@@ -132,7 +132,7 @@ plot.kl <- function(x,...){
 
 
 
-#'@importFrom RColorBrewer brewer.pal colorRampPalette
+#'@importFrom RColorBrewer brewer.pal
 #'@importFrom graphics plot.new
 #'@importFrom grDevices colorRampPalette
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph

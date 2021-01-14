@@ -4,7 +4,7 @@
 \alias{psd_check}
 \alias{psd_check.GBN}
 \alias{psd_check.CI}
-\title{Check for positive semidefiniteness after a perturbation}
+\title{Check for positive semi-definiteness after a perturbation}
 \usage{
 psd_check(x, ...)
 
@@ -24,15 +24,15 @@ psd_check(x, ...)
 \item{type}{character string. Type of model-preserving co-variation: either \code{total}, \code{partial}, \code{row}, \code{column} or \code{all}. If \code{all}, the Frobenius norms are computed for every type of co-variation matrix.}
 }
 \value{
-A dataframe including the variations performed and the check for positive semidefinitess.
+A dataframe including the variations performed and the check for positive semi-definiteness.
 }
 \description{
-\code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semidefinite.
+\code{psd_check} returns a boolean to determine if the covariance matrix after a perturbation is positive semi-definite.
 }
 \details{
 The details depend on the class the method \code{psd_check} is applied to.
 
-Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semidefinite if
+Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network and let \eqn{D} be a perturbation matrix acting additively. The perturbed covariance matrix \eqn{\Sigma+D} is positive semi-definite if
 \deqn{\rho(D)\leq \lambda_{\min}(\Sigma)}
 where \eqn{\lambda_{\min}} is the smallest eigenvalue end \eqn{\rho} is the spectral radius.
 }

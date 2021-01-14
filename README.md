@@ -323,7 +323,7 @@ order-preserving covariation, respectively.
 Suppose we are interested in the probability that `Report = TRUE` and
 how this varies with respect to the probability that `Alarm = FALSE`
 conditional on `Fire = TRUE` and `Tampering = FALSE`. This can be
-coputed with the function `sensitivity`.
+computed with the function `sensitivity`.
 
 ``` r
 sens <- sensitivity(bnfit = fire_alarm, interest_node = "Report", interest_node_value =  "TRUE" , node = "Alarm" , value_node = "FALSE", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
@@ -344,7 +344,7 @@ interest, not only marginals, which can be set by the options
 For such changes in the probability distribution of a BN, we can compute
 the distance between the original and the varied networks using the
 Chan-Darwiche distance (`CD`) and the Kullback-Leibler divergence
-(`KL`). As an example cosnider `Alarm = MALFUNCTIOn` conditional on
+(`KL`). As an example consider `Alarm = MALFUNCTIOn` conditional on
 `Fire = TRUE` and `Tampering = FALSE`.
 
 ``` r
@@ -469,7 +469,7 @@ grid.arrange(plot(kl_var5), plot(jef_var5), ncol = 2)
 <img src="man/figures/README-unnamed-chunk-24-1.png" width="50%" />
 
 More interestingly, one can check the different effect of variations of
-different paramenters (code not shown).
+different parameters (code not shown).
 
 <img src="man/figures/README-unnamed-chunk-25-1.png" width="50%" />
 
@@ -484,8 +484,8 @@ matrix, for two reasons:
 
 -   the perturbed matrix may not be positive semidefinite;
 
--   the perturbed matrix may not respect the conditional indepedences of
-    the underlying BN.
+-   the perturbed matrix may not respect the conditional independences
+    of the underlying BN.
 
 Suppose we are interested in assessing the effect of varying the
 covariance between `Statistics` and `Vectors`.
@@ -505,7 +505,7 @@ gbn$covariance
 The parameter of interest correspond to the entry (2,5) of the
 covariance matrix.
 
-A standard perturbated covariance matrix can be constructed with the
+A standard perturbed covariance matrix can be constructed with the
 `covariance_var` function. Suppose we want to increase the covariance
 between `Statistics` and `Vectors` by an additive factor of 10.
 
@@ -582,7 +582,7 @@ Having constructed various covariation matrices, we can assess how far
 apart the original and the perturbed distributions are for various
 covariation methods. Available dissimilarity measures are Frobenius norm
 (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey’s divergence
-(`Jeffreys`). Let’s consider the Froenius norm.
+(`Jeffreys`). Let’s consider the Frobenius norm.
 
 ``` r
 d <- seq(-10, 10, 0.1)
