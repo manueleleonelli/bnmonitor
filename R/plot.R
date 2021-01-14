@@ -131,7 +131,7 @@ plot.kl <- function(x,...){
 
 
 
-#'@importFrom RColorBrewer brewer.pal
+#'@importFrom RColorBrewer brewer.pal colorRampPalette
 #'@importFrom graphics plot.new
 #'@importFrom grDevices colorRampPalette
 #'@importFrom DiagrammeR create_node_df create_edge_df create_graph render_graph
@@ -146,8 +146,8 @@ plot.node_monitor <- function(x, which, ...){
 
   edges <- create_edge_df(from=match(from.nodes,x$Node_Monitor$node),
                           to=match(to.nodes,x$Node_Monitor$node))
-
-  my.colors = brewer.pal(length(names(x$DAG$nodes)),"Greens")
+  l <- length(names(x$DAG$nodes))
+  my.colors <-  colorRampPalette(brewer.pal(8, "Greens"))(l)
   max.val <- ceiling(max(abs(x$Node_Monitor$marg.z.score)))
   max.val.cond <- ceiling(max(abs(x$Node_Monitor$cond.z.score)))
   my.palette <- colorRampPalette(my.colors)(max.val)
