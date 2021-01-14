@@ -150,8 +150,8 @@ plot.node_monitor <- function(x, which, ...){
                           to=match(to.nodes,x$Node_Monitor$node))
   l <- length(names(x$DAG$nodes))
   my.colors <-  colorRampPalette(brewer.pal(8, "Greens"))(l)
-  max.val <- ceiling(max(abs(x$Node_Monitor$marg.z.score)))
-  max.val.cond <- ceiling(max(abs(x$Node_Monitor$cond.z.score)))
+  max.val <- ceiling(max(abs(x$Node_Monitor$marg.z.score[is.finite(x$Node_Monitor$marg.z.score)])))
+  max.val.cond <- ceiling(max(abs(x$Node_Monitor$cond.z.score[is.finite(x$Node_Monitor$cond.z.score)])))
   my.palette <- colorRampPalette(my.colors)(max.val)
   my.palette.cond <- colorRampPalette(my.colors)(max.val.cond)
   node.colors <- my.palette[floor(abs(x$Node_Monitor$marg.z.score))+1]
