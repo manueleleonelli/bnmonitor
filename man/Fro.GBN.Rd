@@ -13,7 +13,7 @@
 
 \item{delta}{numeric vector, including the variation parameters that act additively.}
 
-\item{log}{boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.}
+\item{log}{boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by default to \code{TRUE}.}
 
 \item{...}{additional arguments for compatibility.}
 }

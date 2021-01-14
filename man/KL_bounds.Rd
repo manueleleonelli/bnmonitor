@@ -15,7 +15,7 @@ KL_bounds(ci, delta)
 A dataframe including the KL-divergence bound for each co-variation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
 }
 \description{
-Computation of the bounds of the KL-divergence for variations of each paramater of a \code{CI} object.
+Computation of the bounds of the KL-divergence for variations of each parameter of a \code{CI} object.
 }
 \details{
 Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network with \eqn{n} vertices.

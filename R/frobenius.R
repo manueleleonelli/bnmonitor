@@ -23,7 +23,7 @@ Fro <- function (x, ...) {
 #'@param x object of class \code{GBN}.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector, including the variation parameters that act additively.
-#'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.
+#'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'@return A dataframe including in the first column the variations performed and in the second column the corresponding Frobenius norm.
@@ -76,7 +76,7 @@ Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
 #'@param type character string. Type of model-preserving co-variation: either \code{"total"}, \code{"partial"}, \code{row}, \code{column} or \code{all}. If \code{all} the Frobenius norm is computed for every type of co-variation matrix.
 #'@param entry a vector of length 2 indicating the entry of the covariance matrix to vary.
 #'@param delta numeric vector with positive elements, including the variation parameters that act multiplicatively.
-#'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by defaul to \code{TRUE}.
+#'@param log boolean value. If \code{TRUE}, the logarithm of the Frobenius norm is returned. Set by default to \code{TRUE}.
 #'@param ... additional arguments for compatibility.
 #'
 #'

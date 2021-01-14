@@ -1,6 +1,6 @@
 #' Bounds for the KL-divergence
 #'
-#' Computation of the bounds of the KL-divergence for variations of each paramater of a \code{CI} object.
+#' Computation of the bounds of the KL-divergence for variations of each parameter of a \code{CI} object.
 #'
 #'
 #' Let \eqn{\Sigma} be the covariance matrix of a Gaussian Bayesian network with \eqn{n} vertices.
