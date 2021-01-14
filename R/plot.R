@@ -66,7 +66,8 @@ plot.seq_cond_monitor <- function(x,...){
 #'
 
 plot.global_monitor <- function(x, ...){
-  my.colors = brewer.pal(length(names(x$DAG$nodes)),"Blues")
+  nb.cols <- length(names(x$DAG$nodes))
+  my.colors <- colorRampPalette(brewer.pal(8, "Blues"))(nb.cols)
   max.val <- ceiling(max(abs(x$Global_Monitor$Score)))
   my.palette <- colorRampPalette(my.colors)(max.val)
   node.colors <- my.palette[floor(abs(x$Global_Monitor$Score))]
