@@ -13,6 +13,30 @@ The package `bnmonitor` can be installed from GitHub using the command
 ``` r
 # install.packages("devtools")
 devtools::install_github("manueleleonelli/bnmonitor")
+#> Downloading GitHub repo manueleleonelli/bnmonitor@HEAD
+#> Skipping 3 packages not available: RBGL, Rgraphviz, graph
+#>          checking for file 'C:\Users\Manuele.Leonelli\AppData\Local\Temp\RtmpAb1sne\remotes4bec24033f42\manueleleonelli-bnmonitor-bc2acb3/DESCRIPTION' ...     checking for file 'C:\Users\Manuele.Leonelli\AppData\Local\Temp\RtmpAb1sne\remotes4bec24033f42\manueleleonelli-bnmonitor-bc2acb3/DESCRIPTION' ...   v  checking for file 'C:\Users\Manuele.Leonelli\AppData\Local\Temp\RtmpAb1sne\remotes4bec24033f42\manueleleonelli-bnmonitor-bc2acb3/DESCRIPTION' (421ms)
+#>       -  preparing 'bnmonitor':
+#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   v  checking DESCRIPTION meta-information
+#>       -  checking for LF line-endings in source and make files and shell scripts
+#>       -  checking for empty or unneeded directories
+#>      NB: this package now depends on R (>=        NB: this package now depends on R (>= 3.5.0)
+#>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+#>      serialize/load version 3 cannot be read in older versions of R.
+#>      File(s) containing such objects:
+#>        'bnmonitor/data/cachexia_ci.RData'
+#>        'bnmonitor/data/cachexia_data.RData'
+#>        'bnmonitor/data/cachexia_gbn.RData' 'bnmonitor/data/chds.RData'
+#>        'bnmonitor/data/chds_bn.RData' 'bnmonitor/data/chds_bn.fit.RData'
+#>        'bnmonitor/data/control_ci.RData' 'bnmonitor/data/control_gbn.RData'
+#>        'bnmonitor/data/diabetes.RData' 'bnmonitor/data/mathmarks.RData'
+#>        'bnmonitor/data/synthetic_ci.RData'
+#>        'bnmonitor/data/synthetic_gbn.RData'
+#>   -  building 'bnmonitor_0.1.0.tar.gz'
+#>      
+#> 
+#> Installing package into 'C:/cocoa-5.3/emacs/R/win-library/4.1'
+#> (as 'lib' is unspecified)
 ```
 
 and loaded in R with
