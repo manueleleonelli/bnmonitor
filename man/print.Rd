@@ -39,6 +39,9 @@
 
 \item{...}{for compatibility}
 }
+\value{
+Printing specific to the object it is applied to.
+}
 \description{
 Printing methods for outputs of \code{bnmonitor} functions
 }

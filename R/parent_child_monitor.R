@@ -19,7 +19,7 @@
 #'@param node.name node over which to compute the monitor
 #'@param pa.names vector including the names of the parents of \code{node.name}
 #'@param pa.val vector including the levels of \code{pa.names} considered
-#'@param alpha single integer, usually the number of max levels in \code{df}
+#'@param alpha single integer. By default, the number of max levels in \code{df}
 #'
 #'
 #' @examples seq_pa_ch_monitor(chds_bn, chds, "Events", "Social", "High", 3)
@@ -38,7 +38,8 @@
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 
-seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val,alpha){#takes input from bnlearn
+seq_pa_ch_monitor <- function(dag, df, node.name, pa.names, pa.val, alpha = "default"){#takes input from bnlearn
+  if (alpha == "default") alpha <- max(sapply(df, nlevels))
   for (i in length(pa.names)){
     df <- dplyr::filter(df,!!(sym(pa.names[i]))==pa.val[i])
   }

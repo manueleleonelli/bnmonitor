@@ -11,6 +11,9 @@ Jeffreys(x, ...)
 
 \item{...}{parameters specific to the class used.}
 }
+\value{
+A dataframe whose columns depend of the class of the object.
+}
 \description{
 \code{Jeffreys} returns the Jeffreys divergence between a continuous Bayesian network and its update after parameter variation.
 }

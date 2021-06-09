@@ -11,6 +11,9 @@ KL(x, ...)
 
 \item{...}{parameters specific to the class used.}
 }
+\value{
+A dataframe whose columns depend of the class of the object.
+}
 \description{
 \code{KL} returns the Kullback-Leibler (KL) divergence between a Bayesian network and its update after parameter variation.
 }

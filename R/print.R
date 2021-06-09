@@ -6,6 +6,7 @@
 #' @param x an appropriate object
 #' @param ... for compatibility
 #' @name print
+#' @return Printing specific to the object it is applied to.
 NULL
 
 

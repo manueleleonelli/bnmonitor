@@ -12,6 +12,7 @@
 \alias{plot.node_monitor}
 \alias{plot.seq_pa_ch_monitor}
 \alias{plot.sensitivity}
+\alias{plot.fro}
 \title{Plotting methods}
 \usage{
 \method{plot}{seq_marg_monitor}(x, ...)
@@ -33,6 +34,8 @@
 \method{plot}{seq_pa_ch_monitor}(x, ...)
 
 \method{plot}{sensitivity}(x, ...)
+
+\method{plot}{fro}(x, ...)
 }
 \arguments{
 \item{x}{The output of node_monitor.}
@@ -40,6 +43,9 @@
 \item{...}{for compatibility}
 
 \item{which}{select the monitor to plot, either "marginal" or "conditional" (for output of \code{node_monitor} only).}
+}
+\value{
+A plot specific to the object it is applied to.
 }
 \description{
 Plotting methods for outputs of \code{bnmonitor} functions

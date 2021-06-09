@@ -9,6 +9,7 @@
 #' @param ... parameters specific to the class used.
 #' @export
 #'
+#'@return A dataframe whose columns depend of the class of the object.
 #'
 Fro <- function (x, ...) {
   UseMethod("Fro", x)
@@ -33,7 +34,6 @@ Fro <- function (x, ...) {
 #' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
 #' @export
-#' @importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
 #'@importFrom ggplot2 geom_line
 #'@importFrom ggplot2 geom_point
@@ -47,7 +47,7 @@ Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
     for(i in 1:length(fro)){
       D[entry[1],entry[2]]<- delta[i]
       D[entry[2],entry[1]]<- delta[i]
-      if(is.positive.semi.definite(round(gbn$covariance+D,2))){
+      if(is.psd(round(gbn$covariance+D,2))){
         fro[i] <- sum(diag(t(D)%*%D))
       }
       else{fro[i]<-NA}
@@ -90,7 +90,6 @@ Fro.GBN <- function(x,entry,delta, log = TRUE, ...){
 #'@examples Fro(synthetic_ci,"column",c(1,2),seq(0.9,1.1,0.01))
 #'@examples Fro(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01))
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 #'
 
@@ -101,7 +100,7 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
     for(i in 1:length(delta)){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- total_covar_matrix(ci,entry,delta[i])
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))){
         fro[i] <- sum(diag(t(ci$covariance-Cov*Delta*ci$covariance)%*%(ci$covariance-Cov*Delta*ci$covariance)))
       }
       else{fro[i]<- NA}
@@ -111,7 +110,7 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
     for(i in 1:length(delta)){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- partial_covar_matrix(ci,entry,delta[i])
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))){
         fro[i] <- sum(diag(t(ci$covariance-Cov*Delta*ci$covariance)%*%(ci$covariance-Cov*Delta*ci$covariance)))
       }
       else{fro[i]<- NA}
@@ -121,7 +120,7 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
     for(i in 1:length(delta)){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- row_covar_matrix(ci, entry, delta[i])
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))){
         fro[i] <- sum(diag(t(ci$covariance-Cov*Delta*ci$covariance)%*%(ci$covariance-Cov*Delta*ci$covariance)))      }
       else{fro[i]<- NA}
     }
@@ -130,7 +129,7 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
     for(i in 1:length(delta)){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- col_covar_matrix(ci,entry,delta[i])
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))){
         fro[i] <- sum(diag(t(ci$covariance-Cov*Delta*ci$covariance)%*%(ci$covariance-Cov*Delta*ci$covariance)))      }
       else{fro[i]<- NA}
     }
@@ -143,16 +142,16 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
       Cov_row <- row_covar_matrix(ci,entry,delta[i])
       Cov_par <- partial_covar_matrix(ci,entry,delta[i])
       Cov_tot <- total_covar_matrix(ci,entry,delta[i])
-      if(is.positive.semi.definite(round(Cov_tot*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov_tot*Delta*ci$covariance,2))){
         fro[i,1] <- sum(diag(t(ci$covariance-Cov_tot*Delta*ci$covariance)%*%(ci$covariance-Cov_tot*Delta*ci$covariance)))      }
       else{fro[i,1]<- NA}
-      if(is.positive.semi.definite(round(Cov_par*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov_par*Delta*ci$covariance,2))){
         fro[i,2] <- sum(diag(t(ci$covariance-Cov_par*Delta*ci$covariance)%*%(ci$covariance-Cov_par*Delta*ci$covariance)))      }
       else{fro[i,2]<- NA}
-      if(is.positive.semi.definite(round(Cov_row*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov_row*Delta*ci$covariance,2))){
         fro[i,3] <- sum(diag(t(ci$covariance-Cov_row*Delta*ci$covariance)%*%(ci$covariance-Cov_row*Delta*ci$covariance)))      }
       else{fro[i,3]<- NA}
-      if(is.positive.semi.definite(round(Cov_col*Delta*ci$covariance,2))){
+      if(is.psd(round(Cov_col*Delta*ci$covariance,2))){
         fro[i,4] <- sum(diag(t(ci$covariance-Cov_col*Delta*ci$covariance)%*%(ci$covariance-Cov_col*Delta*ci$covariance)))      }
       else{fro[i,4]<- NA}
     }
@@ -192,14 +191,45 @@ Fro.CI <- function(x, type, entry, delta, log = TRUE, ...){
 
 
 
-#' Plot of Frobenius
-#'@export
-#'
-#'@method plot fro
-#'@param x The output of \code{Fro}
-#'@param ... additional inputs
-#'
-plot.fro <- function(x,...){
-  x$plot
+
+is.psd <- function (x, tol = 1e-08)
+{
+  if (!is.square.matrix(x))
+    stop("argument x is not a square matrix")
+  if (!is.symmetric.matrix(x))
+    stop("argument x is not a symmetric matrix")
+if (!is.numeric(x))
+  stop("argument x is not a numeric matrix")
+eigenvalues <- eigen(x, only.values = TRUE)$values
+n <- nrow(x)
+for (i in 1:n) {
+  if (abs(eigenvalues[i]) < tol) {
+    eigenvalues[i] <- 0
+  }
+}
+if (any(eigenvalues < 0)) {
+  return(FALSE)
+}
+return(TRUE)
+}
+
+is.square.matrix <- function (x)
+{
+  if (!is.matrix(x))
+    stop("argument x is not a matrix")
+  return(nrow(x) == ncol(x))
+}
+
+is.symmetric.matrix <- function (x)
+{
+  if (!is.matrix(x)) {
+    stop("argument x is not a matrix")
+  }
+  if (!is.numeric(x)) {
+    stop("argument x is not a numeric matrix")
+  }
+  if (!is.square.matrix(x))
+    stop("argument x is not a square numeric matrix")
+  return(sum(x == t(x)) == (nrow(x)^2))
 }
 

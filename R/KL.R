@@ -9,6 +9,7 @@
 #'
 #' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
+#'@return A dataframe whose columns depend of the class of the object.
 #'@export
 #'
 
@@ -332,7 +333,6 @@ KL.bn.fit <-
 #'@examples KL(synthetic_ci, "row", c(3,2), seq(0.9,1.1,0.01))
 #'@examples KL(synthetic_ci, "all", c(3,2), seq(0.9,1.1,0.01))
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
 #'@importFrom ggplot2 geom_line
 #'@importFrom ggplot2 geom_point
@@ -351,7 +351,7 @@ KL.CI <- function(x, type, entry, delta,  ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- total_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         KL[i] <- 0.5*(log(det_or/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance))))
       }
       else{KL[i]<- NA}
@@ -362,7 +362,7 @@ KL.CI <- function(x, type, entry, delta,  ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- partial_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         KL[i] <- 0.5*(log(det_or/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance))))
       }
       else{KL[i]<- NA}
@@ -373,7 +373,7 @@ KL.CI <- function(x, type, entry, delta,  ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- row_covar_matrix(ci, entry, delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         KL[i] <- 0.5*(log(det_or/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance))))
       }
       else{KL[i]<- NA}
@@ -384,7 +384,7 @@ KL.CI <- function(x, type, entry, delta,  ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- col_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         KL[i] <- 0.5*(log(det_or/det(Cov*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance))))
       }
       else{KL[i]<- NA}
@@ -402,19 +402,19 @@ KL.CI <- function(x, type, entry, delta,  ...){
       det_new_row <- det(Cov_row*Delta*ci$covariance)
       det_new_par <- det(Cov_par*Delta*ci$covariance)
       det_new_tot <- det(Cov_tot*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov_tot*Delta*ci$covariance,2))&det_new_tot > 1e-10){
+      if(is.psd(round(Cov_tot*Delta*ci$covariance,2))&det_new_tot > 1e-10){
         KL[i,1] <- 0.5*(log(det_or/det(Cov_tot*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_tot*Delta*ci$covariance))))
       }
       else{KL[i,1]<- NA}
-      if(is.positive.semi.definite(round(Cov_par*Delta*ci$covariance,2))&det_new_par > 1e-10){
+      if(is.psd(round(Cov_par*Delta*ci$covariance,2))&det_new_par > 1e-10){
         KL[i,2] <- 0.5*(log(det_or/det(Cov_par*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_par*Delta*ci$covariance))))
       }
       else{KL[i,2]<- NA}
-      if(is.positive.semi.definite(round(Cov_row*Delta*ci$covariance,2))&det_new_row > 1e-10){
+      if(is.psd(round(Cov_row*Delta*ci$covariance,2))&det_new_row > 1e-10){
         KL[i,3] <- 0.5*(log(det_or/det(Cov_row*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_row*Delta*ci$covariance))))
       }
       else{KL[i,3]<- NA}
-      if(is.positive.semi.definite(round(Cov_col*Delta*ci$covariance,2))&det_new_col > 1e-10){
+      if(is.psd(round(Cov_col*Delta*ci$covariance,2))&det_new_col > 1e-10){
         KL[i,4] <- 0.5*(log(det_or/det(Cov_col*Delta*ci$covariance))-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_col*Delta*ci$covariance))))
       }
       else{KL[i,4]<- NA}
@@ -468,7 +468,6 @@ KL.CI <- function(x, type, entry, delta,  ...){
 #'@examples KL(synthetic_gbn,"mean",2,seq(-1,1,0.1))
 #'@examples KL(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1))
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
 #'@importFrom ggplot2 geom_line
 #'@importFrom ggplot2 geom_point
@@ -496,7 +495,7 @@ KL.GBN <- function(x,where,entry,delta,  ...){
     for(i in 1:length(KL)){
       D[entry[1],entry[2]]<- delta[i]
       D[entry[2],entry[1]]<- delta[i]
-      if(is.positive.semi.definite(round(gbn$covariance+D),2) & det(gbn$covariance+D) > 1e-10){
+      if(is.psd(round(gbn$covariance+D),2) & det(gbn$covariance+D) > 1e-10){
         KL[i] <- 0.5*(sum(diag(inv_or%*%D))+log(det_or/det(gbn$covariance+D)))
       }
       else{KL[i]<-NA}

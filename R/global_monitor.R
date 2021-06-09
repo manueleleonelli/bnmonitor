@@ -11,7 +11,7 @@
 #'
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
-#' @param alpha single integer, usually the number of max levels in \code{df}
+#' @param alpha single integer. By default, number of max levels in \code{df}
 #'
 #' @examples global_monitor(chds_bn, chds, 3)
 #'
@@ -33,7 +33,8 @@
 #'
 #'@export
 #'
-global_monitor <- function(dag, df, alpha){
+global_monitor <- function(dag, df, alpha = "default"){
+  if (alpha == "default") alpha <- max(sapply(df, nlevels))
   node.scores <- as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node)))
   result <- data.frame(Vertex = names(dag$nodes), Score = node.scores)
   result <- list(Global_Monitor = result, DAG = dag)

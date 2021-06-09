@@ -4,7 +4,7 @@
 \alias{seq_pa_ch_monitor}
 \title{Sequential parent-child node monitors}
 \usage{
-seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha)
+seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha = "default")
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
@@ -17,7 +17,7 @@ seq_pa_ch_monitor(dag, df, node.name, pa.names, pa.val, alpha)
 
 \item{pa.val}{vector including the levels of \code{pa.names} considered}
 
-\item{alpha}{single integer, usually the number of max levels in \code{df}}
+\item{alpha}{single integer. By default, the number of max levels in \code{df}}
 }
 \value{
 A vector including the scores \eqn{Z_{ij}}.

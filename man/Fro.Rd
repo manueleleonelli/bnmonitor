@@ -11,6 +11,9 @@ Fro(x, ...)
 
 \item{...}{parameters specific to the class used.}
 }
+\value{
+A dataframe whose columns depend of the class of the object.
+}
 \description{
 \code{Fro} returns the Frobenius norm between a Bayesian network and its update after parameter variation.
 }

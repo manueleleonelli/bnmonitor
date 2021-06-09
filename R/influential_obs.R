@@ -11,7 +11,7 @@
 #'
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
 #' @param df a base R style dataframe
-#' @param alpha single integer, usually the number of max levels in \code{df}
+#' @param alpha single integer. By default, the number of max levels in \code{df}
 #'
 #' @importClassesFrom bnlearn bn.fit
 #'@importFrom purrr  map_dbl
@@ -22,7 +22,8 @@
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 #'
-influential_obs <- function(dag, df, alpha){#j is the index of the parent set
+influential_obs <- function(dag, df, alpha = "default"){#j is the index of the parent set
+  if (alpha == "default") alpha <- max(sapply(df, nlevels))
   un <- unique(df)
   result <- rep(0,nrow(un))
   for(i in 1:nrow(un)){

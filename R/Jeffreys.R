@@ -9,6 +9,7 @@
 #'
 #' @seealso \code{\link{KL.GBN}}, \code{\link{KL.CI}}, \code{\link{Fro.CI}}, \code{\link{Fro.GBN}}, \code{\link{Jeffreys.GBN}}, \code{\link{Jeffreys.CI}}
 #'
+#'@return A dataframe whose columns depend of the class of the object.
 #'@export
 #'
 
@@ -38,7 +39,6 @@ Jeffreys <- function (x, ...) {
 #'@examples Jeffreys(synthetic_gbn,"mean",2,seq(-1,1,0.1))
 #'@examples Jeffreys(synthetic_gbn,"covariance",c(3,3),seq(-1,1,0.1))
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
 #'@importFrom ggplot2 geom_line
 #'@importFrom ggplot2 geom_point
@@ -66,7 +66,7 @@ Jeffreys.GBN <- function(x,where,entry,delta,  ...){
       D[entry[1],entry[2]]<- delta[i]
       D[entry[2],entry[1]]<- delta[i]
       det_new <- det(gbn$covariance + D)
-      if(is.positive.semi.definite(round(gbn$covariance+D,5)) & det_new > 1e-10){
+      if(is.psd(round(gbn$covariance+D,5)) & det_new > 1e-10){
         KL[i] <- 0.5*(sum(diag(inv_or%*%D))+log(det_or/det_new)) + 0.5*(sum(diag(solve(gbn$covariance + D)%*%gbn$covariance)) - nrow(gbn$covariance) + log(det(gbn$covariance + D)/det_or))
       }
       else{KL[i]<-NA}
@@ -109,7 +109,6 @@ Jeffreys.GBN <- function(x,where,entry,delta,  ...){
 #'@examples Jeffreys(synthetic_ci,"row",c(3,2),seq(0.9,1.1,0.01))
 #'@examples Jeffreys(synthetic_ci,"all",c(3,2),seq(0.9,1.1,0.01))
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@importFrom ggplot2 ggplot
 #'@importFrom ggplot2 geom_line
 #'@importFrom ggplot2 geom_point
@@ -128,7 +127,7 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- total_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2)) & det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2)) & det_new > 1e-10){
         J[i] <- 0.5*(log(det_or/det_new)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance)))) + 0.5*(log(det_new/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i]<- NA}
@@ -139,7 +138,7 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- partial_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         J[i] <- 0.5*(log(det_or/det_new)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance)))) + 0.5*(log(det_new/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i]<- NA}
@@ -150,7 +149,7 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- row_covar_matrix(ci, entry, delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         J[i] <- 0.5*(log(det_or/det_new)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance)))) + 0.5*(log(det_new/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i]<- NA}
@@ -161,7 +160,7 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       Delta <- variation_mat(ci,entry,delta[i])
       Cov <- col_covar_matrix(ci,entry,delta[i])
       det_new <- det(Cov*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
+      if(is.psd(round(Cov*Delta*ci$covariance,2))& det_new > 1e-10){
         J[i] <- 0.5*(log(det_or/det_new)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov*Delta*ci$covariance)))) + 0.5*(log(det_new/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i]<- NA}
@@ -179,19 +178,19 @@ Jeffreys.CI <- function(x, type, entry,delta, ...){
       det_new_row <- det(Cov_row*Delta*ci$covariance)
       det_new_par <- det(Cov_par*Delta*ci$covariance)
       det_new_tot <- det(Cov_tot*Delta*ci$covariance)
-      if(is.positive.semi.definite(round(Cov_tot*Delta*ci$covariance,2))& det_new_tot > 1e-10){
+      if(is.psd(round(Cov_tot*Delta*ci$covariance,2))& det_new_tot > 1e-10){
         J[i,1] <- 0.5*(log(det_or/det_new_tot)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_tot*Delta*ci$covariance)))) + 0.5*(log(det_new_tot/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov_tot*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i,1]<- NA}
-      if(is.positive.semi.definite(round(Cov_par*Delta*ci$covariance,2))& det_new_par > 1e-10){
+      if(is.psd(round(Cov_par*Delta*ci$covariance,2))& det_new_par > 1e-10){
         J[i,2] <- 0.5*(log(det_or/det_new_par)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_par*Delta*ci$covariance)))) + 0.5*(log(det_new_par/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov_par*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i,2]<- NA}
-      if(is.positive.semi.definite(round(Cov_row*Delta*ci$covariance,2))& det_new_row > 1e-10){
+      if(is.psd(round(Cov_row*Delta*ci$covariance,2))& det_new_row > 1e-10){
         J[i,3] <- 0.5*(log(det_or/det_new_row)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_row*Delta*ci$covariance)))) + 0.5*(log(det_new_row/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov_row*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i,3]<- NA}
-      if(is.positive.semi.definite(round(Cov_col*Delta*ci$covariance,2))& det_new_col > 1e-10){
+      if(is.psd(round(Cov_col*Delta*ci$covariance,2))& det_new_col > 1e-10){
         J[i,4] <- 0.5*(log(det_or/det_new_col)-nrow(ci$covariance)+sum(diag(inv_or%*%(Cov_col*Delta*ci$covariance)))) + 0.5*(log(det_new_col/det_or)-nrow(ci$covariance)+ sum(diag(solve(Cov_col*Delta*ci$covariance)%*%ci$covariance)))
       }
       else{J[i,4]<- NA}

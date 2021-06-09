@@ -22,7 +22,6 @@
 #'@return A dataframe including the KL-divergence bound for each co-variation scheme (model-preserving and standard) and every entry of the covariance matrix. For variations leading to non-positive semidefinite matrix, the dataframe includes a \code{NA}.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 
 KL_bounds <- function(ci,delta){
@@ -52,20 +51,20 @@ KL_bounds <- function(ci,delta){
       row_mat[j,i] <- delta
       column_mat[i,j] <- delta
       column_mat[j,i] <- delta
-      if(is.positive.semi.definite(round(D+ci$covariance,5))){
+      if(is.psd(round(D+ci$covariance,5))){
       eig_s <- c(max(eigen(D%*%solve(ci$covariance))$values),min(eigen(D%*%solve(ci$covariance))$values))
       standard <- c(standard,0.5*length(ci$mean)*max(log(1+eig_s[1])-eig_s[1]/(1+eig_s[1]),log(1+eig_s[2])-eig_s[2]/(1+eig_s[2])))
       }
       else{standard <- c(standard,NA)}
-      if(is.positive.semi.definite(round(partial_mat*ci$covariance,5))){
+      if(is.psd(round(partial_mat*ci$covariance,5))){
       eig_partial <- c(max(eigen(partial_mat)$values),min(eigen(partial_mat)$values))
       partial <- c(partial, 0.5*length(ci$mean)*max(log(1+eig_partial[1])-eig_partial[1]/(1+eig_partial[1]),log(1+eig_partial[2])-eig_partial[2]/(1+eig_partial[2])))}
       else{partial <- c(partial,NA)}
-      if(is.positive.semi.definite(round(row_mat*ci$covariance,5))){
+      if(is.psd(round(row_mat*ci$covariance,5))){
       eig_row <- c(max(eigen(row_mat)$values),min(eigen(row_mat)$values))
       rowb <- c(rowb,0.5*length(ci$mean)*max(log(1+eig_row[1])-eig_row[1]/(1+eig_row[1]),log(1+eig_row[2])-eig_row[2]/(1+eig_row[2])))}
       else{rowb <- c(rowb,NA)}
-      if(is.positive.semi.definite(round(row_mat*ci$covariance,5))){
+      if(is.psd(round(row_mat*ci$covariance,5))){
       eig_col <- c(max(eigen(column_mat)$values),min(eigen(column_mat)$values))
       colb <- c(colb,0.5*length(ci$mean)*max(log(1+eig_col[1])-eig_col[1]/(1+eig_col[1]),log(1+eig_col[2])-eig_col[2]/(1+eig_col[2])))}
       else{colb <- c(colb,NA)}

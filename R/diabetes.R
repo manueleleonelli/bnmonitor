@@ -1,0 +1,25 @@
+#' Pima Indian Diabetes Data
+#'
+#' Discretized version of the widely-used Pima Indians Diabetes Database
+#'
+#' @docType data
+#'
+#'
+#' @format A dataframe with 392 observations on the following 9 binary variables:
+#' \itemize{
+#'    \item \bold{pregnant}: number of times pregnant (low/high)
+#'    \item \bold{glucose}: plasma glucose concentration (low/high)
+#'    \item \bold{pressure}: diastolic blood pressure (low/high)
+#'    \item \bold{triceps}: triceps skin fold thickness (low/high)
+#'    \item \bold{insulin}: 2-hour serum insulin (low/high)
+#'    \item \bold{mass}: body mass index (low/high)
+#'    \item \bold{pedigree}: diabetes pedigree function (low/high)
+#'    \item \bold{age}: age (low/high)
+#'    \item \bold{diabetes}: test for diabetes (neg/pos)
+#'
+#'}
+#'
+#' @name diabetes
+#'
+#'@source	 These data have been taken from the UCI Repository Of Machine Learning Databases
+NULL

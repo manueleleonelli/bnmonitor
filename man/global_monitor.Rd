@@ -4,14 +4,14 @@
 \alias{global_monitor}
 \title{Global monitor}
 \usage{
-global_monitor(dag, df, alpha)
+global_monitor(dag, df, alpha = "default")
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
 
 \item{df}{a base R style dataframe}
 
-\item{alpha}{single integer, usually the number of max levels in \code{df}}
+\item{alpha}{single integer. By default, number of max levels in \code{df}}
 }
 \value{
 A dataframe including the name of the vertices and the contribution of the vertices to the global monitor. It also returns a plot where vertices with higher contributions in absolute value are darker.

@@ -54,7 +54,6 @@ mean_var <- function(gbn,entry,delta){
 #'@examples covariance_var(synthetic_gbn,c(1,1),3)
 #'@examples covariance_var(synthetic_gbn,c(1,2),-0.4)
 #'
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 
 
@@ -67,7 +66,7 @@ covariance_var <- function(gbn, entry, delta){
     D[entry[1],entry[2]]<- delta
     D[entry[2],entry[1]]<- delta
   gbn$covariance <- D + gbn$covariance
-  if(is.positive.semi.definite(round(gbn$covariance,5))){return(gbn)}
+  if(is.psd(round(gbn$covariance,5))){return(gbn)}
   else{
     gbn$warning <- "The covariance is not positive semidefinite"
     attr(gbn,'class') <- 'npsd.gbn'

@@ -31,7 +31,6 @@
 #'@return If the resulting covariance is positive semi-definite, \code{model_pres_cov} returns an object of class \code{CI} with an updated covariance matrix. Otherwise it returns an object of class \code{npsd.ci}, which has the same components of \code{CI} but also has a warning entry specifying that the covariance matrix is not positive semi-definite.
 #'
 #'@references C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
-#'@importFrom matrixcalc is.positive.semi.definite
 #'@export
 
 
@@ -51,7 +50,7 @@ model_pres_cov <- function(ci, type, entry, delta){
     if(type == "row"){cov_matrix <- row_covar_matrix(ci,entry, delta)}
     if(type == "column"){cov_matrix <- col_covar_matrix(ci,entry,delta)}
     ci$covariance <- cov_matrix*var_matrix*ci$covariance
-    if(is.positive.semi.definite(round(ci$covariance,5))){return(ci)}
+    if(is.psd(round(ci$covariance,5))){return(ci)}
     else{
       ci$warning <- "The covariance is not positive semidefinite"
       attr(ci,'class') <- 'npsd.ci'
@@ -60,7 +59,7 @@ model_pres_cov <- function(ci, type, entry, delta){
   }
   else{
     ci$covariance <- var_matrix*ci$covariance
-    if(is.positive.semi.definite(round(ci$covariance,5))){return(ci)}
+    if(is.psd(round(ci$covariance,5))){return(ci)}
     else{
       ci$warning <- "The covariance is not positive semidefinite"
       attr(ci,'class') <- 'npsd.ci'
