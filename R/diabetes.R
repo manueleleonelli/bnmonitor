@@ -7,15 +7,15 @@
 #'
 #' @format A dataframe with 392 observations on the following 9 binary variables:
 #' \itemize{
-#'    \item \bold{pregnant}: number of times pregnant (low/high)
-#'    \item \bold{glucose}: plasma glucose concentration (low/high)
-#'    \item \bold{pressure}: diastolic blood pressure (low/high)
-#'    \item \bold{triceps}: triceps skin fold thickness (low/high)
-#'    \item \bold{insulin}: 2-hour serum insulin (low/high)
-#'    \item \bold{mass}: body mass index (low/high)
-#'    \item \bold{pedigree}: diabetes pedigree function (low/high)
-#'    \item \bold{age}: age (low/high)
-#'    \item \bold{diabetes}: test for diabetes (neg/pos)
+#'    \item \bold{PREG}: number of times pregnant (low/high)
+#'    \item \bold{GLUC}: plasma glucose concentration (low/high)
+#'    \item \bold{PRES}: diastolic blood pressure (low/high)
+#'    \item \bold{TRIC}: triceps skin fold thickness (low/high)
+#'    \item \bold{INS}: 2-hour serum insulin (low/high)
+#'    \item \bold{MASS}: body mass index (low/high)
+#'    \item \bold{PED}: diabetes pedigree function (low/high)
+#'    \item \bold{AGE}: age (low/high)
+#'    \item \bold{DIAB}: test for diabetes (neg/pos)
 #'
 #'}
 #'
