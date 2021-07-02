@@ -11,7 +11,7 @@
 NULL
 
 
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
+#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle geom_hline
 
 #'
 #' @method plot seq_marg_monitor
@@ -20,7 +20,7 @@ NULL
 #'
 plot.seq_marg_monitor <- function(x,...){
   temp <- data.frame(x= 1:length(x$Seq_Marg_Monitor), y=x$Seq_Marg_Monitor[1:length(x$Seq_Marg_Monitor)])
-  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Marginal Node Monitor for ", x$node.name)))
+  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Marginal Node Monitor for ", x$node.name)) +  geom_hline(yintercept=1.96, linetype="dashed", color = "red") + geom_hline(yintercept=-1.96, linetype="dashed", color = "red"))
   return(p)
 }
 
@@ -38,7 +38,7 @@ plot.CD <- function(x,...){
 
 
 #'
-#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle
+#'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle geom_hline
 #'@rdname plot
 #'
 #' @method plot seq_cond_monitor
@@ -47,7 +47,7 @@ plot.CD <- function(x,...){
 #'
 plot.seq_cond_monitor <- function(x,...){
   temp <- data.frame(x= 1:length(x$Seq_Cond_Monitor), y=x$Seq_Cond_Monitor[1:length(x$Seq_Cond_Monitor)])
-  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Conditional Node Monitor for ", x$node.name)))
+  p <- suppressWarnings(ggplot(temp, aes(temp[,1],temp[,2])) + geom_point() +  xlab('Index') + ylab('Standardized Z Statistic') + theme_minimal() + ggtitle(paste0("Conditional Node Monitor for ", x$node.name)) +  geom_hline(yintercept=1.96, linetype="dashed", color = "red") + geom_hline(yintercept=-1.96, linetype="dashed", color = "red"))
   return(p)
 }
 
@@ -189,7 +189,7 @@ plot.node_monitor <- function(x, which, ...){
 }
 
 
-#' @importFrom ggplot2 ggtitle xlab ylab theme_minimal theme scale_colour_discrete
+#' @importFrom ggplot2 ggtitle xlab ylab theme_minimal theme scale_colour_discrete geom_hline
 #' @method plot seq_pa_ch_monitor
 #'@export
 #'@rdname plot
@@ -199,7 +199,7 @@ plot.seq_pa_ch_monitor <- function(x,...){
   index <- 1:length(x)
   value <- x[1:length(x)]
   data <- data.frame(index=index, value = value)
-  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Relevant sample size') + ylab('Standardized Z Statistic') + theme_minimal())
+  p <- suppressWarnings(ggplot(data, aes(index, value))+ geom_point() + xlab('Relevant sample size') + ylab('Standardized Z Statistic') + theme_minimal() +  geom_hline(yintercept=1.96, linetype="dashed", color = "red") + geom_hline(yintercept=-1.96, linetype="dashed", color = "red"))
   return(p)
 }
 

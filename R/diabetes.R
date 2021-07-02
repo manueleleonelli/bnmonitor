@@ -21,5 +21,5 @@
 #'
 #' @name diabetes
 #'
-#'@source	 These data have been taken from the UCI Repository Of Machine Learning Databases
+#'@source	 These data have been taken from the UCI Repository Of Machine Learning Databases. We chose this dataset because it best showcases the function of our monitors. However, we acknowledge that this data is used here without the consent of or compensation for the original Akimel O'odham participants.
 NULL
