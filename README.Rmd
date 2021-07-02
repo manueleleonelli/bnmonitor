@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ## Installation 
 
 The package `bnmonitor` can be installed from GitHub using the command 
-```{r }
+```{r warning = FALSE, message = FALSE}
 # install.packages("devtools")
 devtools::install_github("manueleleonelli/bnmonitor")
 ```

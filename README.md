@@ -13,8 +13,6 @@ The package `bnmonitor` can be installed from GitHub using the command
 ``` r
 # install.packages("devtools")
 devtools::install_github("manueleleonelli/bnmonitor")
-#> Skipping install of 'bnmonitor' from a github remote, the SHA1 (ff3270ee) has not changed since last install.
-#>   Use `force = TRUE` to force installation
 ```
 
 and loaded in R with
