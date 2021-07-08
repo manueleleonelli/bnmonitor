@@ -13,4 +13,4 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: bnlearn, dplyr, ggplot2, gRain, gRbase, graphics, matrixcalc, purrr, qgraph, RColorBrewer, reshape2, rlang, tidyr
 Suggests: testthat, knitr, rmarkdown
-VignetteBuilder: knitr
+
