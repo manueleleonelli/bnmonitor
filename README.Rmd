@@ -84,8 +84,8 @@ bnlearn::graphviz.plot(asia_bn_alt)
 A first useful diagnostic is the `global_monitor`, reporting the contribution of each vertex to the log-likelihood of the model.
 
 ``` {r}
-glob_asia <- global_monitor(dag = asia_bn, df = asia, alpha = 3)
-glob_asia_alt <- global_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
+glob_asia <- node_monitor(dag = asia_bn, df = asia, alpha = 3)
+glob_asia_alt <- node_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
 glob_asia
 glob_asia_alt
 ```
@@ -109,7 +109,7 @@ There are two variants of node monitors.
 As a quick survey of the nodes, the `node_monitor` command computes the marginal and conditional monitors for the final observation in the data set. 
 
 ``` {r echo=TRUE, message = FALSE, warning = FALSE}
-node_asia <- node_monitor(dag = asia_bn, df = asia)
+node_asia <- final_node_monitor(dag = asia_bn, df = asia)
 node_asia
 ```
 

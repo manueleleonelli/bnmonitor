@@ -13,6 +13,26 @@ The package `bnmonitor` can be installed from GitHub using the command
 ``` r
 # install.packages("devtools")
 devtools::install_github("manueleleonelli/bnmonitor")
+#> 
+#> * checking for file 'C:\Users\Manuele.Leonelli\AppData\Local\Temp\RtmpagcbTt\remotesda4396c5d90\manueleleonelli-bnmonitor-bbfcea8/DESCRIPTION' ... OK
+#> * preparing 'bnmonitor':
+#> * checking DESCRIPTION meta-information ... OK
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#>   NB: this package now depends on R (>= 3.5.0)
+#>   WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+#>   serialize/load version 3 cannot be read in older versions of R.
+#>   File(s) containing such objects:
+#>     'bnmonitor/data/cachexia_ci.RData'
+#>     'bnmonitor/data/cachexia_data.RData'
+#>     'bnmonitor/data/cachexia_gbn.RData' 'bnmonitor/data/chds.RData'
+#>     'bnmonitor/data/chds_bn.RData' 'bnmonitor/data/chds_bn.fit.RData'
+#>     'bnmonitor/data/control_ci.RData' 'bnmonitor/data/control_gbn.RData'
+#>     'bnmonitor/data/diabetes.RData' 'bnmonitor/data/mathmarks.RData'
+#>     'bnmonitor/data/synthetic_ci.RData'
+#>     'bnmonitor/data/synthetic_gbn.RData'
+#> * building 'bnmonitor_0.1.2.tar.gz'
+#> 
 ```
 
 and loaded in R with
@@ -60,6 +80,7 @@ variables can be found in the `bnlearn` documentation.
 
 ``` r
 library(bnlearn)
+#> Warning: package 'bnlearn' was built under R version 4.1.1
 data(asia)
 summary(asia)
 #>    A          S          T          L          B          E          X       
@@ -101,8 +122,8 @@ A first useful diagnostic is the `global_monitor`, reporting the
 contribution of each vertex to the log-likelihood of the model.
 
 ``` r
-glob_asia <- global_monitor(dag = asia_bn, df = asia, alpha = 3)
-glob_asia_alt <- global_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
+glob_asia <- node_monitor(dag = asia_bn, df = asia, alpha = 3)
+glob_asia_alt <- node_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
 glob_asia
 #>   Vertex      Score
 #> 1      A  249.74568
@@ -142,13 +163,19 @@ plot(glob_asia)
 
 There are two variants of node monitors.
 
--   The marginal node monitor computes the probability of the *i*th
+-   The marginal node monitor computes the probability of the
+    ![i](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;i "i")th
     observation in the data set in turn after passing the evidence of
-    the *i* − 1th cases in the data set.
+    the
+    ![i-1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;i-1 "i-1")th
+    cases in the data set.
 
--   The conditional node monitor computes the probability of the *i*th
-    observation in the data set after passing evidence of the *i* − 1th
-    cases in the data set, and the evidence for all nodes in the *i*th
+-   The conditional node monitor computes the probability of the
+    ![i](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;i "i")th
+    observation in the data set after passing evidence of the
+    ![i-1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;i-1 "i-1")th
+    cases in the data set, and the evidence for all nodes in the
+    ![i](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;i "i")th
     case except the node of interest.
 
 As a quick survey of the nodes, the `node_monitor` command computes the
@@ -156,7 +183,7 @@ marginal and conditional monitors for the final observation in the data
 set.
 
 ``` r
-node_asia <- node_monitor(dag = asia_bn, df = asia)
+node_asia <- final_node_monitor(dag = asia_bn, df = asia)
 node_asia
 #>   node marg.z.score cond.z.score
 #> 1    A   -0.1029759   -0.1029862
