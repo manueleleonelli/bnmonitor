@@ -20,9 +20,9 @@ bnmonitor further provides function to perform robustness studies in DBNs to ver
 
 The available functions for robustness are:
 \itemize{
-\item \emph{Global monitor} (\code{\link{global_monitor}}): contribution of each vertex to the overall log-likelihood of the model.
+\item \emph{Node monitors} (\code{\link{node_monitor}}): contribution of each vertex to the overall log-likelihood of the model.
 \item \emph{Observation's influence} (\code{\link{influential_obs}}): difference in the log-likelihood of a model learnt with the full dataset and with all but one observation.
-\item \emph{Node monitors} (\code{\link{node_monitor}}): marginal and conditional node monitors to assess the fit of a vertex distribution to the full dataset.
+\item \emph{Final node monitors} (\code{\link{node_monitor}}): marginal and conditional node monitors to assess the fit of a vertex distribution to the full dataset.
 \item \emph{Sequential node monitors} (\code{\link{seq_node_monitor}}): marginal and conditional node monitors for a specific vertex only using sequentially subsets of the dataset.
 \item \emph{Sequential parent-child monitor} (\code{\link{seq_pa_ch_monitor}}): parent-child node monitor for a specific vertex and a specific configuration of its parents using sequentially subsets of the dataset.
 }

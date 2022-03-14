@@ -59,12 +59,12 @@ plot.seq_cond_monitor <- function(x,...){
 #'@importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
 #'@importFrom qgraph qgraph
-#' @method plot global_monitor
+#' @method plot node_monitor
 #'@export
 #'@rdname plot
 #'
 
-plot.global_monitor <- function(x, ...){
+plot.node_monitor <- function(x, ...){
   nb.cols <- length(names(x$DAG$nodes))
   my.colors <- colorRampPalette(brewer.pal(8, "Blues"))(nb.cols)
   max.val <- ceiling(max(abs(x$Global_Monitor$Score)))
@@ -137,10 +137,10 @@ plot.kl <- function(x,...){
 #'@importFrom grDevices colorRampPalette
 #'@importFrom bnlearn arcs
 #'@importFrom qgraph qgraph
-#'@method plot node_monitor
+#'@method plot final_node_monitor
 #'@rdname plot
 #'@export
-plot.node_monitor <- function(x, which, ...){
+plot.final_node_monitor <- function(x, which, ...){
   if(which!="marginal" & which!="conditional")stop("wrong input for which")
   from.nodes <- arcs(x$DAG)[,1]
   to.nodes <- arcs(x$DAG)[,2]

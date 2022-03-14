@@ -52,7 +52,7 @@ print.fro <- function(x,...){
 #'@export
 #'@rdname print
 #'
-print.global_monitor <- function(x,...){
+print.node_monitor <- function(x,...){
   print(x$Global_Monitor)
   invisible(x)
 }
@@ -71,7 +71,7 @@ print.jeffreys <- function(x,...){
 #'@export
 #'@rdname print
 #'
-print.node_monitor <- function(x,...){
+print.final_node_monitor <- function(x,...){
   print(x$Node_Monitor)
   invisible(x)
 }

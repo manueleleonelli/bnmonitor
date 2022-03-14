@@ -2,36 +2,32 @@
 % Please edit documentation in R/node_monitor.R
 \name{node_monitor}
 \alias{node_monitor}
-\title{Node monitors}
+\title{Node monitor}
 \usage{
-node_monitor(dag, df)
+node_monitor(dag, df, alpha = "default")
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
 
 \item{df}{a base R style dataframe}
+
+\item{alpha}{single integer. By default, number of max levels in \code{df}}
 }
 \value{
-A dataframe including the names of the vertices, the marginal node monitors and the conditional node monitors. It also return two plots where vertices with a darker color have a higher marginal z-score or conditional z-score, respectively, in absolute value.
+A dataframe including the name of the vertices and the contribution of the vertices to the global monitor. It also returns a plot where vertices with higher contributions in absolute value are darker.
 }
 \description{
-Marginal and conditional node monitors for all vertices of a Bayesian network using the full dataset
+Contribution of each vertex of a Bayesian network to the global monitor
 }
 \details{
-Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dataset \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} has been observed, where \eqn{\boldsymbol{y}_i=(y_{i1},\dots,y_{im})} and \eqn{y_{ij}} is the i-th observation of the j-th variable.
-Let \eqn{p_n} denote the marginal density of \eqn{Y_j} after the first \eqn{n-1} observations have been processed. Define
-\deqn{E_n = \sum_{k=1}^Kp_n(d_k)\log(p_n(d_k)),}
-\deqn{V_n = \sum_{k=1}^K p_n(d_k)\log^2(p_n(d_k))-E_n^2,}
-where \eqn{(d_1,\dots,d_K)} are the possible values of \eqn{Y_j}. The marginal node monitor for the vertex \eqn{Y_j} is defined as
-\deqn{Z_j=\frac{-\log(p_n(y_{ij}))- E_n}{\sqrt{V_n}}.}
-Higher values of \eqn{Z_j} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
-
-The conditional node monitor for the vertex \eqn{Y_j} is defined as
- \deqn{Z_j=\frac{-\log(p_n(y_{nj}|y_{n1},\dots,y_{n(j-1)},y_{n(j+1)},\dots,y_{nm}))- E_n}{\sqrt{V_n}},}
- where \eqn{E_n} and \eqn{V_n} are computed with respect to \eqn{p_n(y_{nj}|y_{n1},\dots,y_{n(j-1)},y_{n(j+1)},\dots,y_{nm})}. Again, higher values of \eqn{Z_j} can give an indication of a poor model fit for the vertex \eqn{Y_j}.
+Consider a Bayesian network over variables \eqn{Y_1,\dots,Y_m} and suppose a dataset \eqn{(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n)} has been observed, where \eqn{\boldsymbol{y}_i=(y_{i1},\dots,y_{im})} and \eqn{y_{ij}} is the i-th observation of the j-th variable. The global monitor is defined as the negative log-likelihood of the model, i.e.
+\deqn{-\log(p(\boldsymbol{y}_1,\dots,\boldsymbol{y}_n))= - \sum_{j=1}^m\sum_{i=1}^n \log(p(y_{ij} | \pi_{ij})),}
+where \eqn{\pi_{ij}} is the value of the parents of \eqn{Y_j} for the i-th observation. The contribution of the j-th vertex to the global monitor is thus
+\deqn{-\sum_{i=1}^n\log(p(y_{ij}|\pi_{ij})).}
 }
 \examples{
-node_monitor(chds_bn, chds[1:100,])
+node_monitor(chds_bn, chds, 3)
+
 }
 \references{
 Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Probabilistic networks and expert systems: Exact computational methods for Bayesian networks. Springer Science & Business Media.
@@ -39,5 +35,5 @@ Cowell, R. G., Dawid, P., Lauritzen, S. L., & Spiegelhalter, D. J. (2006). Proba
 Cowell, R. G., Verrall, R. J., & Yoon, Y. K. (2007). Modeling operational risk with Bayesian networks. Journal of Risk and Insurance, 74(4), 795-827.
 }
 \seealso{
-\code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
+\code{\link{global_monitor}}, \code{\link{influential_obs}}, \code{\link{final_node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 }

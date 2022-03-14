@@ -5,11 +5,11 @@
 \alias{plot.seq_marg_monitor}
 \alias{plot.CD}
 \alias{plot.seq_cond_monitor}
-\alias{plot.global_monitor}
+\alias{plot.node_monitor}
 \alias{plot.influential_obs}
 \alias{plot.jeffreys}
 \alias{plot.kl}
-\alias{plot.node_monitor}
+\alias{plot.final_node_monitor}
 \alias{plot.seq_pa_ch_monitor}
 \alias{plot.sensitivity}
 \alias{plot.fro}
@@ -21,7 +21,7 @@
 
 \method{plot}{seq_cond_monitor}(x, ...)
 
-\method{plot}{global_monitor}(x, ...)
+\method{plot}{node_monitor}(x, ...)
 
 \method{plot}{influential_obs}(x, ...)
 
@@ -29,7 +29,7 @@
 
 \method{plot}{kl}(x, ...)
 
-\method{plot}{node_monitor}(x, which, ...)
+\method{plot}{final_node_monitor}(x, which, ...)
 
 \method{plot}{seq_pa_ch_monitor}(x, ...)
 
