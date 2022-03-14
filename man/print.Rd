@@ -6,9 +6,9 @@
 \alias{print.kl}
 \alias{print.CD}
 \alias{print.fro}
-\alias{print.global_monitor}
-\alias{print.jeffreys}
 \alias{print.node_monitor}
+\alias{print.jeffreys}
+\alias{print.final_node_monitor}
 \alias{print.seq_cond_monitor}
 \alias{print.seq_pa_ch_monitor}
 \alias{print.seq_marg_monitor}
@@ -22,11 +22,11 @@
 
 \method{print}{fro}(x, ...)
 
-\method{print}{global_monitor}(x, ...)
+\method{print}{node_monitor}(x, ...)
 
 \method{print}{jeffreys}(x, ...)
 
-\method{print}{node_monitor}(x, ...)
+\method{print}{final_node_monitor}(x, ...)
 
 \method{print}{seq_cond_monitor}(x, ...)
 
