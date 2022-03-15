@@ -1,3 +1,6 @@
+## New Version
+This is a small update to the package to address comments of a referee. We renamed two functions of the package and introduced a new simple function
+
 ## Test environments
 * local x86_64-w64-mingw32, R 3.6.2
 * local x86_64-apple-darwin17.0, R 4.0.3
