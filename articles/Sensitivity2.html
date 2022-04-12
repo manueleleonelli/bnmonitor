@@ -53,7 +53,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/manueleleonelli/bnmonitor/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -68,7 +75,7 @@
       <img src="" class="logo" alt=""><h1>Sensitivity Analysis in Gaussian BNs</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/manueleleonelli/bnmonitor/blob/HEAD/vignettes/Sensitivity2.Rmd" class="external-link"><code>vignettes/Sensitivity2.Rmd</code></a></small>
       <div class="d-none name"><code>Sensitivity2.Rmd</code></div>
     </div>
 
@@ -79,51 +86,53 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.bnlearn.com/" class="external-link">bnlearn</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://manueleleonelli.github.io/bnmonitor/">bnmonitor</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mathmarks</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mathmarks</span><span class="op">)</span>
-<span class="co">#&gt;   mechanics vectors algebra analysis statistics</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mathmarks</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;   mechanics vectors algebra analysis statistics</span>
 <span class="co">#&gt; 1        77      82      67       67         81</span>
 <span class="co">#&gt; 2        63      78      80       70         81</span>
 <span class="co">#&gt; 3        75      73      71       66         81</span>
 <span class="co">#&gt; 4        55      72      63       70         68</span>
 <span class="co">#&gt; 5        63      63      65       70         63</span>
-<span class="co">#&gt; 6        53      61      72       64         73</span></code></pre></div>
+<span class="co">#&gt; 6        53      61      72       64         73</span></code></pre>
 <p>The data includes the grades (out of 100) of students in five maths exams: mechanics, vectors, algebra, analysis and statistics.</p>
 <p>The structure of a BN for this data is first learnt using the package <code>bnlearn</code> and the maximum likelihood estimate of its parameters is computed and stored in <code>bnfit</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/hc.html" class="external-link">hc</a></span><span class="op">(</span><span class="va">mathmarks</span><span class="op">)</span>
 <span class="fu">qgraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qgraph/man/qgraph.html" class="external-link">qgraph</a></span><span class="op">(</span><span class="va">bn</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/sens2-unnamed-chunk-3-1.png" width="70%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bnfit</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/bn.fit.html" class="external-link">bn.fit</a></span><span class="op">(</span><span class="va">bn</span>, <span class="va">mathmarks</span><span class="op">)</span></code></pre></div>
 <p>To start the sensitivity analysis for the parameters of the learnt BN, one first need to transform <code>bnfit</code> to objects of class <code>GBN</code> (for standard sensitivity analysis) and <code>CI</code> (for model-preserving sensitivity). This can be done using the functions <code>bn2gbn</code> and <code>bn2ci</code> respectively.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gbn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bn2.html">bn2gbn</a></span><span class="op">(</span><span class="va">bnfit</span><span class="op">)</span>
 <span class="va">ci</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/bn2.html">bn2ci</a></span><span class="op">(</span><span class="va">bnfit</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">gbn</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">ci</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "GBN" "CI"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">gbn</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt; [1] "GBN" "CI"</span></code></pre>
 <div class="section level3">
 <h3 id="perturbation-of-the-mean-vector">Perturbation of the mean vector<a class="anchor" aria-label="anchor" href="#perturbation-of-the-mean-vector"></a>
 </h3>
 <p>A varied Gaussian BN after a perturbation of an entry of the mean vector can be obtained with the function <code>mean_var</code>, which can only be applied to an object of class <code>GBN</code>. Below, we vary the fifth entry of the mean vector (statistics) by an additive factor 10.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mean_varied</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">gbn</span><span class="op">$</span><span class="va">order</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">gbn</span><span class="op">$</span><span class="va">mean</span>, <span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="../reference/mean_var.html">mean_var</a></span><span class="op">(</span>gbn <span class="op">=</span> <span class="va">gbn</span>, entry <span class="op">=</span> <span class="fl">5</span>, delta <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">$</span><span class="va">mean</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">mean_varied</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Course"</span>, <span class="st">"Original Mean"</span>, <span class="st">"Varied Mean"</span><span class="op">)</span>
-<span class="va">mean_varied</span>
-<span class="co">#&gt;      Course       Original Mean Varied Mean</span>
+<span class="va">mean_varied</span></code></pre></div>
+<pre><code><span class="co">#&gt;      Course       Original Mean Varied Mean</span>
 <span class="co">#&gt; [1,] "mechanics"  "38.95"       "38.95"    </span>
 <span class="co">#&gt; [2,] "vectors"    "50.59"       "50.59"    </span>
 <span class="co">#&gt; [3,] "algebra"    "50.6"        "50.6"     </span>
 <span class="co">#&gt; [4,] "analysis"   "46.68"       "46.68"    </span>
-<span class="co">#&gt; [5,] "statistics" "42.31"       "52.31"</span></code></pre></div>
+<span class="co">#&gt; [5,] "statistics" "42.31"       "52.31"</span></code></pre>
 <p>The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (<code>KL</code>) and Jeffrey’s divergence (<code>Jeffreys</code>). For instance, let’s see what’s the effect of variations in the mean of the statistics exam.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kl_var5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/KL.html">KL</a></span><span class="op">(</span><span class="va">gbn</span>, where <span class="op">=</span> <span class="st">"mean"</span>, entry <span class="op">=</span> <span class="fl">5</span>, delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">jef_var5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Jeffreys.html">Jeffreys</a></span><span class="op">(</span><span class="va">gbn</span>, where <span class="op">=</span> <span class="st">"mean"</span>, entry <span class="op">=</span> <span class="fl">5</span>, delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">kl_var5</span><span class="op">)</span>, <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">jef_var5</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/sens2-unnamed-chunk-6-1.png" width="30%"></p>
+<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">kl_var5</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-6-1.png" width="700" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">jef_var5</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-6-2.png" width="700" style="display: block; margin: auto;"></p>
 <p>More interestingly, one can check the different effect of variations of different parameters (code not shown).</p>
-<p><img src="reference/figures/sens2-unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-7-1.png" width="700" style="display: block; margin: auto;"><img src="Sensitivity2_files/figure-html/unnamed-chunk-7-2.png" width="700" style="display: block; margin: auto;"></p>
 <p>Misspecifications of the mean of the algebra exam would have the biggest effect on the distribution of the Gaussian BN, since it leads to the biggest distance between the original and the varied network.</p>
 </div>
 <div class="section level3">
@@ -135,83 +144,90 @@
 <li><p>the perturbed matrix may not respect the conditional independences of the underlying BN.</p></li>
 </ul>
 <p>Suppose we are interested in assessing the effect of varying the covariance between <code>Statistics</code> and <code>Vectors</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gbn</span><span class="op">$</span><span class="va">order</span>
-<span class="co">#&gt; [1] "mechanics"  "vectors"    "algebra"    "analysis"   "statistics"</span>
-<span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span>
-<span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]      [,5]</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gbn</span><span class="op">$</span><span class="va">order</span></code></pre></div>
+<pre><code><span class="co">#&gt; [1] "mechanics"  "vectors"    "algebra"    "analysis"   "statistics"</span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]      [,5]</span>
 <span class="co">#&gt; [1,] 305.7680 127.22257 101.57941 100.88420 109.66411</span>
 <span class="co">#&gt; [2,] 127.2226 174.23649  85.65601  85.06978  92.47337</span>
 <span class="co">#&gt; [3,] 101.5794  85.65601 114.56549 113.78140 123.68375</span>
 <span class="co">#&gt; [4,] 100.8842  85.06978 113.78140 223.30480 157.73746</span>
-<span class="co">#&gt; [5,] 109.6641  92.47337 123.68375 157.73746 303.49318</span></code></pre></div>
+<span class="co">#&gt; [5,] 109.6641  92.47337 123.68375 157.73746 303.49318</span></code></pre>
 <p>The parameter of interest correspond to the entry (2,5) of the covariance matrix.</p>
 <p>A standard perturbed covariance matrix can be constructed with the <code>covariance_var</code> function. Suppose we want to increase the covariance between <code>Statistics</code> and <code>Vectors</code> by an additive factor of 10.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="fu"><a href="../reference/covariance_var.html">covariance_var</a></span><span class="op">(</span><span class="va">gbn</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">d</span><span class="op">)</span><span class="op">$</span><span class="va">covariance</span>
-<span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]     [,5]</span>
+<span class="fu"><a href="../reference/covariance_var.html">covariance_var</a></span><span class="op">(</span><span class="va">gbn</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">d</span><span class="op">)</span><span class="op">$</span><span class="va">covariance</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]     [,5]</span>
 <span class="co">#&gt; [1,] 305.7680 127.22257 101.57941 100.88420 109.6641</span>
 <span class="co">#&gt; [2,] 127.2226 174.23649  85.65601  85.06978 102.4734</span>
 <span class="co">#&gt; [3,] 101.5794  85.65601 114.56549 113.78140 123.6837</span>
 <span class="co">#&gt; [4,] 100.8842  85.06978 113.78140 223.30480 157.7375</span>
-<span class="co">#&gt; [5,] 109.6641 102.47337 123.68375 157.73746 303.4932</span></code></pre></div>
+<span class="co">#&gt; [5,] 109.6641 102.47337 123.68375 157.73746 303.4932</span></code></pre>
 <p>The above perturbation made the original network structure not valid for the new covariation matrix. In order to ensure that the perturbed covariance is still valid for the underlying network structure, we can use model-preserving methods. These apply multiplicatively and not additively as standard methods, but we apply the same change in the covariance via the perturbation <code>delta</code> defined below. We can construct various covariation matrices using the following commands:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delta</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span> <span class="op">+</span> <span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">]</span>
-<span class="fu"><a href="../reference/covariation_matrix.html">total_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span>
-<span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span>
+<span class="fu"><a href="../reference/covariation_matrix.html">total_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span>
 <span class="co">#&gt; [1,] 1.108139 1.108139 1.108139 1.108139 1.108139</span>
 <span class="co">#&gt; [2,] 1.108139 1.108139 1.108139 1.108139 1.000000</span>
 <span class="co">#&gt; [3,] 1.108139 1.108139 1.108139 1.108139 1.108139</span>
 <span class="co">#&gt; [4,] 1.108139 1.108139 1.108139 1.108139 1.108139</span>
-<span class="co">#&gt; [5,] 1.108139 1.000000 1.108139 1.108139 1.108139</span>
-<span class="fu"><a href="../reference/covariation_matrix.html">partial_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span>
-<span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span>
+<span class="co">#&gt; [5,] 1.108139 1.000000 1.108139 1.108139 1.108139</span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/covariation_matrix.html">partial_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span>
 <span class="co">#&gt; [1,] 1.000000 1.000000 1.108139 1.108139 1.108139</span>
 <span class="co">#&gt; [2,] 1.000000 1.000000 1.108139 1.108139 1.000000</span>
 <span class="co">#&gt; [3,] 1.108139 1.108139 1.108139 1.108139 1.108139</span>
 <span class="co">#&gt; [4,] 1.108139 1.108139 1.108139 1.108139 1.108139</span>
-<span class="co">#&gt; [5,] 1.108139 1.000000 1.108139 1.108139 1.000000</span>
-<span class="fu"><a href="../reference/covariation_matrix.html">row_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span>
-<span class="co">#&gt;          [,1] [,2]     [,3]     [,4]     [,5]</span>
+<span class="co">#&gt; [5,] 1.108139 1.000000 1.108139 1.108139 1.000000</span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/covariation_matrix.html">row_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1] [,2]     [,3]     [,4]     [,5]</span>
 <span class="co">#&gt; [1,] 1.000000    1 1.000000 1.000000 1.108139</span>
 <span class="co">#&gt; [2,] 1.000000    1 1.000000 1.000000 1.000000</span>
 <span class="co">#&gt; [3,] 1.000000    1 1.000000 1.000000 1.108139</span>
 <span class="co">#&gt; [4,] 1.000000    1 1.000000 1.000000 1.108139</span>
-<span class="co">#&gt; [5,] 1.108139    1 1.108139 1.108139 1.000000</span>
-<span class="fu"><a href="../reference/covariation_matrix.html">col_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span>
-<span class="co">#&gt;      [,1]     [,2]     [,3]     [,4] [,5]</span>
+<span class="co">#&gt; [5,] 1.108139    1 1.108139 1.108139 1.000000</span></code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/covariation_matrix.html">col_covar_matrix</a></span><span class="op">(</span><span class="va">ci</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;      [,1]     [,2]     [,3]     [,4] [,5]</span>
 <span class="co">#&gt; [1,]    1 1.000000 1.000000 1.000000    1</span>
 <span class="co">#&gt; [2,]    1 1.000000 1.108139 1.108139    1</span>
 <span class="co">#&gt; [3,]    1 1.108139 1.000000 1.000000    1</span>
 <span class="co">#&gt; [4,]    1 1.108139 1.000000 1.000000    1</span>
-<span class="co">#&gt; [5,]    1 1.000000 1.000000 1.000000    1</span></code></pre></div>
+<span class="co">#&gt; [5,]    1 1.000000 1.000000 1.000000    1</span></code></pre>
 <p>Importantly, notice that standard methods are applied to objects of class <code>gbn</code>, whilst model-preserving methods operate over <code>ci</code> objects.</p>
 <p>For any of the four available methods (<code>total</code>, <code>partial</code>, <code>row</code> and <code>column</code>) the perturbed covariance matrix can be calculated with the function <code>model_pres_cov</code>. For instance in the case of a partial covariation:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/model_pres_cov.html">model_pres_cov</a></span><span class="op">(</span><span class="va">ci</span>, type <span class="op">=</span> <span class="st">"partial"</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span><span class="op">$</span><span class="va">covariance</span>
-<span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]     [,5]</span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_pres_cov.html">model_pres_cov</a></span><span class="op">(</span><span class="va">ci</span>, type <span class="op">=</span> <span class="st">"partial"</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span><span class="op">$</span><span class="va">covariance</span></code></pre></div>
+<pre><code><span class="co">#&gt;          [,1]      [,2]      [,3]      [,4]     [,5]</span>
 <span class="co">#&gt; [1,] 305.7680 127.22257 112.56414 111.79374 121.5231</span>
 <span class="co">#&gt; [2,] 127.2226 174.23649  94.91879  94.26916 102.4734</span>
 <span class="co">#&gt; [3,] 112.5641  94.91879 126.95451 126.08563 137.0588</span>
 <span class="co">#&gt; [4,] 111.7937  94.26916 126.08563 247.45281 174.7951</span>
-<span class="co">#&gt; [5,] 121.5231 102.47337 137.05881 174.79507 303.4932</span></code></pre></div>
+<span class="co">#&gt; [5,] 121.5231 102.47337 137.05881 174.79507 303.4932</span></code></pre>
 <p>Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariation methods. Available dissimilarity measures are Frobenius norm (<code>Fro</code>), Kullback-Leibler divergence (<code>KL</code>) and Jeffrey’s divergence (<code>Jeffreys</code>). Let’s consider the Frobenius norm.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">0.1</span><span class="op">)</span>
 <span class="va">delta</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span> <span class="op">+</span> <span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">gbn</span><span class="op">$</span><span class="va">covariance</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">]</span>
 <span class="va">cov_stand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Fro.html">Fro</a></span><span class="op">(</span><span class="va">gbn</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="va">cov_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Fro.html">Fro</a></span><span class="op">(</span><span class="va">ci</span>, type <span class="op">=</span> <span class="st">"column"</span>, entry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span>, delta <span class="op">=</span> <span class="va">delta</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cov_stand</span><span class="op">)</span>, <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cov_col</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/sens2-unnamed-chunk-12-1.png" width="50%"></p>
+<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cov_stand</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-12-1.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cov_col</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-12-2.png" width="50%" style="display: block; margin: auto;"></p>
 <p>As for the mean, we can check which entry of the covariance matrix has the biggest impact if varied. For simplicity here we pick the standard method only (code not shown).</p>
-<p><img src="reference/figures/sens2-unnamed-chunk-13-1.png" width="50%"></p>
+<p><img src="Sensitivity2_files/figure-html/unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;"></p>
 <p>From the above plot we can notice that the less robust entries of the covariance matrix are the variance of <code>algebra</code>, the covariance between <code>algebra</code> and <code>analysis</code>, and the covariance between <code>algebra</code> and <code>vectors</code>.</p>
 <p>Another method to quickly have an overview of the effect of all parameters is <code>KL_bounds</code> which creates a table with upper bounds to the Kullback-Leibler divergence for all entries of the covariance matrix and all covariation methods.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/KL_bounds.html">KL_bounds</a></span><span class="op">(</span><span class="va">ci</span>, delta <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span>
-<span class="co">#&gt;    row col   standard    total  partial row_based col_based</span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/KL_bounds.html">KL_bounds</a></span><span class="op">(</span><span class="va">ci</span>, delta <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;    row col   standard    total  partial row_based col_based</span>
 <span class="co">#&gt; 1    1   1 0.08745398 2.721918 2.410370  2.410370  2.410370</span>
 <span class="co">#&gt; 2    1   2 0.11113375 2.721918 2.424361  2.424361  2.424361</span>
 <span class="co">#&gt; 3    1   3 0.18319140 2.721918 2.661624  2.563009  2.563009</span>
@@ -226,7 +242,7 @@
 <span class="co">#&gt; 12   3   5 0.54029638 2.721918 2.661624  2.508260  2.508260</span>
 <span class="co">#&gt; 13   4   4 0.14403323 2.721918 2.661624  2.563009  2.563009</span>
 <span class="co">#&gt; 14   4   5 0.19426900 2.721918 2.661624  2.508260  2.508260</span>
-<span class="co">#&gt; 15   5   5 0.11777072 2.721918 2.410370  2.410370  2.410370</span></code></pre></div>
+<span class="co">#&gt; 15   5   5 0.11777072 2.721918 2.410370  2.410370  2.410370</span></code></pre>
 <p>By looking at the standard method column, we have the confirmation that the 11th entry, corresponding to <code>algebra/analysis</code>, is the most critical for the robustness of the network.</p>
 </div>
   </main>

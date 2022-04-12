@@ -53,7 +53,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/manueleleonelli/bnmonitor/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -68,7 +75,7 @@
       <img src="" class="logo" alt=""><h1>Robustness to Data</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/manueleleonelli/bnmonitor/blob/HEAD/vignettes/Robustness.Rmd" class="external-link"><code>vignettes/Robustness.Rmd</code></a></small>
       <div class="d-none name"><code>Robustness.Rmd</code></div>
     </div>
 
@@ -90,11 +97,11 @@
 <code class="sourceCode R"><span class="va">asia_bn</span> <span class="op">&lt;-</span> <span class="fu">bnlearn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/modelstring.html" class="external-link">model2network</a></span><span class="op">(</span><span class="st">"[A][S][T|A][L|S][B|S][D|B:E][E|T:L][X|E]"</span><span class="op">)</span>
 <span class="fu">bnlearn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/graphviz.plot.html" class="external-link">graphviz.plot</a></span><span class="op">(</span><span class="va">asia_bn</span><span class="op">)</span> 
 <span class="co">#&gt; Loading required namespace: Rgraphviz</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-3-1.png" width="50%"></p>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">asia_bn_alt</span> <span class="op">&lt;-</span>  <span class="fu">bnlearn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/modelstring.html" class="external-link">model2network</a></span><span class="op">(</span><span class="st">"[A][S][T|A][L|S][B|S][E|T:L][X|E][D|B:E:S]"</span><span class="op">)</span>
 <span class="fu">bnlearn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/graphviz.plot.html" class="external-link">graphviz.plot</a></span><span class="op">(</span><span class="va">asia_bn_alt</span><span class="op">)</span> </code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-3-2.png" width="50%"></p>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-3-2.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="section level3">
 <h3 id="global-monitor">Global monitor<a class="anchor" aria-label="anchor" href="#global-monitor"></a>
 </h3>
@@ -108,33 +115,34 @@
 <p>A first useful diagnostic is the <code>global_monitor</code>, reporting the contribution of each vertex to the log-likelihood of the model.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://manueleleonelli.github.io/bnmonitor/">bnmonitor</a></span><span class="op">)</span>
+<span class="va">asia</span> <span class="op">&lt;-</span> <span class="va">asia</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">asia</span><span class="op">)</span>,<span class="fl">50</span><span class="op">)</span>,<span class="op">]</span>
 <span class="va">glob_asia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/node_monitor.html">node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">glob_asia_alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/node_monitor.html">node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn_alt</span>, df <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">glob_asia</span>
-<span class="co">#&gt;   Vertex      Score</span>
-<span class="co">#&gt; 1      A  249.74568</span>
-<span class="co">#&gt; 2      B 3020.72273</span>
-<span class="co">#&gt; 3      D 2144.16059</span>
-<span class="co">#&gt; 4      E   26.31263</span>
-<span class="co">#&gt; 5      L 1101.55381</span>
-<span class="co">#&gt; 6      S 3469.43743</span>
-<span class="co">#&gt; 7      T  260.38452</span>
-<span class="co">#&gt; 8      X  851.22579</span>
+<span class="co">#&gt;   Vertex         Score</span>
+<span class="co">#&gt; 1      A -1.887379e-15</span>
+<span class="co">#&gt; 2      B  3.287805e+01</span>
+<span class="co">#&gt; 3      D -2.109424e-15</span>
+<span class="co">#&gt; 4      E  4.953256e+00</span>
+<span class="co">#&gt; 5      L  2.002190e+01</span>
+<span class="co">#&gt; 6      S  3.582355e+01</span>
+<span class="co">#&gt; 7      T  5.105678e+00</span>
+<span class="co">#&gt; 8      X  7.001926e+00</span>
 <span class="va">glob_asia_alt</span>
-<span class="co">#&gt;   Vertex      Score</span>
-<span class="co">#&gt; 1      A  249.74568</span>
-<span class="co">#&gt; 2      B 3020.72273</span>
-<span class="co">#&gt; 3      D 2153.19484</span>
-<span class="co">#&gt; 4      E   26.31263</span>
-<span class="co">#&gt; 5      L 1101.55381</span>
-<span class="co">#&gt; 6      S 3469.43743</span>
-<span class="co">#&gt; 7      T  260.38452</span>
-<span class="co">#&gt; 8      X  851.22579</span></code></pre></div>
+<span class="co">#&gt;   Vertex         Score</span>
+<span class="co">#&gt; 1      A -1.887379e-15</span>
+<span class="co">#&gt; 2      B  3.287805e+01</span>
+<span class="co">#&gt; 3      D  1.332268e-15</span>
+<span class="co">#&gt; 4      E  4.953256e+00</span>
+<span class="co">#&gt; 5      L  2.002190e+01</span>
+<span class="co">#&gt; 6      S  3.582355e+01</span>
+<span class="co">#&gt; 7      T  5.105678e+00</span>
+<span class="co">#&gt; 8      X  7.001926e+00</span></code></pre></div>
 <p>In the alternative model, Dysnopea contributes more to the log-likelihood.</p>
 <p>Global monitors can be plotted giving a quick view of the decomposition of the log-likelihood. The darker the color, the more substantial the contribution of a vertex.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">glob_asia</span><span class="op">)</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-5-1.png" width="50%"></p>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-5-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="node-monitor">Node monitor<a class="anchor" aria-label="anchor" href="#node-monitor"></a>
@@ -149,18 +157,18 @@
 <code class="sourceCode R"><span class="va">node_asia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/final_node_monitor.html">final_node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span><span class="op">)</span>
 <span class="va">node_asia</span>
 <span class="co">#&gt;   node marg.z.score cond.z.score</span>
-<span class="co">#&gt; 1    A   -0.1029759   -0.1029862</span>
-<span class="co">#&gt; 2    S -114.8350581 -118.7946397</span>
-<span class="co">#&gt; 3    T   -0.1054182   -0.1054288</span>
-<span class="co">#&gt; 4    L   -0.3013303   -0.3013649</span>
-<span class="co">#&gt; 5    B  -34.6833789  -35.0407002</span>
-<span class="co">#&gt; 6    E   -0.3226028   -0.3226405</span>
-<span class="co">#&gt; 7    X   -0.4234203   -0.4234785</span>
-<span class="co">#&gt; 8    D  -10.4048397  -10.3678671</span></code></pre></div>
+<span class="co">#&gt; 1    A          NaN          NaN</span>
+<span class="co">#&gt; 2    S   -5.1501250   -6.1575372</span>
+<span class="co">#&gt; 3    T          NaN          NaN</span>
+<span class="co">#&gt; 4    L   -0.3878116   -0.3929668</span>
+<span class="co">#&gt; 5    B   -3.7255788   -4.2372425</span>
+<span class="co">#&gt; 6    E   -0.3878116   -0.3929668</span>
+<span class="co">#&gt; 7    X   -0.3878116   -0.3929668</span>
+<span class="co">#&gt; 8    D  -13.8690553   -9.1857310</span></code></pre></div>
 <p>The scores indicate a poor fit of the probability distributions specified for the Smoking, Bronchitis, and Dysnopea nodes, since these are larger than 1.96 in absolute value. Plots can also be created to give a visual counterpart of the node monitors.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">node_asia</span>, which <span class="op">=</span> <span class="st">"marginal"</span><span class="op">)</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-7-1.png" width="50%"></p>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-7-1.png" width="700" style="display: block; margin: auto;"></p>
 <!-- The modeller may decide which of these distributions is of the most interest.  -->
 <!-- For the purposes of this vignette, we assume that we would like to check the forecasts for Dysnopea.  -->
 <p>As an illustration we investigate further the fit of the variable Dysnopea.</p>
@@ -170,16 +178,18 @@
 <span class="va">seq_asia_alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_node_monitor.html">seq_marg_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn_alt</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span>
 <span class="va">seq_asia</span>
 <span class="co">#&gt; Marginal Node Monitor for D </span>
-<span class="co">#&gt;  Minimum      -2.182895 </span>
-<span class="co">#&gt;  Maximum      0.446613</span>
+<span class="co">#&gt;  Minimum      0.7901641 </span>
+<span class="co">#&gt;  Maximum      2</span>
 <span class="va">seq_asia_alt</span>
 <span class="co">#&gt; Marginal Node Monitor for D </span>
-<span class="co">#&gt;  Minimum      -2.408245 </span>
-<span class="co">#&gt;  Maximum      0.1543135</span></code></pre></div>
+<span class="co">#&gt;  Minimum      0.7982808 </span>
+<span class="co">#&gt;  Maximum      2</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">seq_asia</span><span class="op">)</span>,<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">seq_asia_alt</span><span class="op">)</span>,ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-9-1.png" width="50%"></p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">seq_asia</span><span class="op">)</span></code></pre></div>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-9-1.png" width="700" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">seq_asia_alt</span><span class="op">)</span></code></pre></div>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-9-2.png" width="700" style="display: block; margin: auto;"></p>
 <p>Both monitors indicate that for some observations there is a poor fit (score above 1.96 in absolute value). In particular for the alternative models the marginal monitor has larger values in absolute value.</p>
 <p>A similar analysis can be conducted with <code>seq_marg_monitor</code>, which would show that the model fits well (not reported here).</p>
 </div>
@@ -188,37 +198,40 @@
 </h3>
 <p>Once a vertex has been identified as a poor fit, further investigation can be carried out to check for which values of the parents the model provides a bad representation. This can be achieved with the <code>seq_pa_ch_monitor</code> function.</p>
 <p>As an illustration consider the <code>asia_bn</code> BN, the vertex <code>D</code> (Dysnopea), the parent variable <code>B</code> (Bronchitis) which can take values <code>yes</code> and <code>no</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">asia_pa_ch1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_pa_ch_monitor.html">seq_pa_ch_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span>, pa.names <span class="op">=</span>  <span class="st">"B"</span>, pa.val <span class="op">=</span>  <span class="st">"yes"</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">asia_pa_ch1</span>
 <span class="co">#&gt; Parent Child Node Monitor </span>
-<span class="co">#&gt;  Minimum      -1.674971 </span>
-<span class="co">#&gt;  Maximum      2.158953</span>
+<span class="co">#&gt;  Minimum      -1.049052 </span>
+<span class="co">#&gt;  Maximum      2.03484</span>
 <span class="va">asia_pa_ch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_pa_ch_monitor.html">seq_pa_ch_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span>, pa.names <span class="op">=</span> <span class="st">"B"</span>, pa.val <span class="op">=</span> <span class="st">"no"</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">asia_pa_ch2</span>
 <span class="co">#&gt; Parent Child Node Monitor </span>
-<span class="co">#&gt;  Minimum      -1.911069 </span>
-<span class="co">#&gt;  Maximum      1.629946</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">asia_pa_ch1</span><span class="op">)</span>,<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">asia_pa_ch2</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-10-1.png" width="50%"></p>
+<span class="co">#&gt;  Minimum      -1.612927 </span>
+<span class="co">#&gt;  Maximum      -0.6256765</span>
+<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">asia_pa_ch1</span><span class="op">)</span></code></pre></div>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-10-1.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">asia_pa_ch2</span><span class="op">)</span></code></pre></div>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-10-2.png" width="50%" style="display: block; margin: auto;"></p>
 <p>For this model, Dysnopea is adequately modeled for both values of Bronchitis, since most scores largely fall in the recommended range.</p>
 </div>
 <div class="section level3">
 <h3 id="influential-observations">Influential observations<a class="anchor" aria-label="anchor" href="#influential-observations"></a>
 </h3>
 <p>The last robustness tool is the absolute value of the log-likelihood ratio between a model learnt without one observation and the one learnt with the full dataset. Larger values are associated to atomic events which influence the structural learning.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">influence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/influential_obs.html">influential_obs</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">influence</span><span class="op">)</span>
-<span class="co">#&gt;    A   S   T  L   B   E   X   D    score</span>
-<span class="co">#&gt; 1 no yes  no no yes  no  no yes 1.448996</span>
-<span class="co">#&gt; 2 no yes  no no  no  no  no  no 2.246368</span>
-<span class="co">#&gt; 3 no  no yes no  no yes yes yes 6.218600</span>
-<span class="co">#&gt; 4 no  no  no no yes  no  no yes 2.223474</span>
-<span class="co">#&gt; 5 no  no  no no  no  no  no yes 3.435658</span>
-<span class="co">#&gt; 6 no yes  no no  no  no  no yes 4.443592</span>
+<span class="co">#&gt;       A   S  T  L   B  E  X   D    score</span>
+<span class="co">#&gt; 38   no  no no no  no no no  no 1.545775</span>
+<span class="co">#&gt; 484  no yes no no  no no no  no 2.284299</span>
+<span class="co">#&gt; 251  no yes no no yes no no  no 1.231149</span>
+<span class="co">#&gt; 4076 no yes no no yes no no yes 1.231149</span>
+<span class="co">#&gt; 839  no  no no no yes no no  no 2.079858</span>
+<span class="co">#&gt; 3083 no  no no no yes no no yes 2.079858</span>
 <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">influence</span><span class="op">)</span></code></pre></div>
-<p><img src="Robustness_files/figure-html/unnamed-chunk-11-1.png" width="50%"></p>
+<p><img src="Robustness_files/figure-html/unnamed-chunk-11-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
   </main>
 </div>

@@ -53,7 +53,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/manueleleonelli/bnmonitor/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -68,7 +75,7 @@
       <img src="" class="logo" alt=""><h1>Sensitivity Analysis in Discrete BNs</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/manueleleonelli/bnmonitor/blob/HEAD/vignettes/Sensitivity.Rmd" class="external-link"><code>vignettes/Sensitivity.Rmd</code></a></small>
       <div class="d-none name"><code>Sensitivity.Rmd</code></div>
     </div>
 
@@ -79,7 +86,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.bnlearn.com/" class="external-link">bnlearn</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://manueleleonelli.github.io/bnmonitor/">bnmonitor</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/bnlearn/man/graphviz.plot.html" class="external-link">graphviz.plot</a></span><span class="op">(</span><span class="va">fire_alarm</span><span class="op">)</span></code></pre></div>
-<p><img src="Sensitivity_files/figure-html/unnamed-chunk-2-1.png" width="50%"></p>
+<p><img src="Sensitivity_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>The network consists of 6 nodes (<code>Fire</code>, <code>Smoke</code>, <code>Tampering</code>, <code>Alarm</code>, <code>Leaving</code> and <code>Report</code>) of either two or three levels.</p>
 <div class="section level3">
 <h3 id="covariation-schemes">Covariation schemes<a class="anchor" aria-label="anchor" href="#covariation-schemes"></a>
@@ -109,30 +116,33 @@
 </h3>
 <p>Suppose we are interested in the probability that <code>Report = TRUE</code> and how this varies with respect to the probability that <code>Alarm = FALSE</code> conditional on <code>Fire = TRUE</code> and <code>Tampering = FALSE</code>. This can be computed with the function <code>sensitivity</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sensitivity.html">sensitivity</a></span><span class="op">(</span>bnfit <span class="op">=</span> <span class="va">fire_alarm</span>, interest_node <span class="op">=</span> <span class="st">"Report"</span>, interest_node_value <span class="op">=</span>  <span class="st">"TRUE"</span> , node <span class="op">=</span> <span class="st">"Alarm"</span> , value_node <span class="op">=</span> <span class="st">"FALSE"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
+<span class="va">sens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sensitivity.html">sensitivity</a></span><span class="op">(</span>bnfit <span class="op">=</span> <span class="va">fire_alarm</span>, interest_node <span class="op">=</span> <span class="st">"Report"</span>, interest_node_value <span class="op">=</span>  <span class="st">"TRUE"</span> , node <span class="op">=</span> <span class="st">"Alarm"</span> , value_node <span class="op">=</span> <span class="st">"FALSE"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'gRbase'</span>
 <span class="co">#&gt; The following objects are masked from 'package:bnlearn':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     ancestors, children, nodes, parents</span>
-<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">sens</span><span class="op">)</span></code></pre></div>
-<p><img src="Sensitivity_files/figure-html/unnamed-chunk-4-1.png" width="50%"></p>
+<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">sens</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>For all covariation schemes as the conditional probability of <code>Alarm = FALSE</code> increases, the probability of <code>Report = TRUE</code> decreases. The uniform covariation scheme is reported in red, the proportional in green and the order-preserving in blue.</p>
 <p>The function sensitivity also allows for conditional probabilities of interest, not only marginals, which can be set by the options <code>evidence_nodes</code> and <code>evidence_states</code>.</p>
 <p>For such changes in the probability distribution of a BN, we can compute the distance between the original and the varied networks using the Chan-Darwiche distance (<code>CD</code>) and the Kullback-Leibler divergence (<code>KL</code>). As an example consider <code>Alarm = MALFUNCTIOn</code> conditional on <code>Fire = TRUE</code> and <code>Tampering = FALSE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cd_distance</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CD.html">CD</a></span><span class="op">(</span><span class="va">fire_alarm</span>, node <span class="op">=</span> <span class="st">"Alarm"</span>, value_node <span class="op">=</span> <span class="st">"MALFUNCTION"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-<span class="va">kl_divergence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/KL.html">KL</a></span><span class="op">(</span><span class="va">fire_alarm</span>, node <span class="op">=</span> <span class="st">"Alarm"</span>, value_node <span class="op">=</span> <span class="st">"MALFUNCTION"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cd_distance</span><span class="op">)</span>, <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">kl_divergence</span><span class="op">)</span>,ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="Sensitivity_files/figure-html/unnamed-chunk-5-1.png" width="50%"></p>
+<code class="sourceCode R"><span class="va">cd_distance</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CD.html">CD</a></span><span class="op">(</span><span class="va">fire_alarm</span>, node <span class="op">=</span> <span class="st">"Alarm"</span>, value_node <span class="op">=</span> <span class="st">"MALFUNCTION"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> 
+<span class="va">kl_divergence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/KL.html">KL</a></span><span class="op">(</span><span class="va">fire_alarm</span>, node <span class="op">=</span> <span class="st">"Alarm"</span>, value_node <span class="op">=</span> <span class="st">"MALFUNCTION"</span>, value_parents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>,<span class="st">"FALSE"</span><span class="op">)</span>, new_value <span class="op">=</span> <span class="st">"all"</span>, covariation <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> 
+<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cd_distance</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity_files/figure-html/unnamed-chunk-5-1.png" width="700" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">kl_divergence</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
+<p><img src="Sensitivity_files/figure-html/unnamed-chunk-5-2.png" width="700" style="display: block; margin: auto;"></p>
 <p>As expected proportional covariation has the smallest distance/divergence of all covariation schemes.</p>
 </div>
 <div class="section level3">
 <h3 id="sensitivity-queries">Sensitivity queries<a class="anchor" aria-label="anchor" href="#sensitivity-queries"></a>
 </h3>
 <p>Another task in sensitivity analysis is to identify parameter changes that meet a specific constraint. As an example suppose we want the probability <code>Report = TRUE</code> to be equal to 0.4. Which parameters could we change to obtain such a probability? The answer can be obtained using the function <code>sensquery</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/sensquery.html">sensquery</a></span><span class="op">(</span>bnfit <span class="op">=</span> <span class="va">fire_alarm</span>, interest_node <span class="op">=</span> <span class="st">"Report"</span>, interest_node_value <span class="op">=</span> <span class="st">"TRUE"</span>, new_value <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
 <span class="co">#&gt;        Node Value node Value parents Original value Suggested change</span>
 <span class="co">#&gt; 1   Leaving       TRUE   MALFUNCTION         0.7300        0.7983961</span>
