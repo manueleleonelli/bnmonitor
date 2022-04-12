@@ -1,0 +1,178 @@
+---
+title: "Sensitivity Analysis in Gaussian BNs"
+output: rmarkdown::html_vignette
+description: >
+  Learn how bnmonitor implements sensitivity analysis for Gaussian BNs
+vignette: >
+  %\VignetteIndexEntry{Sensitivity-Gaussian}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/sens2-",
+  out.width = "100%"
+)
+```
+
+The functionalities of `bnmonitor` for sensitivity analysis in Gaussian BNs are illustrated next using the `mathmarks` dataset bundled within the package. 
+```{r}
+library(bnlearn)
+library(bnmonitor)
+data(mathmarks)
+head(mathmarks)
+```
+The data includes the grades (out of 100) of students in five maths exams: mechanics, vectors, algebra, analysis and statistics.
+
+The structure of a BN for this data is first learnt using the package `bnlearn` and the maximum likelihood estimate of its parameters is computed and stored in `bnfit`.
+```{r, out.width = "70%"}
+bn <- hc(mathmarks)
+qgraph::qgraph(bn)
+bnfit <-bn.fit(bn, mathmarks)
+```
+
+To start the sensitivity analysis for the parameters of the learnt BN, one first need to transform `bnfit` to objects of class `GBN` (for standard sensitivity analysis) and `CI` (for model-preserving sensitivity). This can be done using the functions `bn2gbn` and `bn2ci` respectively.
+```{r}
+gbn <- bn2gbn(bnfit)
+ci <-  bn2ci(bnfit)
+c(class(gbn), class(ci))
+```
+
+
+### Perturbation of the mean vector
+
+A varied Gaussian BN after a perturbation of an entry of the mean vector can be obtained with the function `mean_var`, which can only be applied to an object of class `GBN`. Below, we vary the fifth entry of the mean vector (statistics) by an additive factor 10.
+
+```{r}
+mean_varied <- cbind(gbn$order, round(gbn$mean, 2),round(mean_var(gbn = gbn, entry = 5, delta = 10)$mean, 2))
+colnames(mean_varied) <- c("Course", "Original Mean", "Varied Mean")
+mean_varied
+```
+
+The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). For instance, let's see what's the effect of variations in the mean of the statistics exam.
+
+```{r out.width="30%", warning = FALSE}
+kl_var5 <- KL(gbn, where = "mean", entry = 5, delta = seq(-10,10,0.1))
+jef_var5 <- Jeffreys(gbn, where = "mean", entry = 5, delta = seq(-10,10,0.1))
+library(gridExtra)
+grid.arrange(plot(kl_var5), plot(jef_var5), ncol = 2)
+```
+
+More interestingly, one can check the different effect of variations of different parameters (code not shown).
+
+```{r echo = FALSE, out.width="100%", warning = FALSE}
+library(ggplot2)
+mean_var1 <- KL(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$KL
+mean_var2 <- KL(gbn, "mean", entry=2, delta = seq(-10,10,0.1))$KL
+mean_var3 <- KL(gbn, "mean", entry=3, delta = seq(-10,10,0.1))$KL
+mean_var4 <- KL(gbn, "mean", entry=4, delta = seq(-10,10,0.1))$KL
+mean_var5 <- KL(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$KL
+out <- data.frame(delta = rep(seq(-10,10,0.1),5), KL = c(mean_var1[,2],mean_var2[,2],mean_var3[,2],mean_var4[,2],mean_var5[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
+mean_var1J <- Jeffreys(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$Jeffreys
+mean_var2J <- Jeffreys(gbn, "mean", entry=2, delta = seq(-10,10,0.1))$Jeffreys
+mean_var3J <- Jeffreys(gbn, "mean", entry=3, delta = seq(-10,10,0.1))$Jeffreys
+mean_var4J <- Jeffreys(gbn, "mean", entry=4, delta = seq(-10,10,0.1))$Jeffreys
+mean_var5J <- Jeffreys(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$Jeffreys
+out1 <- data.frame(delta = rep(seq(-10,10,0.1),5), Jeffreys = c(mean_var1J[,2],mean_var2J[,2],mean_var3J[,2],mean_var4J[,2],mean_var5J[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
+p1 <-ggplot(out) + geom_line(aes(x=delta,y=KL,color = Entry)) + theme_minimal()
+p2 <- ggplot(out1) + geom_line(aes(x=delta,y=Jeffreys,color = Entry)) + theme_minimal()
+grid.arrange(p1,p2,ncol=2)
+```
+
+Misspecifications of the mean of the algebra exam would have the biggest effect on the distribution of the Gaussian BN, since it leads to the biggest distance between the original and the varied network.
+
+### Perturbation of the covariance matrix
+
+Care must be taken when performing perturbations of the covariance matrix, for two reasons: 
+
+ - the perturbed matrix may not be positive semidefinite; 
+ 
+ - the perturbed matrix may not respect the conditional independences of the underlying BN.
+ 
+Suppose we are interested in assessing the effect of varying the covariance between `Statistics` and `Vectors`.
+
+
+```{r}
+gbn$order
+gbn$covariance
+```
+
+The parameter of interest correspond to the entry (2,5) of the covariance matrix.
+
+A standard perturbed covariance matrix can be constructed with the `covariance_var` function. Suppose we want to increase the covariance between `Statistics` and `Vectors` by an additive factor of 10. 
+```{r}
+d <- 10
+covariance_var(gbn, entry = c(2,5), delta = d)$covariance
+```
+
+The above perturbation made the original network structure not valid for the new covariation matrix. In order to ensure that the perturbed covariance is still valid for the underlying network structure, we can use model-preserving methods. These apply multiplicatively and not additively as standard methods, but we apply the same change in the covariance via the perturbation `delta` defined below. We can construct various covariation matrices using the following commands:
+
+```{r}
+delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]
+total_covar_matrix(ci, entry = c(2,5), delta = delta)
+partial_covar_matrix(ci, entry = c(2,5), delta = delta)
+row_covar_matrix(ci, entry = c(2,5), delta = delta)
+col_covar_matrix(ci, entry = c(2,5), delta = delta)
+```
+
+Importantly, notice that standard methods are applied to objects of class `gbn`, whilst model-preserving methods operate over `ci` objects.
+
+
+For any of the four available methods (`total`, `partial`, `row` and `column`) the perturbed covariance matrix can be calculated with the function `model_pres_cov`. For instance in the case of a partial covariation:
+```{r}
+model_pres_cov(ci, type = "partial", entry = c(2,5), delta = delta)$covariance
+```
+
+Having constructed various covariation matrices, we can assess how far apart the original and the perturbed distributions are for various covariation methods. Available dissimilarity measures are Frobenius norm (`Fro`), Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). Let's consider the Frobenius norm.
+```{r out.width = "50%"}
+d <- seq(-10, 10, 0.1)
+delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]
+cov_stand <- Fro(gbn, entry = c(2,5), delta = d)
+cov_col <- Fro(ci, type = "column", entry = c(2,5), delta = delta)
+grid.arrange(plot(cov_stand), plot(cov_col), ncol = 2)
+```
+
+As for the mean, we can check which entry of the covariance matrix has the biggest impact if varied. For simplicity here we pick the standard method only (code not shown).
+
+```{r,echo=FALSE, out.width="50%"}
+d <- seq(-5,5,0.1)
+standard11 <- Jeffreys(gbn,"covariance", c(1,1), d)$Jeffreys
+standard12 <- Jeffreys(gbn,"covariance", c(1,2), d)$Jeffreys
+standard13 <- Jeffreys(gbn,"covariance", c(1,3), d)$Jeffreys
+standard14 <- Jeffreys(gbn,"covariance", c(1,4), d)$Jeffreys
+standard15 <- Jeffreys(gbn,"covariance", c(1,5), d)$Jeffreys
+standard22 <- Jeffreys(gbn,"covariance", c(2,2), d)$Jeffreys
+standard23 <- Jeffreys(gbn,"covariance", c(2,3), d)$Jeffreys
+standard24 <- Jeffreys(gbn,"covariance", c(2,4), d)$Jeffreys
+standard25 <- Jeffreys(gbn,"covariance", c(2,5), d)$Jeffreys
+standard33 <- Jeffreys(gbn,"covariance", c(3,3), d)$Jeffreys
+standard34 <- Jeffreys(gbn,"covariance", c(3,4), d)$Jeffreys
+standard35 <- Jeffreys(gbn,"covariance", c(3,5), d)$Jeffreys
+standard44 <- Jeffreys(gbn,"covariance", c(4,4), d)$Jeffreys
+standard45 <- Jeffreys(gbn,"covariance", c(4,5), d)$Jeffreys
+standard55 <- Jeffreys(gbn,"covariance", c(5,5), d)$Jeffreys
+dtot <- rep(d,15)
+l <- length(d)
+entry <- c(rep("mechanics",l),rep("mechanics/vectors",l),rep("mechanics/algebra",l),rep("mechanics/analysis",l),rep("mechanics/statistics",l),rep("vectors",l),rep("vectors/algebra",l),rep("vectors/analysis",l),rep("vectors/statistics",l), rep("algebra",l), rep("algebra/analysis",l),rep("algebra/statistics",l),rep("analysis",l),rep("analysis/statistics",l),rep("statistics",l))
+Jef <- c(standard11$Jeffreys,standard12$Jeffreys,standard13$Jeffreys,standard14$Jeffreys,standard15$Jeffreys,standard22$Jeffreys,standard23$Jeffreys,standard24$Jeffreys,standard25$Jeffreys,standard33$Jeffreys,standard34$Jeffreys,standard35$Jeffreys,standard44$Jeffreys,standard45$Jeffreys,standard55$Jeffreys)
+out <- data.frame(d = dtot, entry = entry, Jeffreys = Jef)
+ggplot(out) + geom_line(aes(x = d, y = Jeffreys, color=entry))
+```
+
+From the above plot we can notice that the less robust entries of the covariance matrix are the variance of `algebra`, the covariance between `algebra` and `analysis`, and the covariance between `algebra` and `vectors`.
+
+Another method to quickly have an overview of the effect of all parameters is `KL_bounds` which creates a table with upper bounds to the Kullback-Leibler divergence for all entries of the covariance matrix and all covariation methods.
+
+```{r}
+KL_bounds(ci, delta = 1.2)
+```
+
+By looking at the standard method column, we have the confirmation that the 11th entry, corresponding to `algebra/analysis`, is the most critical for the robustness of the network.
+
+
+
+
+

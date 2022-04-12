@@ -1,7 +1,7 @@
 url: https://manueleleonelli.github.io/bnmonitor/
 template:
   bootstrap: 5
-  bootswatch: materia
+  bootswatch: litera
 navbar:
   structure:
     left:
