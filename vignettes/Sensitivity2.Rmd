@@ -11,10 +11,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/sens2-",
-  out.width = "100%"
+  fig.align = 'center'
 )
 ```
 
@@ -28,7 +26,7 @@ head(mathmarks)
 The data includes the grades (out of 100) of students in five maths exams: mechanics, vectors, algebra, analysis and statistics.
 
 The structure of a BN for this data is first learnt using the package `bnlearn` and the maximum likelihood estimate of its parameters is computed and stored in `bnfit`.
-```{r, out.width = "70%"}
+```{r}
 bn <- hc(mathmarks)
 qgraph::qgraph(bn)
 bnfit <-bn.fit(bn, mathmarks)
@@ -54,16 +52,16 @@ mean_varied
 
 The overall effect of such variations can be assessed in terms of dissimilarity measures: the Kullback-Leibler divergence (`KL`) and Jeffrey's divergence (`Jeffreys`). For instance, let's see what's the effect of variations in the mean of the statistics exam.
 
-```{r out.width="30%", warning = FALSE}
+```{r  warning = FALSE}
 kl_var5 <- KL(gbn, where = "mean", entry = 5, delta = seq(-10,10,0.1))
 jef_var5 <- Jeffreys(gbn, where = "mean", entry = 5, delta = seq(-10,10,0.1))
-library(gridExtra)
-grid.arrange(plot(kl_var5), plot(jef_var5), ncol = 2)
+plot(kl_var5)
+plot(jef_var5)
 ```
 
 More interestingly, one can check the different effect of variations of different parameters (code not shown).
 
-```{r echo = FALSE, out.width="100%", warning = FALSE}
+```{r echo = FALSE,  warning = FALSE}
 library(ggplot2)
 mean_var1 <- KL(gbn, "mean", entry=1, delta = seq(-10,10,0.1))$KL
 mean_var2 <- KL(gbn, "mean", entry=2, delta = seq(-10,10,0.1))$KL
@@ -79,7 +77,8 @@ mean_var5J <- Jeffreys(gbn, "mean", entry=5, delta = seq(-10,10,0.1))$Jeffreys
 out1 <- data.frame(delta = rep(seq(-10,10,0.1),5), Jeffreys = c(mean_var1J[,2],mean_var2J[,2],mean_var3J[,2],mean_var4J[,2],mean_var5J[,2]), Entry = c(rep("mechanics",length(seq(-10,10,0.1))),rep("vectors",length(seq(-10,10,0.1))),rep("algebra",length(seq(-10,10,0.1))),rep("analysis",length(seq(-10,10,0.1))),rep("statistics",length(seq(-10,10,0.1)))))
 p1 <-ggplot(out) + geom_line(aes(x=delta,y=KL,color = Entry)) + theme_minimal()
 p2 <- ggplot(out1) + geom_line(aes(x=delta,y=Jeffreys,color = Entry)) + theme_minimal()
-grid.arrange(p1,p2,ncol=2)
+p1 
+p2
 ```
 
 Misspecifications of the mean of the algebra exam would have the biggest effect on the distribution of the Gaussian BN, since it leads to the biggest distance between the original and the varied network.
@@ -132,7 +131,8 @@ d <- seq(-10, 10, 0.1)
 delta <- (d + gbn$covariance[2,5])/gbn$covariance[2,5]
 cov_stand <- Fro(gbn, entry = c(2,5), delta = d)
 cov_col <- Fro(ci, type = "column", entry = c(2,5), delta = delta)
-grid.arrange(plot(cov_stand), plot(cov_col), ncol = 2)
+plot(cov_stand)
+plot(cov_col)
 ```
 
 As for the mean, we can check which entry of the covariance matrix has the biggest impact if varied. For simplicity here we pick the standard method only (code not shown).
@@ -159,7 +159,7 @@ l <- length(d)
 entry <- c(rep("mechanics",l),rep("mechanics/vectors",l),rep("mechanics/algebra",l),rep("mechanics/analysis",l),rep("mechanics/statistics",l),rep("vectors",l),rep("vectors/algebra",l),rep("vectors/analysis",l),rep("vectors/statistics",l), rep("algebra",l), rep("algebra/analysis",l),rep("algebra/statistics",l),rep("analysis",l),rep("analysis/statistics",l),rep("statistics",l))
 Jef <- c(standard11$Jeffreys,standard12$Jeffreys,standard13$Jeffreys,standard14$Jeffreys,standard15$Jeffreys,standard22$Jeffreys,standard23$Jeffreys,standard24$Jeffreys,standard25$Jeffreys,standard33$Jeffreys,standard34$Jeffreys,standard35$Jeffreys,standard44$Jeffreys,standard45$Jeffreys,standard55$Jeffreys)
 out <- data.frame(d = dtot, entry = entry, Jeffreys = Jef)
-ggplot(out) + geom_line(aes(x = d, y = Jeffreys, color=entry))
+ggplot(out) + geom_line(aes(x = d, y = Jeffreys, color=entry)) +  theme(legend.title = element_text(size = 5), legend.text = element_text(size = 4), legend.key.size = unit(0.4, 'cm'))
 ```
 
 From the above plot we can notice that the less robust entries of the covariance matrix are the variance of `algebra`, the covariance between `algebra` and `analysis`, and the covariance between `algebra` and `vectors`.

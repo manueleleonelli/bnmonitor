@@ -13,4 +13,5 @@ LazyData: true
 RoxygenNote: 7.1.2
 Imports: bnlearn, dplyr, ggplot2, gRain, gRbase, graphics, purrr, qgraph, RColorBrewer, reshape2, rlang, tidyr
 Suggests: testthat, knitr, rmarkdown
-URL: https://manueleleonelli.github.io/bnmonitor/
+URL: https://manueleleonelli.github.io/bnmonitor/,
+    https://github.com/manueleleonelli/bnmonitor

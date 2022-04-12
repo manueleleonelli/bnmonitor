@@ -12,7 +12,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = 'center'
 )
 ```
 
@@ -48,6 +49,7 @@ A first useful diagnostic is the `global_monitor`, reporting the contribution of
 
 ``` {r}
 library(bnmonitor)
+asia <- asia[sample(1:nrow(asia),50),]
 glob_asia <- node_monitor(dag = asia_bn, df = asia, alpha = 3)
 glob_asia_alt <- node_monitor(dag = asia_bn_alt, df = asia, alpha = 3)
 glob_asia
@@ -58,7 +60,7 @@ In the alternative model, Dysnopea contributes more to the log-likelihood.
 
 Global monitors can be plotted giving a quick view of the decomposition of the log-likelihood. The darker the color, the more substantial the contribution of a vertex.
 
-```{r out.width = "50%"}
+```{r }
 plot(glob_asia)
 ```
 
@@ -79,7 +81,7 @@ node_asia
 
 The scores indicate a poor fit of the probability distributions specified for the Smoking, Bronchitis, and Dysnopea nodes, since these are larger than 1.96 in absolute value. Plots can also be created to give a visual counterpart of the node monitors.
 
-```{r out.width="50%"}
+```{r }
 plot(node_asia, which = "marginal")
 ```
 
@@ -99,9 +101,9 @@ seq_asia_alt
 ```
 
 
-```{r out.width="50%",warning=FALSE}
-library(gridExtra)
-grid.arrange(plot(seq_asia),plot(seq_asia_alt),ncol=2)
+```{r warning=FALSE}
+plot(seq_asia)
+plot(seq_asia_alt)
 ```
 
 Both monitors indicate that for some observations there is a poor fit (score above 1.96 in absolute value). In particular for the alternative models the marginal monitor has larger values in absolute value. 
@@ -120,7 +122,8 @@ asia_pa_ch1 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.n
 asia_pa_ch1
 asia_pa_ch2 <- seq_pa_ch_monitor(dag = asia_bn, df = asia, node.name = "D", pa.names = "B", pa.val = "no", alpha = 3)
 asia_pa_ch2
-grid.arrange(plot(asia_pa_ch1),plot(asia_pa_ch2), ncol = 2)
+plot(asia_pa_ch1)
+plot(asia_pa_ch2)
 ```
 
 For this model, Dysnopea is adequately modeled for both values of Bronchitis, since most scores largely fall in the recommended range.
