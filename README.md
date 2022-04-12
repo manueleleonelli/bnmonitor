@@ -51,3 +51,19 @@ into three main areas:
 <!-- The observations are then standardized to give a z-score statistic.  -->
 <!-- Following the recommendation of Cowell (2007), scores indicate a poor fit where |z| > 1.96  -->
 <!-- We demonstrate the efficacy of the prequential monitors with the Asia data set from the bnlearn package. Details of the variables (nodes) can be found in the documentation for bnlearn. -->
+
+Refer to the articles section for guidance on each of these areas.
+
+## Papers where bnmonitor is used
+
+-   Görgen, Christiane, and Manuele Leonelli. “Model-Preserving
+    Sensitivity Analysis for Families of Gaussian Distributions.” J.
+    Mach. Learn. Res. 21 (2020): 84-1.
+
+-   Leonelli, Manuele, and Eva Riccomagno. “A geometric characterisation
+    of sensitivity analysis in monomial models.” arXiv preprint
+    arXiv:1901.02058 (2018).
+
+-   Leonelli, Manuele, Ramsiya Ramanathan, and Rachel L. Wilkerson.
+    “Sensitivity and robustness analysis in Bayesian networks with the
+    bnmonitor R package.” arXiv preprint arXiv:2107.11785 (2021).
