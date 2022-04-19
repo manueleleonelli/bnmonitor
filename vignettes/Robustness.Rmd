@@ -134,7 +134,7 @@ The last robustness tool is the absolute value of the log-likelihood ratio betwe
 
 
 ```{r warning=FALSE, out.width="50%"}
-influence <- influential_obs(dag = asia_bn, df = asia, alpha = 3)
+influence <- influential_obs(dag = asia_bn, data = asia, alpha = 3)
 head(influence)
 plot(influence)
 ```
