@@ -22,27 +22,17 @@
 #' @seealso \code{\link{influential_obs}}, \code{\link{node_monitor}}, \code{\link{seq_node_monitor}}, \code{\link{seq_pa_ch_monitor}}
 #'@export
 #'
-influential_obs <- function(dag, df, alpha = "default"){#j is the index of the parent set
-  if (alpha == "default") alpha <- max(sapply(df, nlevels))
-  un <- unique(df)
+influential_obs <- function(dag,data,alpha = "default"){
+  if (alpha == "default") alpha <- max(sapply(data, nlevels))
+  un <- unique(data)
   result <- rep(0,nrow(un))
+  total <- global_monitor(dag,data)
   for(i in 1:nrow(un)){
-    a <- 0
-    j <- 0
-    while(a == 0){
-      j <- j +1
-      if(prod(un[i,] == df[j,]) == 1 ) {a <- 1}
-    }
-    result[i] <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df[-j,], .f= global.monitor.bn.node))))
+    result[i] <- global_monitor(dag,rbind(data,un[i,]),alpha)
   }
-  total <- sum(as.numeric(as.character(map_dbl(.x=1:length(dag$nodes), dag, alpha, df, .f= global.monitor.bn.node))))
-  score <- abs(total - result)
+  score <- result- total
   out <- data.frame(un,score)
   attr(out,'class') <- c('influential_obs','data.frame')
 
-  return(out)#returns global and pach monitor
+  return(out)
 }
-
-
-
-

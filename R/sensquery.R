@@ -36,6 +36,7 @@ sensquery <- function(bnfit,
                       new_value,
                       evidence_nodes = NULL,
                       evidence_states = NULL) {
+
   if (!(interest_node %in% names(bnfit))) {
     stop("Invalid input for interest_node")
   }
@@ -45,27 +46,27 @@ sensquery <- function(bnfit,
     }
   }
   query <- data.frame()
-  for (i in 1:length(nodes(bnfit))) {
+  for (i in 1:length(bnfit)) {
     original <-
-      numeric(nrow(expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]]))))
+      numeric(nrow(expand.grid(dimnames(bnfit[[i]][["prob"]]))))
     i_change <-
-      numeric(nrow(expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]]))))
+      numeric(nrow(expand.grid(dimnames(bnfit[[i]][["prob"]]))))
     ij_parents <-
-      character(nrow(expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]]))))
-    for (j in 1:nrow(expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]])))) {
+      character(nrow(expand.grid(dimnames(bnfit[[i]][["prob"]]))))
+    for (j in 1:nrow(expand.grid(dimnames(bnfit[[i]][["prob"]])))) {
       value_node <-
-        as.character.factor(expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]]))[j, 1])
-      if (length(bnfit[[nodes(bnfit)[i]]][["parents"]]) == 0) {
+        as.character.factor(expand.grid(dimnames(bnfit[[i]][["prob"]]))[j, 1])
+      if (length(bnfit[[i]][["parents"]]) == 0) {
         value_parents <- NULL
       } else{
         value_parents <-
           as.character.factor(unname(unlist(expand.grid(
-            dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]])
+            dimnames(bnfit[[i]][["prob"]])
           )[j, -1])))
       }
       ij_parents[j] <- paste(value_parents, collapse = ",")
       original[j] <-
-        coef(bnfit[[nodes(bnfit)[i]]])[t(append(value_node, value_parents))]
+        coef(bnfit[[i]])[t(append(value_node, value_parents))]
       i_change[j] <- try(uniroot(
         fquery,
         c(0, 1),
@@ -86,8 +87,8 @@ sensquery <- function(bnfit,
       suppressWarnings(rbind(
         query,
         data.frame(
-          node = rep(nodes(bnfit)[i]),
-          value_node = expand.grid(dimnames(bnfit[[nodes(bnfit)[i]]][["prob"]]))[, 1],
+          node = bnfit[[i]]$node,
+          value_node = expand.grid(dimnames(bnfit[[i]][["prob"]]))[, 1],
           value_parents = ij_parents,
           original = as.numeric(original),
           change = as.numeric(i_change)

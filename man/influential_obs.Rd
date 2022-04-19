@@ -4,14 +4,14 @@
 \alias{influential_obs}
 \title{Influential observations}
 \usage{
-influential_obs(dag, df, alpha = "default")
+influential_obs(dag, data, alpha = "default")
 }
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
 
-\item{df}{a base R style dataframe}
-
 \item{alpha}{single integer. By default, the number of max levels in \code{df}}
+
+\item{df}{a base R style dataframe}
 }
 \value{
 A vector including the influence of each observation.
