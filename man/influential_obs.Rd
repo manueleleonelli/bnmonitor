@@ -9,9 +9,9 @@ influential_obs(dag, data, alpha = "default")
 \arguments{
 \item{dag}{an object of class \code{bn} from the \code{bnlearn} package}
 
-\item{alpha}{single integer. By default, the number of max levels in \code{df}}
+\item{data}{a base R style dataframe}
 
-\item{df}{a base R style dataframe}
+\item{alpha}{single integer. By default, the number of max levels in \code{data}}
 }
 \value{
 A vector including the influence of each observation.
