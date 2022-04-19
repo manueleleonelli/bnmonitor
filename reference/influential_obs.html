@@ -56,17 +56,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">influential_obs</span><span class="op">(</span><span class="va">dag</span>, <span class="va">df</span>, alpha <span class="op">=</span> <span class="st">"default"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">influential_obs</span><span class="op">(</span><span class="va">dag</span>, <span class="va">data</span>, alpha <span class="op">=</span> <span class="st">"default"</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>dag</dt>
 <dd><p>an object of class <code>bn</code> from the <code>bnlearn</code> package</p></dd>
-<dt>df</dt>
+<dt>data</dt>
 <dd><p>a base R style dataframe</p></dd>
 <dt>alpha</dt>
-<dd><p>single integer. By default, the number of max levels in <code>df</code></p></dd>
+<dd><p>single integer. By default, the number of max levels in <code>data</code></p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -88,27 +88,27 @@ High values of this index denote observations that highly contribute to the like
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">influential_obs</span><span class="op">(</span><span class="va">chds_bn</span>, <span class="va">chds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Social Economic  Events Admission    score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    High      Low     Low        No 2.158256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    High      Low     Low       Yes 4.104166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    High     High    High        No 3.497180</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Low      Low    High        No 2.046216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Low      Low     Low        No 2.730746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Low      Low Average        No 2.115741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15   High     High     Low        No 1.854045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22   High     High     Low       Yes 3.799955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23   High      Low Average       Yes 4.487159</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26    Low      Low     Low       Yes 4.676656</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34   High     High Average        No 3.166013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Low      Low    High       Yes 3.655654</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40    Low     High     Low       Yes 6.968067</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45   High      Low Average        No 3.470224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46    Low     High     Low        No 5.022157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52   High      Low    High        No 3.801391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Low      Low Average       Yes 3.132675</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69   High     High Average       Yes 4.182947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Low     High    High        No 4.337628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83   High      Low    High       Yes 5.410829</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85   High     High    High       Yes 5.106618</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    High      Low     Low        No 2.109706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    High      Low     Low       Yes 3.914204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    High     High    High        No 3.350580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Low      Low    High        No 1.993258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Low      Low     Low        No 2.628451</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Low      Low Average        No 2.061860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   High     High     Low        No 1.816719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   High     High     Low       Yes 3.621217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   High      Low Average       Yes 4.302875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    Low      Low     Low       Yes 4.432949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   High     High Average        No 3.062507</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Low      Low    High       Yes 3.445511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40    Low     High     Low       Yes 6.545914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   High      Low Average        No 3.355494</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46    Low     High     Low        No 4.741415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   High      Low    High        No 3.643567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Low      Low Average       Yes 3.009242</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69   High     High Average       Yes 4.009888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Low     High    High        No 4.106223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83   High      Low    High       Yes 5.095819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85   High     High    High       Yes 4.802832</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
