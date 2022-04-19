@@ -1,7 +1,7 @@
 Package: bnmonitor
 Type: Package
 Title: An Implementation of Sensitivity Analysis in Bayesian Networks
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person("Manuele", "Leonelli", email = "manuele.leonelli@ie.edu", role = c("aut","cre")),
     person("Ramsiya", "Ramanathan", email = "ramsiya.ramanathan@studio.unibo.it", role = "aut"),
