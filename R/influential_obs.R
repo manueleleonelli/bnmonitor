@@ -10,8 +10,8 @@
 #' @return A vector including the influence of each observation.
 #'
 #' @param dag an object of class \code{bn} from the \code{bnlearn} package
-#' @param df a base R style dataframe
-#' @param alpha single integer. By default, the number of max levels in \code{df}
+#' @param data a base R style dataframe
+#' @param alpha single integer. By default, the number of max levels in \code{data}
 #'
 #' @importClassesFrom bnlearn bn.fit
 #'@importFrom purrr  map_dbl
