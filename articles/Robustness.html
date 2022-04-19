@@ -119,25 +119,25 @@
 <span class="va">glob_asia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/node_monitor.html">node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">glob_asia_alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/node_monitor.html">node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn_alt</span>, df <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">glob_asia</span>
-<span class="co">#&gt;   Vertex         Score</span>
-<span class="co">#&gt; 1      A -1.887379e-15</span>
-<span class="co">#&gt; 2      B  3.260832e+01</span>
-<span class="co">#&gt; 3      D  2.497962e+01</span>
-<span class="co">#&gt; 4      E  7.197978e+00</span>
-<span class="co">#&gt; 5      L  1.525136e+01</span>
-<span class="co">#&gt; 6      S  3.617043e+01</span>
-<span class="co">#&gt; 7      T  8.622186e+00</span>
-<span class="co">#&gt; 8      X  1.312792e+01</span>
+<span class="co">#&gt;   Vertex     Score</span>
+<span class="co">#&gt; 1      A  8.622186</span>
+<span class="co">#&gt; 2      B 28.798130</span>
+<span class="co">#&gt; 3      D 24.015552</span>
+<span class="co">#&gt; 4      E  6.872393</span>
+<span class="co">#&gt; 5      L 13.423495</span>
+<span class="co">#&gt; 6      S 36.131966</span>
+<span class="co">#&gt; 7      T  5.769555</span>
+<span class="co">#&gt; 8      X 19.838721</span>
 <span class="va">glob_asia_alt</span>
-<span class="co">#&gt;   Vertex         Score</span>
-<span class="co">#&gt; 1      A -1.887379e-15</span>
-<span class="co">#&gt; 2      B  3.260832e+01</span>
-<span class="co">#&gt; 3      D  2.745524e+01</span>
-<span class="co">#&gt; 4      E  7.197978e+00</span>
-<span class="co">#&gt; 5      L  1.525136e+01</span>
-<span class="co">#&gt; 6      S  3.617043e+01</span>
-<span class="co">#&gt; 7      T  8.622186e+00</span>
-<span class="co">#&gt; 8      X  1.312792e+01</span></code></pre></div>
+<span class="co">#&gt;   Vertex     Score</span>
+<span class="co">#&gt; 1      A  8.622186</span>
+<span class="co">#&gt; 2      B 28.798130</span>
+<span class="co">#&gt; 3      D 26.000880</span>
+<span class="co">#&gt; 4      E  6.872393</span>
+<span class="co">#&gt; 5      L 13.423495</span>
+<span class="co">#&gt; 6      S 36.131966</span>
+<span class="co">#&gt; 7      T  5.769555</span>
+<span class="co">#&gt; 8      X 19.838721</span></code></pre></div>
 <p>In the alternative model, Dysnopea contributes more to the log-likelihood.</p>
 <p>Global monitors can be plotted giving a quick view of the decomposition of the log-likelihood. The darker the color, the more substantial the contribution of a vertex.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -157,14 +157,14 @@
 <code class="sourceCode R"><span class="va">node_asia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/final_node_monitor.html">final_node_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span><span class="op">)</span>
 <span class="va">node_asia</span>
 <span class="co">#&gt;   node marg.z.score cond.z.score</span>
-<span class="co">#&gt; 1    A          NaN          NaN</span>
-<span class="co">#&gt; 2    S         -Inf  -33.2425982</span>
+<span class="co">#&gt; 1    A   -0.1597335   -0.1613890</span>
+<span class="co">#&gt; 2    S  -16.5793259  -10.5415193</span>
 <span class="co">#&gt; 3    T   -0.1597335   -0.1613890</span>
-<span class="co">#&gt; 4    L   -0.2854600   -0.2887278</span>
-<span class="co">#&gt; 5    B   -1.6246455   -1.7179794</span>
-<span class="co">#&gt; 6    E   -0.3327684   -0.3367305</span>
-<span class="co">#&gt; 7    X   -0.4344181   -0.4405873</span>
-<span class="co">#&gt; 8    D  -14.0579034  -23.9428212</span></code></pre></div>
+<span class="co">#&gt; 4    L   -0.2288513   -0.2313243</span>
+<span class="co">#&gt; 5    B   -3.4028054   -2.8065671</span>
+<span class="co">#&gt; 6    E   -0.2822414   -0.2853932</span>
+<span class="co">#&gt; 7    X   -0.5457280   -0.5552700</span>
+<span class="co">#&gt; 8    D   -9.5968328   -7.0590459</span></code></pre></div>
 <p>The scores indicate a poor fit of the probability distributions specified for the Smoking, Bronchitis, and Dysnopea nodes, since these are larger than 1.96 in absolute value. Plots can also be created to give a visual counterpart of the node monitors.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">node_asia</span>, which <span class="op">=</span> <span class="st">"marginal"</span><span class="op">)</span></code></pre></div>
@@ -178,12 +178,12 @@
 <span class="va">seq_asia_alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_node_monitor.html">seq_marg_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn_alt</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span>
 <span class="va">seq_asia</span>
 <span class="co">#&gt; Marginal Node Monitor for D </span>
-<span class="co">#&gt;  Minimum      -1.116659 </span>
-<span class="co">#&gt;  Maximum      -0.4299553</span>
+<span class="co">#&gt;  Minimum      -1.080395 </span>
+<span class="co">#&gt;  Maximum      1.414214</span>
 <span class="va">seq_asia_alt</span>
 <span class="co">#&gt; Marginal Node Monitor for D </span>
-<span class="co">#&gt;  Minimum      -1.135837 </span>
-<span class="co">#&gt;  Maximum      -0.4299553</span></code></pre></div>
+<span class="co">#&gt;  Minimum      -1.199249 </span>
+<span class="co">#&gt;  Maximum      1.414214</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">seq_asia</span><span class="op">)</span></code></pre></div>
 <p><img src="Robustness_files/figure-html/unnamed-chunk-9-1.png" width="700" style="display: block; margin: auto;"></p>
@@ -202,13 +202,13 @@
 <code class="sourceCode R"><span class="va">asia_pa_ch1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_pa_ch_monitor.html">seq_pa_ch_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span>, pa.names <span class="op">=</span>  <span class="st">"B"</span>, pa.val <span class="op">=</span>  <span class="st">"yes"</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">asia_pa_ch1</span>
 <span class="co">#&gt; Parent Child Node Monitor </span>
-<span class="co">#&gt;  Minimum      -0.9194334 </span>
-<span class="co">#&gt;  Maximum      2.03484</span>
+<span class="co">#&gt;  Minimum      -1.413491 </span>
+<span class="co">#&gt;  Maximum      0.8722724</span>
 <span class="va">asia_pa_ch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seq_pa_ch_monitor.html">seq_pa_ch_monitor</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, df <span class="op">=</span> <span class="va">asia</span>, node.name <span class="op">=</span> <span class="st">"D"</span>, pa.names <span class="op">=</span> <span class="st">"B"</span>, pa.val <span class="op">=</span> <span class="st">"no"</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">asia_pa_ch2</span>
 <span class="co">#&gt; Parent Child Node Monitor </span>
-<span class="co">#&gt;  Minimum      -1.175123 </span>
-<span class="co">#&gt;  Maximum      0.794852</span>
+<span class="co">#&gt;  Minimum      -1.402926 </span>
+<span class="co">#&gt;  Maximum      1.132179</span>
 <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">asia_pa_ch1</span><span class="op">)</span></code></pre></div>
 <p><img src="Robustness_files/figure-html/unnamed-chunk-10-1.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -223,13 +223,13 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">influence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/influential_obs.html">influential_obs</a></span><span class="op">(</span>dag <span class="op">=</span> <span class="va">asia_bn</span>, data <span class="op">=</span> <span class="va">asia</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">influence</span><span class="op">)</span>
-<span class="co">#&gt;       A   S  T  L   B  E  X   D    score</span>
-<span class="co">#&gt; 3932 no  no no no  no no no  no 5.664240</span>
-<span class="co">#&gt; 1392 no yes no no yes no no yes 5.559697</span>
-<span class="co">#&gt; 2648 no yes no no yes no no  no 6.507078</span>
-<span class="co">#&gt; 1111 no  no no no yes no no yes 5.833457</span>
-<span class="co">#&gt; 2844 no  no no no yes no no  no 6.780838</span>
-<span class="co">#&gt; 1090 no yes no no  no no no  no 6.515271</span>
+<span class="co">#&gt;       A   S  T   L   B   E   X   D     score</span>
+<span class="co">#&gt; 3854 no  no no  no yes  no  no yes  6.828713</span>
+<span class="co">#&gt; 2535 no yes no  no yes  no  no yes  5.879189</span>
+<span class="co">#&gt; 3578 no yes no  no yes  no yes  no  9.274072</span>
+<span class="co">#&gt; 4966 no  no no  no  no  no  no  no  6.013563</span>
+<span class="co">#&gt; 5    no  no no  no  no  no  no yes  7.731215</span>
+<span class="co">#&gt; 172  no yes no yes  no yes yes yes 10.059472</span>
 <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">influence</span><span class="op">)</span></code></pre></div>
 <p><img src="Robustness_files/figure-html/unnamed-chunk-11-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
