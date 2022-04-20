@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 description: >
   Learn how bnmonitor implements sensitivity analysis for discrete BNs
 vignette: >
-  %\VignetteIndexEntry{Sensitivity}
+  %\VignetteIndexEntry{Sensitivity Analysis in Discrete BNs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -42,7 +42,7 @@ The functions `uniform_covar` and `orderp_covar` have the same inputs and return
 
 Suppose we are interested in the probability that `Report = TRUE` and how this varies with respect to the probability that `Alarm = FALSE` conditional on `Fire = TRUE` and `Tampering = FALSE`. This can be computed with the function `sensitivity`.
 
-```{r  warning = FALSE}
+```{r }
 library(ggplot2)
 sens <- sensitivity(bnfit = fire_alarm, interest_node = "Report", interest_node_value =  "TRUE" , node = "Alarm" , value_node = "FALSE", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all")
 plot(sens) + theme(legend.title = element_text(size = 5), legend.text = element_text(size = 4), legend.position = "bottom")
@@ -54,7 +54,7 @@ The function sensitivity also allows for conditional probabilities of interest, 
 
 For such changes in the probability distribution of a BN, we can compute the distance between the original and the varied networks using the Chan-Darwiche distance (`CD`) and the Kullback-Leibler divergence (`KL`). As an example consider `Alarm = MALFUNCTIOn` conditional on `Fire = TRUE` and `Tampering = FALSE`.
 
-```{r warning = FALSE}
+```{r }
 cd_distance <- CD(fire_alarm, node = "Alarm", value_node = "MALFUNCTION", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all") 
 kl_divergence <- KL(fire_alarm, node = "Alarm", value_node = "MALFUNCTION", value_parents = c("TRUE","FALSE"), new_value = "all", covariation = "all") 
 plot(cd_distance) + theme(legend.title = element_text(size = 5), legend.text = element_text(size = 4), legend.position = "bottom")

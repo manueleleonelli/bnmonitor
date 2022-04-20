@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 description: >
   Learn how bnmonitor constructs monitors for robustness to data
 vignette: >
-  %\VignetteIndexEntry{Robustness}
+  %\VignetteIndexEntry{Robustness to Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

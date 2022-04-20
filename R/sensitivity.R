@@ -177,13 +177,13 @@ sensitivity <- function(bnfit,
     for (k in 1:length(bnfit.new.scheme)) {
       for (j in 1:length(new_value2)) {
         suppressWarnings(if (!is.na(bnfit.new.scheme[[k]][[j]])) {
-          grain.bn <- compile(as.grain(bnfit.new.scheme[[k]][[j]]))
+          grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[k]][[j]]))
           suppressWarnings(if (!is.null(evidence_nodes)) {
             grain.bn <-
-              setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
+              gRain::setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
           })
           sens[j, k + 1] <-
-            querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
+            gRain::querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
         })
       }
     }
@@ -192,26 +192,26 @@ sensitivity <- function(bnfit,
       for (k in 1:(length(bnfit.new.scheme) - 1)) {
         for (j in 1:length(new_value2)) {
           suppressWarnings(if (!is.na(bnfit.new.scheme[[k]][[j]])) {
-            grain.bn <- compile(as.grain(bnfit.new.scheme[[k]][[j]]))
+            grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[k]][[j]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-
-                setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
+                gRain::setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
             }
             sens[j, k + 1] <-
-              querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
+              gRain::querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
           })
         }
       }
       if (length(new_value_op) != 0) {
         for (t in 1:(length(new_value_op))) {
           suppressWarnings(if (!is.na(bnfit.new.scheme[[3]][[t]])) {
-            grain.bn <- compile(as.grain(bnfit.new.scheme[[3]][[t]]))
+            grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[3]][[t]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-
-                setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
+                gRain::setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
             }
             sens[t, 4] <-
-              querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
+              gRain::querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
           })
         }
       }
@@ -219,13 +219,13 @@ sensitivity <- function(bnfit,
       if (length(new_value_op) != 0) {
         for (t in 1:(length(new_value_op))) {
           suppressWarnings(if (!is.na(bnfit.new.scheme[[1]][[t]])) {
-            grain.bn <- compile(as.grain(bnfit.new.scheme[[1]][[t]]))
+            grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[1]][[t]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-
-                setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
+                gRain::setEvidence(grain.bn, nodes = evidence_nodes, states = evidence_states)
             }
             sens[t, 2] <-
-              querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
+              gRain::querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
           })
         }
       }
@@ -237,14 +237,14 @@ sensitivity <- function(bnfit,
 #  }
     if (covariation == "all") {
       if (nrow(sens) == 1) {
-        ci <- gather(sens, key = "scheme", value = "value", - New_value)
+        ci <- tidyr::gather(sens, key = "scheme", value = "value", - New_value)
         New_value <- ci$New_value
         value <- ci$value
         scheme <- ci$scheme
         Sensitivity <- ci$Sensitivity
         plot <- ggplot(ci, aes(x = New_value, y = value)) + geom_point(aes(color = scheme)) + ylab("Sensitivity") + theme_minimal() + xlab("New value")
       } else{
-        ci <- gather(sens, key = "scheme", value = "value", - New_value)
+        ci <- tidyr::gather(sens, key = "scheme", value = "value", - New_value)
         New_value <- ci$New_value
         value <- ci$value
         scheme <- ci$scheme
