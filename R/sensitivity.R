@@ -176,7 +176,7 @@ sensitivity <- function(bnfit,
   if (length(new_value2) == length(new_value_op)) {
     for (k in 1:length(bnfit.new.scheme)) {
       for (j in 1:length(new_value2)) {
-        suppressWarnings(if (!is.na(bnfit.new.scheme[[k]][[j]])) {
+     #   suppressWarnings(if (!is.na(bnfit.new.scheme[[k]][[j]])) {
           grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[k]][[j]]))
           suppressWarnings(if (!is.null(evidence_nodes)) {
             grain.bn <-
@@ -184,7 +184,8 @@ sensitivity <- function(bnfit,
           })
           sens[j, k + 1] <-
             gRain::querygrain(grain.bn, nodes = interest_node)[[interest_node]][interest_node_value]
-        })
+ #       }
+  #      )
       }
     }
   } else{

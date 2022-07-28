@@ -1,5 +1,5 @@
 ## New Version
-This is a small update to the package to address comments of a referee. We renamed two functions of the package and introduced a new simple function
+This is a small update to the package to address comments of a referee. We updated the functions sensquery and influence.
 
 ## Test environments
 * local x86_64-w64-mingw32, R 3.6.2
