@@ -1,3 +1,7 @@
+# bnmonitor 0.1.4
+
+ - Update of sensitivity 
+ 
 # bnmonitor 0.1.3
 
  - Update of sensquery and influence functions
