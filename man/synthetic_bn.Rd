@@ -13,7 +13,7 @@ The Bayesian network \code{bnsens_example} comprehends the following nodes:
 }
 }
 \source{
-Manuele Leonelli, Eva Riccomagno (2018). "A geometric characterisation of sensitivity analysis in monomial models". \url{https://arxiv.org/abs/1901.02058}
+Leonelli, M., & Riccomagno, E. (2022). A geometric characterization of sensitivity analysis in monomial models. International Journal of Approximate Reasoning, 151, 64-84.
 }
 \usage{
 synthetic_bn

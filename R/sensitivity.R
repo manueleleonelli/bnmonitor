@@ -30,6 +30,9 @@
 #'@references Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
 #'@references Leonelli, M., Goergen, C., & Smith, J. Q. (2017). Sensitivity analysis in multilinear probabilistic models. Information Sciences, 411, 84-97.
 #'
+#' @examples sensitivity(synthetic_bn, "y2", "3", node = "y1",value_node = "1",
+#'  value_parents = NULL, new_value = "all", covariation = "all")
+#' @examples sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all")
 #'
 #'@import bnlearn
 #'@importClassesFrom bnlearn bn.fit
@@ -192,7 +195,7 @@ sensitivity <- function(bnfit,
     if (covariation == "all") {
       for (k in 1:(length(bnfit.new.scheme) - 1)) {
         for (j in 1:length(new_value2)) {
-          suppressWarnings(if (!is.na(bnfit.new.scheme[[k]][[j]])) {
+          suppressWarnings(if (all(!is.na(bnfit.new.scheme[[k]][[j]]))) {
             grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[k]][[j]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-
@@ -205,7 +208,7 @@ sensitivity <- function(bnfit,
       }
       if (length(new_value_op) != 0) {
         for (t in 1:(length(new_value_op))) {
-          suppressWarnings(if (!is.na(bnfit.new.scheme[[3]][[t]])) {
+          suppressWarnings(if (all(!is.na(bnfit.new.scheme[[3]][[t]]))) {
             grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[3]][[t]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-
@@ -219,7 +222,7 @@ sensitivity <- function(bnfit,
     } else{
       if (length(new_value_op) != 0) {
         for (t in 1:(length(new_value_op))) {
-          suppressWarnings(if (!is.na(bnfit.new.scheme[[1]][[t]])) {
+          suppressWarnings(if (all(!is.na(bnfit.new.scheme[[1]][[t]]))) {
             grain.bn <- gRbase::compile(bnlearn::as.grain(bnfit.new.scheme[[1]][[t]]))
             if (!is.null(evidence_nodes)) {
               grain.bn <-

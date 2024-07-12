@@ -19,9 +19,9 @@
 #'@param new_value numeric value between 0 and 1. Value to which the parameter should be updated.
 #'
 #'@references Laskey, K. B. (1995). Sensitivity analysis for probability assessments in Bayesian networks. IEEE Transactions on Systems, Man, and Cybernetics, 25(6), 901-909.
-#'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International journal of approximate reasoning, 55(4), 1022-1042.
-#'@references Leonelli, M., & Riccomagno, E. (2018). A geometric characterisation of sensitivity analysis in monomial models. arXiv preprint arXiv:1901.02058.
-#'
+#'@references Renooij, S. (2014). Co-variation for sensitivity analysis in Bayesian networks: Properties, consequences and alternatives. International Journal of Approximate Reasoning, 55(4), 1022-1042.
+#'@references Leonelli, M., & Riccomagno, E. (2022). A geometric characterization of sensitivity analysis in monomial models. International Journal of Approximate Reasoning, 151, 64-84.
+#'#'
 #'@examples proportional_covar(synthetic_bn, "y3", "2", c("2","1"), 0.3)
 #'@examples uniform_covar(synthetic_bn, "y2", "1", "2", 0.3)
 #'@examples orderp_covar(synthetic_bn, "y1", "1", NULL, 0.3)

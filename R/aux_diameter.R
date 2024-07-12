@@ -18,3 +18,18 @@ diam <- function(bn, node){
   }
   return(max)
 }
+
+
+mi <- function(bnfit, node1, node2){
+  if(class(bnfit)[1] != "bn.fit"){stop("An input bn.fit object required")}
+  if(!node1%in% nodes(bnfit)){stop("Not a valid vertex name in input")}
+  if(!node2%in% nodes(bnfit)){stop("Not a valid vertex name in input")}
+  try <- as.grain(bnfit)
+  proby1 <- querygrain(try,node1)
+  proby2 <- querygrain(try,node2)
+  proby <- querygrain(try,c(node1,node2),type="joint")
+  if(names(dimnames(proby))[1]==node1){probs <- outer(proby1[[1]],proby2[[1]])} else{
+    probs <- outer(proby2[[1]],proby1[[1]])
+  }
+  return(sum(proby*log(proby) - proby*log(probs)))
+}

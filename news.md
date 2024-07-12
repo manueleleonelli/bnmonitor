@@ -1,3 +1,7 @@
+# bnmonitor 0.2.0
+
+ - New functions: diameter, edge.strength, ewi, dwi, mutualinfo, asy.measure, amalgamation
+ 
 # bnmonitor 0.1.4
 
  - Update of sensitivity 

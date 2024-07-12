@@ -14,5 +14,5 @@
 #'   \item \bold{y3}:  three-level factor with levels \emph{1}, \emph{2}, \emph{3}.
 #' }
 #'
-#'@source	 Manuele Leonelli, Eva Riccomagno (2018). "A geometric characterisation of sensitivity analysis in monomial models". \url{https://arxiv.org/abs/1901.02058}
+#'@source	 Leonelli, M., & Riccomagno, E. (2022). A geometric characterization of sensitivity analysis in monomial models. International Journal of Approximate Reasoning, 151, 64-84.
 "synthetic_bn"

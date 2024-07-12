@@ -55,6 +55,12 @@ and the probabilistic query of interest is:
 
  P ( \code{interest_node} = \code{interest_node_value} | \code{evidence_nodes} = \code{evidence_states} )
 }
+\examples{
+sensitivity(synthetic_bn, "y2", "3", node = "y1",value_node = "1",
+ value_parents = NULL, new_value = "all", covariation = "all")
+sensitivity(synthetic_bn, "y3", "1", "y2", "1", node = "y1", "1", NULL, 0.9, "all")
+
+}
 \references{
 Coupé, V. M., & Van Der Gaag, L. C. (2002). Properties of sensitivity analysis of Bayesian belief networks. Annals of Mathematics and Artificial Intelligence, 36(4), 323-356.
 

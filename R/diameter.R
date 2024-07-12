@@ -3,7 +3,7 @@
 #' Computation of the diameters of all conditional probability tables in a Bayesian network.
 #'
 #'
-#' The diameter of a conditional probability table \eqn{P} with \eqn{n} rows \eqn{p_1,\dots,p_n} is \deqn{d^+(P)=\max_{i,j\leq n} d_V(p_i,p_j)} where \eqn{d_V} is the total variation distance between two probability mass functions, i.e. \deqn{d_V(p_i,p_j)=\frac{1}{2}}
+#' The diameter of a conditional probability table \eqn{P} with \eqn{n} rows \eqn{p_1,\dots,p_n} is \deqn{d^+(P)=\max_{i,j\leq n} d_V(p_i,p_j),} where \eqn{d_V} is the total variation distance between two probability mass functions over a sample space \eqn{\mathcal{X}}, i.e. \deqn{d_V(p_i,p_j)=\frac{1}{2}\sum_{x\in\mathcal{X}}|p_i(x)-p_j(x)|.}
 #'
 #'
 #' @return A dataframe with the following columns: \code{Nodes} - the vertices of the BN; \code{Diameter} - the diameters of the associated conditional probability tables.

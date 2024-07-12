@@ -46,7 +46,7 @@ sensquery(synthetic_bn,"y3", "3", 0.3)
 
 }
 \references{
-Chan, H., & Darwiche, A. (2002). When do numbers really matter?. Journal of artificial intelligence research, 17, 265-287.
+Chan, H., & Darwiche, A. (2002). When do numbers really matter?. Journal of Artificial Intelligence Research, 17, 265-287.
 }
 \seealso{
 \code{\link{sensitivity}}
