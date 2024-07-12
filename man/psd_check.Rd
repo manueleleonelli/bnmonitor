@@ -38,11 +38,11 @@ where \eqn{\lambda_{\min}} is the smallest eigenvalue end \eqn{\rho} is the spec
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{GBN}: \code{psd_check} for objects \code{GBN}
+\item \code{psd_check(GBN)}: \code{psd_check} for objects \code{GBN}
 
-\item \code{CI}: \code{psd_check} for objects \code{CI}
+\item \code{psd_check(CI)}: \code{psd_check} for objects \code{CI}
+
 }}
-
 \examples{
 psd_check(synthetic_gbn,c(2,4),-3)
 psd_check(synthetic_gbn,c(2,3),seq(-1,1,0.1))

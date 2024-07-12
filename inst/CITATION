@@ -1,0 +1,10 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "Sensitivity and robustness analysis in {Bayesian} networks with the bnmonitor R package",
+  author   = "Manuele Leonelli and Ramsiya Ramanathan and Rachel L. Wilkerson",
+  journal  = "Knowledge-Based Systems",
+  year     = "2023",
+  volume   = "278",
+  pages = "110882",
+  doi      = "10.1016/j.knosys.2023.110882"
+)

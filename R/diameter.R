@@ -5,7 +5,6 @@
 #'
 #' The diameter of a conditional probability table \eqn{P} with \eqn{n} rows \eqn{p_1,\dots,p_n} is \deqn{d^+(P)=\max_{i,j\leq n} d_V(p_i,p_j)} where \eqn{d_V} is the total variation distance between two probability mass functions, i.e. \deqn{d_V(p_i,p_j)=\frac{1}{2}}
 #'
-#' @seealso \code{\link{sensitivity}}
 #'
 #' @return A dataframe with the following columns: \code{Nodes} - the vertices of the BN; \code{Diameter} - the diameters of the associated conditional probability tables.
 #'

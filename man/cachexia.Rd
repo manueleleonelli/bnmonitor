@@ -15,6 +15,8 @@ Continuous Bayesian networks over six metabolomics: Adipate (A), Betaine (B), Fu
     The networks \code{control_gbn} and \code{control_ci} are for people not suffering of cachexia and of class \code{GBN} and \code{CI} respectively.
     The original dataset is stored in \code{cachexia_data}.
 
+An object of class \code{GBN} of length 3.
+
 An object of class \code{CI} of length 4.
 
 An object of class \code{GBN} of length 3.
@@ -22,10 +24,6 @@ An object of class \code{GBN} of length 3.
 An object of class \code{CI} of length 4.
 
 An object of class \code{data.table} (inherits from \code{data.frame}) with 77 rows and 7 columns.
-}
-\source{
-C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
-NULL
 }
 \usage{
 cachexia_gbn
@@ -40,5 +38,8 @@ cachexia_data
 }
 \description{
 Continuous Bayesian networks comparing the dependence of metabolomics for people who suffer and do not suffer of Cachexia
+}
+\references{
+C. Görgen & M. Leonelli (2020), Model-preserving sensitivity analysis for families of Gaussian distributions.  Journal of Machine Learning Research, 21: 1-32.
 }
 \keyword{datasets}

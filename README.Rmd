@@ -55,10 +55,13 @@ Refer to the articles section for guidance on each of these areas.
 
 ## Papers where bnmonitor is used
 
- - Görgen, Christiane, and Manuele Leonelli. "Model-Preserving Sensitivity Analysis for Families of Gaussian Distributions." J. Mach. Learn. Res. 21 (2020): 84-1.
+ - Görgen, C., & Leonelli, M. (2020). Model-preserving sensitivity analysis for families of Gaussian distributions. Journal of Machine Learning Research, 21(84), 1-32.
  
- - Leonelli, Manuele, and Eva Riccomagno. "A geometric characterisation of sensitivity analysis in monomial models." arXiv preprint arXiv:1901.02058 (2018).
+ - Leonelli, M., & Riccomagno, E. (2022). A geometric characterization of sensitivity analysis in monomial models. International Journal of Approximate Reasoning, 151, 64-84.
  
- - Leonelli, Manuele, Ramsiya Ramanathan, and Rachel L. Wilkerson. "Sensitivity and robustness analysis in Bayesian networks with the bnmonitor R package." arXiv preprint arXiv:2107.11785 (2021).
+ - Leonelli, M., Ramanathan, R., & Wilkerson, R. L. (2023). Sensitivity and robustness analysis in Bayesian networks with the bnmonitor R package. Knowledge-Based Systems, 278, 110882.
+ 
+ - Leonelli, M., Smith, J. Q., & Wright, S. K. (2024). The diameter of a stochastic matrix: A new measure for sensitivity analysis in Bayesian networks. arXiv preprint arXiv:2407.04667.
+
  
 

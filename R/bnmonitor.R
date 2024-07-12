@@ -66,6 +66,6 @@
 #' \item Upper bound to the KL divergence (\code{\link{KL_bounds}}).
 #' }
 #'
-#' @docType package
+#' @docType _PACKAGE
 #' @name bnmonitor
 NULL

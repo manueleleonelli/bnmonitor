@@ -1,16 +1,16 @@
 Package: bnmonitor
 Type: Package
 Title: An Implementation of Sensitivity Analysis in Bayesian Networks
-Version: 0.1.4
+Version: 0.2.0
 Authors@R: c(
     person("Manuele", "Leonelli", email = "manuele.leonelli@ie.edu", role = c("aut","cre")),
     person("Ramsiya", "Ramanathan", email = "ramsiya.ramanathan@studio.unibo.it", role = "aut"),
     person("Rachel", "Wilkerson", email = "R.L.Wilkerson@warwick.ac.uk", role = "aut"))
-Description: An implementation of sensitivity and robustness methods in Bayesian networks in R. It includes methods to perform parameter variations via a variety of co-variation schemes, to compute sensitivity functions and to quantify the dissimilarity of two Bayesian networks via distances and divergences. It further includes diagnostic methods to assess the goodness of fit of a Bayesian networks to data, including global, node and parent-child monitors. References: H. Chan, A. Darwiche (2002) <doi:10.1613/jair.967>; C. Goergen, M. Leonelli (2020) <ArXiv:1809.10794>; M. Leonelli, R. Ramanathan, R.L. Wilkerson (2021) <ArXiv:2107.11785>. 
+Description: An implementation of sensitivity and robustness methods in Bayesian networks in R. It includes methods to perform parameter variations via a variety of co-variation schemes, to compute sensitivity functions and to quantify the dissimilarity of two Bayesian networks via distances and divergences. It further includes diagnostic methods to assess the goodness of fit of a Bayesian networks to data, including global, node and parent-child monitors. Reference: M. Leonelli, R. Ramanathan, R.L. Wilkerson (2022) <doi:10.1016/j.knosys.2023.110882>. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 Imports: bnlearn, dplyr, ggplot2, gRain, gRbase, graphics, purrr, qgraph, RColorBrewer, reshape2, rlang, tidyr
 Suggests: testthat, knitr, rmarkdown
 URL: https://manueleleonelli.github.io/bnmonitor/,
