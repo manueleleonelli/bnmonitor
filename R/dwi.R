@@ -27,7 +27,7 @@
 
 dwi <- function(bn, node, w){
   if(class(bn)[1] == "bn.fit"){bn <- bn.net(bn)}
-  if(class(bn) != "bn"){stop("Not a valid bnlearn object in input")}
+  if(!is(bn,"bn")){stop("Not a valid bnlearn object in input")}
   if(!node%in% nodes(bn)){stop("Not a valid vertex name in input")}
   if(w>1 | w <=0){stop("The input w must be between zero and one")}
   pos.nodes <- nodes(bn)[-which(nodes(bn)== node)]
