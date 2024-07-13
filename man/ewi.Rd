@@ -28,5 +28,5 @@ ewi(travel, "T")
 Leonelli, M., Smith, J. Q., & Wright, S. K. (2024). The diameter of a stochastic matrix: A new measure for sensitivity analysis in Bayesian networks. arXiv preprint arXiv:2407.04667.
 }
 \seealso{
-\code{\link{mutual_info}}, \code{\link{dwi}}
+\code{\link{mutual_info}}, \code{\link{dwi}}, \code{\link{edge_strength}}
 }

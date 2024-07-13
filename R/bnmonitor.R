@@ -4,15 +4,17 @@
 #'
 #' @details
 #'
-#' bnmonitor provides functions to perform sensitivity analysis for both discrete Bayesian networks (DBNs) and Gaussian Bayesian networks (GBNs).
+#' bnmonitor provides functions to perform sensitivity analysis for both discrete Bayesian networks (DBNs) and Gaussian Bayesian networks (GBNs). The following types of sensitivity investigations are available:
+#' \itemize{
+#' \item \strong{Parametric sensitivity analysis}: Investigate the effect of changes in some of the parameter values in a Bayesian network and quantify the difference between the original and perturbed Bayesian networks using dissimilarity measures (both for DBNs and GBNs).
+#' \item \strong{Robustness to data}: Verify how well a Bayesian network fits a specific dataset that was used either for learning or for testing (only for DBNs).
+#' \item \strong{Node influence}: Quantify how much the nodes of a Bayesian network influence an output node of interest (only for DBNs).
+#' \item \strong{Edge strength}: Assess the strength of the edges of a Bayesian network (only for DBNs).
+#' \item \strong{Other investigations}: Including the diameter of the conditional probability tables, measures of asymmetric independence, and level amalgamation.
+#' }
 #'
-#' In the discrete case, it provides three categories of functions: co-variation schemes, dissimilarity measures and sensitivity related functions.
-#'
-#' In the continuous case, both standard and model-preserving methods are available for perturbation of the mean vector and the co-variance matrix.
-#'
-#' bnmonitor further provides function to perform robustness studies in DBNs to verify how well a network fits a specific dataset.
-#'
-#' @section DBNs - Robustness:
+
+#' @section DBNs - Robustness to data:
 #' The available functions for robustness are:
 #' \itemize{
 #' \item \emph{Node monitors} (\code{\link{node_monitor}}): contribution of each vertex to the overall log-likelihood of the model.
@@ -29,6 +31,7 @@
 #'   \item \emph{Proportional co-variation scheme} (\code{\link{proportional_covar}}): distributes the probability mass to be co-varied in the same proportion as in the original Bayesian network.
 #'   \item \emph{Order-preserving co-variation scheme} (\code{\link{orderp_covar}}):distributes the to be co-varied probability mass among the co-varying parameters so that the original order of parameters is preserved.
 #' }
+#'
 #' @section DBNs - Dissimilarity measures:
 #' The dissimilarity measures quantify the difference between a Bayesian network and its update after parameter variation.\cr
 #' The available dissimilarity measures are:
@@ -36,12 +39,36 @@
 #'   \item \emph{Chan-Darwiche distance} (\code{\link{CD}})
 #'   \item \emph{Kullback-Leibler divergence} (\code{\link{KL}})
 #' }
+#'
 #'@section DBNs - Sensitivity functions:
 #'The available functions for sensitivity analysis are:
 #'  \itemize{
 #'   \item \emph{Sensitivity function} (\code{\link{sensitivity}}): returns a certain probability of interest given a parameter change. Evidence can be considered.
 #'   \item \emph{Sensitivity query} (\code{\link{sensquery}}): returns the parameter changes needed to get a certain probability of interest. Evidence can be considered.
 #' }
+#'
+#'@section DBNs - Node influence:
+#'The available functions for node influence are:
+#'\itemize{
+#'  \item \emph{Mutual information} (\code{\link{mutual_info}}): returns the mutual information between a node and all other nodes of a DBN.
+#'  \item \emph{Distance-weighted influence} (\code{\link{dwi}}): returns the distance-weighted influence between a node and all other nodes of a DBN.
+#'  \item \emph{Edge-weighted influence} (\code{\link{ewi}}): returns the edge-weighted influence between a node and all other nodes of a DBN.
+#'}
+#'
+#'@section DBNs - Edge strength:
+#'The available functions for edge strength are:
+#'\itemize{
+#'  \item \emph{Measure of edge strength} (\code{\link{edge_strength}}): returns the edge strength measure for all edges of a DBN.
+#'}
+#'
+#'@section DBNs - Other sensitivity measures:
+#'Other sensitivity measures available are:
+#'\itemize{
+#' \item \emph{Diameter} (\code{\link{diameter}}): returns the diameter of the conditional probability tables of all non-root nodes of a DBN.
+#' \item \emph{Level amalgamation} (\code{\link{amalgmation}}): returns the diameter of all children conditional probability tables of a node in DBN when every pair of levels are merged.
+#' \item \emph{Measures of asymmetric independence} (\code{\link{asy_measure}}): returns the indexes of context-specific and partial conditional independence for all variables of a DBN.
+#'}
+#'
 #'@section GBNs - Model-Preserving matrices:
 #' The available functions to construct model-preserving co-variation matrices are:
 #' \itemize{
@@ -50,6 +77,7 @@
 #'  \item \emph{Row-based co-variation matrix} (\code{\link{row_covar_matrix}}).
 #'  \item \emph{Column-based co-variation matrix} (\code{\link{col_covar_matrix}}).
 #' }
+#'
 #'@section GBNs - Mean and Covariance variations:
 #' The available functions to perturb the distribution of a GBN are:
 #' \itemize{
@@ -57,6 +85,7 @@
 #'  \item \emph{Standard covariance variations} (\code{\link{covariance_var}}).
 #'  \item \emph{Model-preserving covariance variations} (\code{\link{model_pres_cov}}).
 #' }
+#'
 #'@section GBNs - Dissimilarity measures:
 #' The available dissimilarity measures are:
 #' \itemize{
