@@ -1,16 +1,4 @@
 url: https://manueleleonelli.github.io/bnmonitor/
 template:
   bootstrap: 5
-  bootswatch: litera
-navbar:
-  structure:
-    left:
-    - intro
-    - reference
-    - articles
-    - tutorials
-    - news
-    right:
-    - search
-    - github
 

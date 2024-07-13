@@ -23,6 +23,7 @@
 #'@importClassesFrom bnlearn bn.fit
 #'@importFrom bnlearn nodes root.nodes parents as.igraph bn.net
 #'@importFrom igraph all_simple_paths
+#'@importFrom methods is
 #'@export
 
 dwi <- function(bn, node, w){

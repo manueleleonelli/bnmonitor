@@ -11,7 +11,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
-Imports: bnlearn, dplyr, ggplot2, gRain, gRbase, graphics, igraph, purrr, qgraph, RColorBrewer, reshape2, rlang, tidyr
+Imports: bnlearn, dplyr, ggplot2, gRain, gRbase, graphics, igraph, methods, purrr, qgraph, RColorBrewer, reshape2, rlang, tidyr
 Suggests: testthat, knitr, rmarkdown
 URL: https://manueleleonelli.github.io/bnmonitor/,
     https://github.com/manueleleonelli/bnmonitor
