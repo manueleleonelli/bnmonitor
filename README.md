@@ -6,7 +6,7 @@
 `bnmonitor` is a package for sensitivity analysis and robustness in
 Bayesian networks (BNs). If you use the package in your work please consider citing as 
 
-``` r
+```{r}
 citation("bnmonitor")
 ```
 
