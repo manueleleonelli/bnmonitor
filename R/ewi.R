@@ -2,11 +2,11 @@
 #'
 #' @description
 #' Computation of the edge-weigthed influence in a Bayesian network
-#' 
+#'
 #' @details
-#' The edge-weigthed influence of a node \eqn{X_j} on an output node \eqn{X_i} in a Bayesian network is \deqn{EWI(X_j,X_i)= \sum_{s\in S_{ji}}\left(\prod_{(k,l)\in s}\delta_{kl}\right)^{|s|},} where \eqn{S_{ji}} is the set of active trails between \eqn{X_j} and \eqn{X_i}, \eqn{\delta_{kl}} is the strength of an edge between \eqn{X_k} and \eqn{X_l}, and \eqn{|s|} is the length of the trail \eqn{s}. 
-#' 
-#' 
+#' The edge-weigthed influence of a node \eqn{X_j} on an output node \eqn{X_i} in a Bayesian network is \deqn{EWI(X_j,X_i)= \sum_{s\in S_{ji}}\left(\prod_{(k,l)\in s}\delta_{kl}\right)^{|s|},} where \eqn{S_{ji}} is the set of active trails between \eqn{X_j} and \eqn{X_i}, \eqn{\delta_{kl}} is the strength of an edge between \eqn{X_k} and \eqn{X_l}, and \eqn{|s|} is the length of the trail \eqn{s}.
+#'
+#'
 #' @return A dataframe with the following columns: \code{Nodes} - the vertices of the BN; \code{Influence} - the edge-weigthed influence of the corresponding node.
 #'
 #'@param bnfit object of class \code{bn.fit}.
@@ -49,9 +49,12 @@ ewi <- function(bnfit, node){
           }
         }
       }
-    } 
+    }
   }
-  return(data.frame(Nodes = append(pos.nodes, node, after=which(nodes(bnfit)== node)-1), Influence = append(weigth,NA,after=which(nodes(bnfit)== node)-1)))
-}
+  result <- data.frame(Nodes = append(pos.nodes, node, after=which(nodes(bnfit)== node)-1), Influence = append(weigth,NA,after=which(nodes(bnfit)== node)-1))
+  result <- list(EWI = result, BN = bnfit)
+  attr(result, 'class') <- 'ewi'
+  return(result)
+  }
 
 

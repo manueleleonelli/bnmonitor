@@ -27,5 +27,9 @@ diameter<- function(bnfit){
       out[i] <- diam(bnfit,nodes(bnfit)[i])
     }
   }
-  return(data.frame(Nodes = nodes(bnfit),Diameter = unname(out)))
+  result <- data.frame(Nodes = nodes(bnfit),Diameter = unname(out))
+  result <- list(Diameter = result, BN = bnfit)
+  attr(result, 'class') <- 'diameter'
+  return(result)
 }
+

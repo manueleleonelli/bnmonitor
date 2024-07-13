@@ -13,6 +13,11 @@
 \alias{plot.seq_pa_ch_monitor}
 \alias{plot.sensitivity}
 \alias{plot.fro}
+\alias{plot.diameter}
+\alias{plot.edgestrength}
+\alias{plot.mutualinfo}
+\alias{plot.dwi}
+\alias{plot.ewi}
 \title{Plotting methods}
 \usage{
 \method{plot}{seq_marg_monitor}(x, ...)
@@ -36,6 +41,16 @@
 \method{plot}{sensitivity}(x, ...)
 
 \method{plot}{fro}(x, ...)
+
+\method{plot}{diameter}(x, ...)
+
+\method{plot}{edgestrength}(x, ...)
+
+\method{plot}{mutualinfo}(x, ...)
+
+\method{plot}{dwi}(x, ...)
+
+\method{plot}{ewi}(x, ...)
 }
 \arguments{
 \item{x}{The output of node_monitor.}

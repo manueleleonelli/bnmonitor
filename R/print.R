@@ -20,6 +20,42 @@ print.sensitivity <- function(x,...){
 }
 
 #'@export
+#'@rdname print
+#'
+#'
+print.diameter <- function(x,...){
+  print(x$Diameter)
+  invisible(x)
+}
+
+#'@export
+#'@rdname print
+#'
+#'
+print.mutualinfo <- function(x,...){
+  print(x$MutualInfo)
+  invisible(x)
+}
+
+#'@export
+#'@rdname print
+#'
+#'
+print.dwi <- function(x,...){
+  print(x$DWI)
+  invisible(x)
+}
+
+#'@export
+#'@rdname print
+#'
+#'
+print.ewi <- function(x,...){
+  print(x$EWI)
+  invisible(x)
+}
+
+#'@export
 #' @rdname print
 print.kl <- function(x,...){
   print(x$KL)

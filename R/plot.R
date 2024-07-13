@@ -12,7 +12,6 @@ NULL
 
 
 #'@importFrom ggplot2 ggplot xlab ylab theme_minimal ggtitle geom_hline
-
 #'
 #' @method plot seq_marg_monitor
 #'@export
@@ -225,3 +224,88 @@ plot.fro <- function(x,...){
   x$plot
 }
 
+
+#' @method plot diameter
+#'@export
+#'@rdname plot
+#' @importFrom qgraph  qgraph
+#' @importFrom RColorBrewer brewer.pal
+#'@importFrom grDevices colorRampPalette
+
+plot.diameter <- function(x,...){
+  nb.cols <- nrow(x$Diameter)
+  my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
+  max.val <- 100
+  for(i in 1:nrow(x$Diameter)) {if (is.na(x$Diameter[i,2])) {x$Diameter[i,2] <- 0}}
+  my.palette <- colorRampPalette(my.colors)(max.val)
+  vals <- floor(x$Diameter[,2]*100)
+  node.colors <- rep("white",nb.cols)
+  for(i in 1:nrow(x$Diameter)) {if(vals[i]!= 0) {node.colors[i] <- my.palette[vals[i]]}}
+  qgraph::qgraph(bn.net(x$BN),color=node.colors)
+}
+
+#' @method plot edgestrength
+#'@export
+#'@rdname plot
+#' @importFrom qgraph  qgraph
+
+plot.edgestrength <- function(x,...){
+  qgraph::qgraph(x[,1:2], edge.labels = round(x[,3],2), edge.width=x[,3]*3,edge.label.cex=1.2)
+}
+
+#' @method plot mutualinfo
+#'@export
+#'@rdname plot
+#' @importFrom qgraph  qgraph
+#' @importFrom RColorBrewer brewer.pal
+#'@importFrom grDevices colorRampPalette
+
+plot.mutualinfo <- function(x,...){
+  nb.cols <- nrow(x$MutualInfo)
+  my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
+  max.val <- (max(na.omit(x$MutualInfo[,2])) + 0.0001)*10^6
+  my.palette <- colorRampPalette(my.colors)(max.val)
+  vals <- floor(x$MutualInfo[,2]*10^6)
+  vals <- ifelse(vals==0,1,vals)
+  node.colors <- rep("lightblue",nb.cols)
+  for(i in 1:nrow(x$MutualInfo)) {if(!is.na(vals[i])) {node.colors[i] <- my.palette[vals[i]]}}
+  qgraph::qgraph(bn.net(x$BN),color=node.colors)
+}
+
+#' @method plot dwi
+#'@export
+#'@rdname plot
+#' @importFrom qgraph  qgraph
+#' @importFrom RColorBrewer brewer.pal
+#'@importFrom grDevices colorRampPalette
+
+plot.dwi <- function(x,...){
+  nb.cols <- nrow(x$DWI)
+  my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
+  max.val <- (max(na.omit(x$DWI[,2])) + 0.0001)*10^6
+  my.palette <- colorRampPalette(my.colors)(max.val)
+  vals <- floor(x$DWI[,2]*10^6)
+  vals <- ifelse(vals==0,1,vals)
+  node.colors <- rep("lightblue",nb.cols)
+  for(i in 1:nrow(x$DWI)) {if(!is.na(vals[i])) {node.colors[i] <- my.palette[vals[i]]}}
+  qgraph::qgraph(x$BN,color=node.colors)
+}
+
+#' @method plot ewi
+#'@export
+#'@rdname plot
+#' @importFrom qgraph  qgraph
+#' @importFrom RColorBrewer brewer.pal
+#'@importFrom grDevices colorRampPalette
+
+plot.ewi <- function(x,...){
+  nb.cols <- nrow(x$EWI)
+  my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
+  max.val <- (max(na.omit(x$EWI[,2])) + 0.0001)*10^6
+  my.palette <- colorRampPalette(my.colors)(max.val)
+  vals <- floor(x$EWI[,2]*10^6)
+  vals <- ifelse(vals==0,1,vals)
+  node.colors <- rep("lightblue",nb.cols)
+  for(i in 1:nrow(x$EWI)) {if(!is.na(vals[i])) {node.colors[i] <- my.palette[vals[i]]}}
+  qgraph::qgraph(bn.net(x$BN),color=node.colors)
+}

@@ -2,11 +2,11 @@
 #'
 #' @description
 #' Computation of the distance-weigthed influence in a Bayesian network
-#' 
+#'
 #' @details
-#' The distance-weigthed influence of a node \eqn{X_j} on an output node \eqn{X_i} in a Bayesian network is \deqn{DWI(X_j,X_i,w)= \sum_{s\in S_{ji}}w^{|s|},} where \eqn{S_{ji}} is the set of active trails between \eqn{X_j} and \eqn{X_i}, \eqn{w\in(0,1]} is an input parameter, and \eqn{|s|} is the length of the trail \eqn{s}. 
-#' 
-#' 
+#' The distance-weigthed influence of a node \eqn{X_j} on an output node \eqn{X_i} in a Bayesian network is \deqn{DWI(X_j,X_i,w)= \sum_{s\in S_{ji}}w^{|s|},} where \eqn{S_{ji}} is the set of active trails between \eqn{X_j} and \eqn{X_i}, \eqn{w\in(0,1]} is an input parameter, and \eqn{|s|} is the length of the trail \eqn{s}.
+#'
+#'
 #' @return A dataframe with the following columns: \code{Nodes} - the vertices of the BN; \code{Influence} - the distance-weigthed influence of the corresponding node.
 #'
 #'@param bn object of class \code{bn.fit} or \code{bn}.
@@ -45,8 +45,11 @@ dwi <- function(bn, node, w){
           if(status){weigth[k] <- weigth[k] + w^(length(ciao[[i]])-1)}
         }
       }
-    } 
+    }
   }
-  return(data.frame(Nodes = append(pos.nodes, node, after=which(nodes(bn)== node)-1), Influence = append(weigth,NA,after=which(nodes(bn)== node)-1)))
+  result <- data.frame(Nodes = append(pos.nodes, node, after=which(nodes(bn)== node)-1), Influence = append(weigth,NA,after=which(nodes(bn)== node)-1))
+  result <- list(DWI = result, BN = bn)
+  attr(result, 'class') <- 'dwi'
+  return(result)
 }
 

@@ -1,0 +1,108 @@
+---
+title: "Using the diameter"
+output: rmarkdown::html_vignette
+description: >
+  Learn how bnmonitor can be used to assess node influence, edge strength, and to carry out other sensitivity investigations based on the diameter
+vignette: >
+  %\VignetteIndexEntry{Using the diameter}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center'
+)
+```
+
+In this vignette we illustrate the use of the latest `bnmonitor` functions based on the notion of diameter to carry out a wide array of sensitivity investigations. To know more technical details about the diameter and the measures discussed below, the reader can refer to [https://arxiv.org/pdf/2407.04667](https://arxiv.org/pdf/2407.04667).
+
+We consider the `travel` BN available in `bnmonitor` and introduced by Marco Scutari in many of his materials. We start loading the required packages and plotting the BN.
+
+```{r, message = F, warning =F}
+library(bnmonitor)
+library(qgraph)
+library(bnlearn)
+qgraph::qgraph(bn.net(travel))
+```
+This BN describes the travelling preferences of a population. Individuals may travel (T) by car, train, or other means of transportation. Their choice of transportation depends on their occupation (O, either employed or self-employed) and their residency (R, either a small or big community). Both the occupation and residency depend on the education (E) of the individual (university or high-school) and the level of education is affected by age (A) and sex (S). Individuals in this population are either male or female and are divided into yound, adult and old age ranges.
+
+### Computing the diameter 
+
+In a discrete BN each node is associated to a conditional probability table (CPT). The diameter is a measure of each CPT quantifying how much a variable depends on its parents which can be computed in `bnmonitor` with the function `diameter`.
+
+```{r}
+diam <- bnmonitor::diameter(travel)
+diam
+plot(diam)
+```
+
+As the diameter is a number between zero and one, zero indicating independence and one indicating perfect dependence, we can see that variables are only mildly related in the BN. In particular both residency and occupation are minimally related to their parent education. The package include plotting methods which automatically reports the BN with node colored according to the diameter.
+
+### Edge strength
+
+The previous analyis can actually be refined to see which parents have a major effect on a child. It is possible that a node has a high diameter that is only determined by one parent, while the other parent has a minimal effect. The measure of edge strength quantifies exactly this, by giving a weigth to each edge (a number between zero and one): the higher, the bigger the effect of a parent to a child. 
+
+```{r}
+edges <- edge_strength(travel)
+edges
+plot(edges)
+```
+
+The edge strengths are bounded by the diameter of the child node and therefore are expected to be low in this example. We can see that residency has a bigger effect on traveling choice than occupation. Similarly age has a stronger effect on education than sex.
+
+In practice given these measures one may decide to drop some of the edges of the BN, however this functionality is not yet available in the package and will not be pursued further in this vignette.
+
+### Node influence
+
+A different analysis is to quantify how much nodes affect an output node of interest. Suppose we want to assess what affects the choice of transportation of the individuals in our population. There are three functions for this task:
+
+ - `mutual_info` which computes the mutual information between a node and every other node in the BN.
+ 
+ - `dwi` which computes the distance-weighted influence between a node and every other node in the BN. This measure depends on a parameter `w` between zero (excluded) and one (included) which must be set in advance. This measure can also be computed for BNs where the CPTs have not been specified.
+ 
+ - `ewi` which computed the edge-weigthed influence between a node and every other node in the BN.
+ 
+Let's check the result of these functions for a choice `w=0.2` for `dwi`!
+
+```{r}
+mi <- mutual_info(travel,"T")
+mi
+plot(mi)
+
+DWI <- dwi(travel,"T",0.2)
+DWI
+plot(DWI)
+
+EWI <- ewi(travel,"T")
+EWI
+plot(EWI)
+```
+
+As expected the parents of `T` have the strongest effect, while the other variables have a minimal influence on the choice of transportation. This was expected due to the very low edge strengths of the edges into the parents of `T`. Just as for the diameter there is a `plot` methods for all these functions.
+
+### Other investigations
+
+The notion of diameter can also be used for two additional sensitivity investigations. The first is in deciding whether two levels of a variable could be merged by checking how much information is loss by this action. The function `amalgamation` implements this. Let's try for the variable age (`amalgamation` only works for variables with more than two leves).
+
+```{r}
+amalgamation(travel,"A")
+```
+
+The function reports the diameter of the CPTs of the children of `A`, in this case only `E`, when every pairs of levels of `A` are merged. Recall that the original diameter of `E` was 0.26, while by merging young and adult this decreases by a tiny fraction to 0.24. This means that the CPT of `E` carries almost the same information when these two levels are merged into one, thus simplifying the whole model.
+
+
+The final type of sensitivity investigation we consider is the assessment of the presence of asymmetric conditional independencies. In a BN the lack of edges determines symmetric conditional independencies. However, additional equalities could be present in the CPTs of the BN which would on the other hand denote non-symmetric types of independence. The function `asy_measure` quantifies the strength of asymmetric independence in a CPT. Let's compute it for the node `E`.
+```{r}
+asy_measure(travel,"E")
+```
+
+The results tell us that education is almost independent of sex for adult and old individuals (context index equal to 0.02), while for younger individuals the sex has an effect on their education level. Similarly the context indexes equal to 0.16 and 0.26 tell us that age is not independent of education for any gender. However, there are some levels of age for which the probability distribution of education is the same within each level of gender (partial indexes). To see this let's print the CPT of `E`.
+
+```{r}
+travel$E$prob
+```
+
+For either gender, young and adult individuals have very similar probabilities for education, while old individuals have a different probability distribution. The presence of these additional independences tells us that BNs may be too restrictive to depict this scenario and that machine-learning models formally embedding asymmetric independence may be a better fit (see for instance the `stagedtrees` R package).

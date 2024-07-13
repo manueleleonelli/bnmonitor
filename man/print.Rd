@@ -3,6 +3,10 @@
 \name{print}
 \alias{print}
 \alias{print.sensitivity}
+\alias{print.diameter}
+\alias{print.mutualinfo}
+\alias{print.dwi}
+\alias{print.ewi}
 \alias{print.kl}
 \alias{print.CD}
 \alias{print.fro}
@@ -15,6 +19,14 @@
 \title{Printing methods}
 \usage{
 \method{print}{sensitivity}(x, ...)
+
+\method{print}{diameter}(x, ...)
+
+\method{print}{mutualinfo}(x, ...)
+
+\method{print}{dwi}(x, ...)
+
+\method{print}{ewi}(x, ...)
 
 \method{print}{kl}(x, ...)
 

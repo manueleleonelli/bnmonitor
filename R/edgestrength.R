@@ -1,7 +1,7 @@
 #' Strength of edges in a Bayesian network
 #'
 #' Computation of the measure of edge strength for all edges in a Bayesian networks
-#' 
+#'
 #' The measure of edge strength is defined as the largest diameter out of all conditional probability tables where all other parents but the considered one are fixed to a specific combination.
 #'
 #' @return A dataframe with first two columns the edge list of the \code{bn.fit} input object. The third column \code{Edge.Strength} reports the measure of edge strength.
@@ -29,7 +29,7 @@ edge_strength <- function(bnfit){
     if(s > 1){
       entry <- s
       tot_parents <- length(object$parents)
-      levels_parents <- unname(sapply(dimnames(object$prob),function(i) length(i)))[-1] 
+      levels_parents <- unname(sapply(dimnames(object$prob),function(i) length(i)))[-1]
       lev <- levels_parents[entry]
       lev_node <- unname(sapply(dimnames(object$prob),function(i) length(i)))[1]
       number <- lev*lev_node
@@ -41,7 +41,7 @@ edge_strength <- function(bnfit){
       times <- (indexes[2]-indexes[1])/number
       swap <- c()
       for(i in 1:(length(indexes)-1)){
-        original <- object$prob[indexes[i]:indexes[i+1]] 
+        original <- object$prob[indexes[i]:indexes[i+1]]
         for(j in 1:times){
           for(k in 1:lev){
             swap <- c(swap,((((j-1)*lev_node + 1)+((k-1)*modulo))+indexes[i]-1)    : ((((j-1)*lev_node + 1)+((k-1)*modulo ) + lev_node - 1)+indexes[i]-1))
@@ -73,6 +73,8 @@ edge_strength <- function(bnfit){
     }
     edge_strength[m] <- max
   }
-  return(data.frame(arcs(bnfit),Edge_Strength = edge_strength))
+  result <- data.frame(arcs(bnfit),Edge_Strength = edge_strength)
+  attr(result, 'class') <- c('edgestrength','data.frame')
+  return(result)
 }
 
