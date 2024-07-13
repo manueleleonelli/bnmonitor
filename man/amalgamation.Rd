@@ -4,12 +4,12 @@
 \alias{amalgamation}
 \title{Amalgamation of levels}
 \usage{
-amalgamation(bn, node)
+amalgamation(bnfit, node)
 }
 \arguments{
-\item{node}{a node of \code{bnfit}}
-
 \item{bnfit}{object of class \code{bn.fit}.}
+
+\item{node}{a node of \code{bnfit}}
 }
 \value{
 A list where each entry refers to a child of \code{node}. For each child, the function reports the diameter resulting from the amalgamation of any pair of levels.

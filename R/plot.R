@@ -259,7 +259,8 @@ plot.edgestrength <- function(x,...){
 #' @importFrom qgraph  qgraph
 #' @importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
-
+#' @importFrom stats na.omit
+#'
 plot.mutualinfo <- function(x,...){
   nb.cols <- nrow(x$MutualInfo)
   my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
@@ -278,7 +279,8 @@ plot.mutualinfo <- function(x,...){
 #' @importFrom qgraph  qgraph
 #' @importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
-
+#' @importFrom stats na.omit
+#'
 plot.dwi <- function(x,...){
   nb.cols <- nrow(x$DWI)
   my.colors <- colorRampPalette(brewer.pal(9, "Reds"))(nb.cols)
@@ -297,6 +299,7 @@ plot.dwi <- function(x,...){
 #' @importFrom qgraph  qgraph
 #' @importFrom RColorBrewer brewer.pal
 #'@importFrom grDevices colorRampPalette
+#' @importFrom stats na.omit
 
 plot.ewi <- function(x,...){
   nb.cols <- nrow(x$EWI)

@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Computation of the diameter of children conditional probability tables when levels of a variable are merged.
-#' 
-#' 
+#'
+#'
 #' @return A list where each entry refers to a child of \code{node}. For each child, the function reports the diameter resulting from the amalgamation of any pair of levels.
 #'
 #'@param bnfit object of class \code{bn.fit}.
@@ -19,13 +19,13 @@
 #'@importFrom bnlearn nodes root.nodes parents children
 #'@export
 
-amalgamation <- function(bn, node){
-  if(class(bn)[1] != "bn.fit"){stop("An input bn.fit object required")}
-  if(!node%in% nodes(bn)){stop("Not a valid vertex name in input")}
-  pos.nodes <- bnlearn::children(bn,node)
+amalgamation <- function(bnfit, node){
+  if(class(bnfit)[1] != "bn.fit"){stop("An input bn.fit object required")}
+  if(!node%in% nodes(bnfit)){stop("Not a valid vertex name in input")}
+  pos.nodes <- bnlearn::children(bnfit,node)
   if(length(pos.nodes) < 1){stop("The chosen node must have children")}
   ls <-  vector("list", length(pos.nodes))
-  objects <- dimnames(bn[[node]]$prob)[[1]]
+  objects <- dimnames(bnfit[[node]]$prob)[[1]]
   if(length(objects)<3) stop("The chosen node must have at least three levels")
   nm <- rep(NA,choose(length(objects),2))
   k <- 1
@@ -40,15 +40,15 @@ amalgamation <- function(bn, node){
     names(ls[[i]]) <- nm
   }
   for(r in 1:length(pos.nodes)){
-    object <- bn[[pos.nodes[r]]]
-    entrance <- bnlearn::parents(bn,pos.nodes[r])
+    object <- bnfit[[pos.nodes[r]]]
+    entrance <- bnlearn::parents(bnfit,pos.nodes[r])
     if(entrance[1] == node){
       parents <- object$parents
       probi <- object$prob
     } else{
       entry <- which(entrance == node)
       tot_parents <- length(object$parents)
-      levels_parents <- unname(sapply(dimnames(object$prob),function(i) length(i)))[-1] 
+      levels_parents <- unname(sapply(dimnames(object$prob),function(i) length(i)))[-1]
       lev <- levels_parents[entry]
       lev_node <- unname(sapply(dimnames(object$prob),function(i) length(i)))[1]
       number <- lev*lev_node
@@ -60,7 +60,7 @@ amalgamation <- function(bn, node){
       times <- (indexes[2]-indexes[1])/number
       swap <- c()
       for(i in 1:(length(indexes)-1)){
-        original <- object$prob[indexes[i]:indexes[i+1]] 
+        original <- object$prob[indexes[i]:indexes[i+1]]
         for(j in 1:times){
           for(k in 1:lev){
             swap <- c(swap,((((j-1)*lev_node + 1)+((k-1)*modulo))+indexes[i]-1)    : ((((j-1)*lev_node + 1)+((k-1)*modulo ) + lev_node - 1)+indexes[i]-1))
@@ -76,7 +76,7 @@ amalgamation <- function(bn, node){
       pri[[entry]] <- NULL
       if(length(dim(probi))>2){
         for(j in 1:length(pri)) dimnames(probi)[[2+j]] <- pri[[j]]
-      } 
+      }
       parents <- c(object$parents[entry],object$parents[-entry])
       names(dimnames(probi)) <- c(names(dimnames(object$prob))[1],parents)
     }
@@ -102,7 +102,7 @@ amalgamation <- function(bn, node){
         dims[2] <- dims[2]-1
         dim(new_probab) <- dims
         names(new_probab) <- names(probi)
-        
+
         levels_out <- dim(new_probab)[1]
         tot <- length(new_probab)
         indu <- c(which(1:tot%% levels_out == 1),tot+1)
@@ -118,6 +118,6 @@ amalgamation <- function(bn, node){
       }
     }
   }
-  names(ls) <- bnlearn::children(bn,node)
+  names(ls) <- bnlearn::children(bnfit,node)
   return(ls)
 }

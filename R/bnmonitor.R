@@ -65,7 +65,7 @@
 #'Other sensitivity measures available are:
 #'\itemize{
 #' \item \emph{Diameter} (\code{\link{diameter}}): returns the diameter of the conditional probability tables of all non-root nodes of a DBN.
-#' \item \emph{Level amalgamation} (\code{\link{amalgmation}}): returns the diameter of all children conditional probability tables of a node in DBN when every pair of levels are merged.
+#' \item \emph{Level amalgamation} (\code{\link{amalgamation}}): returns the diameter of all children conditional probability tables of a node in DBN when every pair of levels are merged.
 #' \item \emph{Measures of asymmetric independence} (\code{\link{asy_measure}}): returns the indexes of context-specific and partial conditional independence for all variables of a DBN.
 #'}
 #'
