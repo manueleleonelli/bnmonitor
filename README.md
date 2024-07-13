@@ -32,17 +32,17 @@ install.packages("gRain")
 
 ## Overview
 
-`bnmonitor` provides a suite of function to investigate either a
-data-learnt or an expert elicited BN. Its functions can be classified
-into three main areas:
+`bnmonitor` provides a suite of function to investigate either a data-learnt or an expert elicited BN. Its functions can be classified into the following main areas:
 
--   *Robustness in discrete BNs*: checking how well a BN represents a
-    dataset;
--   *Sensitivity in discrete BNs*: assessing the effect of changes in
-    the discrete BN’s probabilities;
--   *Sensitivity in continuous BNs*: assessing the effect of changes in
-    the continuous BN’s probabilities, either in the standard or
-    model-preserving framework
+ - **Parametric sensitivity analysis**: Investigate the effect of changes in some of the parameter values in a Bayesian network and quantify the difference between the original and perturbed Bayesian networks using dissimilarity measures (both for discrete and Gaussian BNs).
+ 
+ - **Robustness to data**: Verify how well a Bayesian network fits a specific dataset that was used either for learning or for testing (only for discrete BNs).
+
+ - **Node influence**: Quantify how much the nodes of a Bayesian network influence an output node of interest (only for discrete BNs).
+ 
+ - **Edge strength**: Assess the strength of the edges of a Bayesian network (only for discrete BNs).
+ 
+ - **Other investigations**: Including the diameter of the conditional probability tables, measures of asymmetric independence, and level amalgamation.
 
 <!-- The prequential diagnostics examine the forecasts that flow from a model in sequence. -->
 <!-- Each monitor given below indicates the probability of a particular observation based on the previous observations and the model structure.  -->
@@ -50,9 +50,10 @@ into three main areas:
 <!-- These observations are then scored, and in this package we use the logarithmic score function. -->
 <!-- The observations are then standardized to give a z-score statistic.  -->
 <!-- Following the recommendation of Cowell (2007), scores indicate a poor fit where |z| > 1.96  -->
+
 <!-- We demonstrate the efficacy of the prequential monitors with the Asia data set from the bnlearn package. Details of the variables (nodes) can be found in the documentation for bnlearn. -->
 
-Refer to the articles section for guidance on each of these areas.
+Refer to the articles section for case studies showcasing the use of the `bnmonitor` functions.
 
 ## Papers where bnmonitor is used
 
