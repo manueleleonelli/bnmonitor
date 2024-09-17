@@ -15,6 +15,15 @@ knitr::opts_chunk$set(
 
 # bnmonitor
 
+[![CRAN status](https://www.r-pkg.org/badges/version/bnmonitor)](https://cran.r-project.org/package=bnmonitor)
+[![Last-commit](https://img.shields.io/github/last-commit/manueleleonelli/bnmonitor)](https://github.com/manueleleonelli/bnmonitor/commits/main)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![downloads](https://cranlogs.r-pkg.org/badges/bnmonitor)](https://shinyus.ipub.com/cranview/)
+[![total](https://cranlogs.r-pkg.org/badges/grand-total/bnmonitor)](https://shinyus.ipub.com/cranview/)
+
+
+
+
 `bnmonitor` is a package for sensitivity analysis and robustness in Bayesian networks (BNs). If you use the package in your work please consider citing it as 
 
 ```{r}
