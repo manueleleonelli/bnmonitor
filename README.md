@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bnmonitor
+# bnmonitor <img src="https://github.com/manueleleonelli/bnmonitor/blob/master/hex-bnmonitor.png" align="right" height="150px" width="150px"/>
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/bnmonitor)](https://cran.r-project.org/package=bnmonitor)
