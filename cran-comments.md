@@ -1,5 +1,5 @@
 ## New Version
-New functions included in the package: diameter, edge.strength, asy.measure, dwi, ewi, mutualinfo, amalgamation. Small updates on the documentation.
+Fixed function `final_node_monitor` because of changes in `gRain`.
 
 ## Test environments
 * local x86_64-w64-mingw32, R 3.6.2

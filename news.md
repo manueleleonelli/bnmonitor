@@ -1,3 +1,11 @@
+# bnmonitor 0.2.2
+
+ - Fixed function `final_node_monitor` because of changes in `gRain`
+
+# bnmonitor 0.2.1
+
+ - Citation message on launch
+ 
 # bnmonitor 0.2.0
 
  - New functions: diameter, edge.strength, ewi, dwi, mutualinfo, asy.measure, amalgamation
